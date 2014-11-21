@@ -157,7 +157,7 @@ JQ.get "test.html", (doc) ->
 			"padding-left":"10%"
 			"padding-right":"10%"
 			"text-align":"justify"
-			"font-size":"20pt"
+			"font-size":"10pt"
 			"position":"absolute"
 			"overflow-y": "auto"
 		IndexCSS =
