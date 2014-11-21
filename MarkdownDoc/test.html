@@ -75,13 +75,20 @@ The main domain where we <i>do</i> use a lot of robots is a good place to start 
 		The industrial arm also cannot directly be controlled. We can only send RAPID instructions to a controller that is attached to the industrial arm and then ABB specific sub-routines are called that directly manipulates the industrial arm.
 	</p>
 </p>
+
 <h4>Tactip Sensor</h4>
 The way the Tactip Sensor works is based on the interaction of the topology we are analysing with another surface that has an LED grid placed on it. A webcam provides a live feed of the LED grid. When the topology comes in contact with the surface with the LED grid attached, the webcam feed will show the changes on the grid surface.
-This subtle change in brightness that we observe in the webcam is the source of our data.
-<!-- <p>
-	Autonomy is a hard concept to define, in our project what we mean by autonomy are the lack of programming rules to analysis of data. What we want to do is provide the algorithm a set of training data which it should use to create its own rules and use them to analyse the data. <i>Even</i>  while doing this it should be creating new rules or solidifing its prior knowledge.
+This subtle changes in brightness that we observe in the webcam is the source of our data. One of the main tasks of our project is to create a suitable algorithm that transforms this data into a topoloy map which we will use to classify and make decisions.
+
+
+<h4>Learing Algorithm</h4>
+
+<p>
+	Autonomy is a hard concept to define accurately, for the purposes of our project what we mean by autonomy is the lack of programming rules for the analysis of our sensor data. What we want to do is provide the algorithm a set of training data which it should use to create its own rules and use them to analyse the data. It should also use the test data for training and learing to either creat new rules or solidifing its prior knowledge.
 </p>
- -->
+
+
+
 
 
 
