@@ -1,25 +1,80 @@
 
-{io,JQ,tempConv,_,TM,move} = require "./headers.js"
+{io,JQ,tempConv,_,TM,move,__} = require "./headers.js"
 
 
-
-PI = 3.14
 #mithril exposed as m
+log = (X) -> console.log(JSON.parse(JSON.stringify(X)))
+
+CreateArray = (size,val= 0) -> 
+	Arr = []
+	
+	for I from 0 to (size - 2)
+		Arr.push(val)
+
+	Arr
+
+
+SetValArray = (list,index,val)->
+
+	for I in ( __.range index,list.length )
+		list[I] = val
+	list
+
 
 ElementPointers = {}
 
 config = (Name)->
 	eval "var Ob = function(e){return ElementPointers." + Name + " =" + " e;}"
 	return Ob
-
-
 JQ.get "test.html", (doc) ->
 
 	Mdoc =  eval (tempConv.Template doc).toString!
 	app = {}
 	Signals = {}
 	Signals.OpenIndex = false
-	# console.log Mdoc
+	
+
+	Nines = CreateArray 7,0
+	
+	
+	
+	NinesCompress =->
+
+		WithNum = _.filter ((x)-> if x == 0 then false else true),Nines
+		
+		_.fold (acc,post)->
+			acc + "." + post
+		,"",WithNum
+
+	_.fold1 (pre,post) ->
+		
+
+		Last = (parseInt _.tail pre.tag) - 2
+		Next = (parseInt _.tail post.tag) - 2
+		# console.log [Last,Next]
+		if Next > Last
+			Nines[Last]++
+			SetValArray Nines,Last+1,0
+		if Last == Next
+			Nines[Last]++
+			SetValArray Nines,Last+1,0
+		if Next < Last
+			Nines[Last]++
+
+		pre.children[0] = (_.tail NinesCompress!) + " " + pre.children[0]
+		
+
+		post
+	,_.filter (x)->
+
+		test = /h[2-9]/.exec x.tag
+		
+		if test != null 
+
+			return true
+		else return false
+
+	,Mdoc
 	FindHeaders = (doc)->
 
 		listofHeaders = []
@@ -34,7 +89,7 @@ JQ.get "test.html", (doc) ->
 			if find != null
 
 				Output.name = elem.children[0]
-				elem.children[0] = m "a",(name:Output.name),Output.name
+				elem.children[0] = m "a",(name:Output.name), Output.name
 				Output.height = find[1]
 				Output.dept = dept
 				listofHeaders.push Output
@@ -45,7 +100,6 @@ JQ.get "test.html", (doc) ->
 		_.map ((x)-> Search x,0),doc
 
 		listofHeaders
-
 
 	CreateHeaderM = (list)->
 
@@ -90,6 +144,11 @@ JQ.get "test.html", (doc) ->
 
 		Stuff = Recur list
 
+			# console.log E.name
+			# console.log index
+			# LastName = E.Name
+			# E.name = index + " " LastName
+
 		m "ol",(_.map Fn, Stuff)
 
 	IndexM = CreateHeaderM FindHeaders Mdoc
@@ -122,7 +181,7 @@ JQ.get "test.html", (doc) ->
 		TM.to ElementPointers.triangle,0.5,("opacity":0.1)
 
 	app.view = (ctrl) ->
-		console.log "mithril view is being called"
+		
 		CMUN = m "link",(rel:"stylesheet" href: "Serif/cmun-serif.css")
 		head = m "head",[CMUN]
 
@@ -130,9 +189,9 @@ JQ.get "test.html", (doc) ->
 			width: "0"
 			height: "0"
 			top:"45%"
-			border-top: "60px solid transparent"
-			border-bottom: "60px solid transparent"
-			border-left: "60px solid rgb(0,0,0)"
+			border-top: "45px solid transparent"
+			border-bottom: "45px solid transparent"
+			border-left: "45px solid rgb(0,0,0)"
 			opacity:"0.1"
 			position:"fixed"
 			z-index: 100
@@ -144,7 +203,6 @@ JQ.get "test.html", (doc) ->
 			onclick:OnMouseClick
 			onmouseover:FadeInTriangle
 			onmouseleave:FadeOutTriangle
-
 
 			# config:config "TriContainer"
 
@@ -163,12 +221,13 @@ JQ.get "test.html", (doc) ->
 		IndexCSS =
 			"top":"0"
 			"left":"-20%"
-			"font-size":"16pt"
+			"font-size":"10pt"
+			# "margin": "0px"
+			# "padding": "0px"
 			"width":"20%"
 			"height":"100%"
 			"-webkit-transform": "translateZ(0)"
 			"position":"fixed"
-
 			"overflow-y": "scroll"
 			"overflow-x": "auto"
 			# "z-index":"99"
