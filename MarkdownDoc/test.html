@@ -6,13 +6,13 @@
 </div>
 <h2>Introduction</h2>
 <p>
-Tactile perception would be a key component if fully autonomous robots are expected to be fully autonomous robot in the near future. However both  tactile perception and autonomy in robots require significant research and study if they are to any major application in our industries and society. <!-- Tactile perception has been left aside for more important study in computer vision for a while in engineering and computational science since it became cheaper to manufacture light sensors than to manufacture expensive touch sensors. This is good news since now we can use the progress made in vision related hardware to improve our understanding of touch -->. To better understand the integration of these two areas of research , a specific problem was choosen from industry namely that of <b>edge</b> and <b>texture</b> detection using a novel new type of tactile sensor.
+Tactile perception would be a key component if fully autonomous robots are expected to be fully autonomous robot in the near future. However both  tactile perception and autonomy in robots require significant research and study if they are to any major application in our industries and society. <!-- Tactile perception has been left aside for more important study in computer vision for a while in engineering and computational science since it became cheaper to manufacture light sensors than to manufacture expensive touch sensors. This is good news since now we can use the progress made in vision related hardware to improve our understanding of touch -->. To better understand the integration of these two areas of research , a specific problem was chosen from industry namely that of <b>edge</b> and <b>texture</b> detection using a novel new type of tactile sensor.
 </p>
 <p>
-	It is important to emphasis how much progress we can make in the field of robotics by creating better algorithms, sensors, etc in the domain of touch. Physically speaking there is only so much information we can use for inference from the electromagnetic spectrum. It is important to point out that data collected from tactile sensors has helped many organims 'win' the evolutionary game, and almost all form of biological intelligence incorporates inference from data obtained from touch sensors. What this means for this project is that even if the application is very specific it can be generally applied to many more known and unkown problems. For this project we create a closely integrated general system with an industrial arm that would enable the sensor to collect data in a highly controlled manner.
+	It is important to emphasis how much progress we can make in the field of robotics by creating better algorithms, sensors, etc in the domain of touch. Physically speaking there is only so much information we can use for inference from the electromagnetic spectrum. It is important to point out that data collected from tactile sensors has helped many organism 'win' the evolutionary game, and almost all form of biological intelligence incorporates inference from data obtained from touch sensors. What this means for this project is that even if the application is very specific it can be generally applied to many more known and unknown problems. For this project we create a closely integrated general system with an industrial arm that would enable the sensor to collect data in a highly controlled manner.
 </p>
 <p>
-	The project in many ways tries to bring two separate areas of research. The progress we have made with general learning algorithms have only been widely applied in mostly IT sectors ( e.g search engines, spam filters, data mining , etc) there is significant potential for these classes of algorithms to revolutizie conventional heavy industries such as automotive manufacturing. Moreover, these approach to combining perception and control can give insights into the neural algorithms underlying learning and inference in humans and other animals; in a sense viewing these agents as 'living'.
+	The project in many ways tries to bring two separate areas of research. The progress we have made with general learning algorithms have only been widely applied in mostly IT sectors ( e.g search engines, Spam filters, data mining , etc) there is significant potential for these classes of algorithms to revolutionize conventional heavy industries such as automotive manufacturing. Moreover, these approach to combining perception and control can give insights into the neural algorithms underlying learning and inference in humans and other animals; in a sense viewing these agents as 'living'.
 
 </p>
 
@@ -20,7 +20,7 @@ Tactile perception would be a key component if fully autonomous robots are expec
 
 <p>The reason for using a touch sensor in the first place rather from vision was because of a very real problem in quality assurance in the automotive manufacturing process.
 </p>
-Quality assurance in automotive mannufacting generally speaking means to assesing the quality of some finished assembly which could be a car part or a whole car. Currently this is mostly done by manual inspections by engineers or technicians. There are two specific tasks that they are required to do:
+Quality assurance in automotive manufacturer generally speaking means to assessing the quality of some finished assembly which could be a car part or a whole car. Currently this is mostly done by manual inspections by engineers or technicians. There are two specific tasks that they are required to do:
 
 <ol>
 	<li>
@@ -33,7 +33,7 @@ Quality assurance in automotive mannufacting generally speaking means to assesin
 
 
 To accomplish this the people inspecting would use approximate prior knowledge about the geometry of the assembly. Usually the engineer would use a CAD model to express the geometry of the assembly. There has been attempts made to automate both these problems using computer vision but unfortunately it has not been successful.
-<p> That vision has not been successful due to the fact that light interacts in complex ways with both the material and geometry of a surface, there can be diffraction, surface ray-scattering, subsurface ray-scattering, diffusion, etc. Detecting the amount of light reflected from beam does not directly inform us about the surface that is reflecting it, even if we do make some inference it will most likely not be robust and have a lot of uncertainities with it, this issue is particularly problematic in materials such as rubber which has a matte finish and diffuse incoming light.
+<p> That vision has not been successful due to the fact that light interacts in complex ways with both the material and geometry of a surface, there can be diffraction, surface ray-scattering, subsurface ray-scattering, diffusion, etc. Detecting the amount of light reflected from beam does not directly inform us about the surface that is reflecting it, even if we do make some inference it will most likely not be robust and have a lot of uncertainties with it, this issue is particularly problematic in materials such as rubber which has a matte finish and diffuse incoming light.
 
 
 </p>
@@ -52,13 +52,13 @@ To summarize there are two main goals of this project
 
 <h4>Infrastructure</h4>
 <p>
-	One of the key thing that is missing for us to continue our investigation is infrastructure, specifically a control infrastructure between our mathematical algorithm and the physical robot that works on an assembly line or in a labatory.
+	One of the key thing that is missing for us to continue our investigation is infrastructure, specifically a control infrastructure between our mathematical algorithm and the physical robot that works on an assembly line or in a laboratory.
 </p>
 <p>
 	Creating this infrastructure is a key part of this report and project. Due to the practical nature of the application we will be working with and developing on two key pieces of hardware
 	<ol>
 		<li>An ABB pick-and-move industrial arm that is widely used in factory floor.</li>
-		<li>A specially designed tactip sensor that uses an webcam to capture images of a LED covered surface that comes in contact with the topography we are investigating. </li>
+		<li>A specially designed tactip sensor that uses an web-cam to capture images of a LED covered surface that comes in contact with the topography we are investigating. </li>
 	</ol>
 </p>
 <h5>Industrial Arm</h5>
@@ -79,29 +79,29 @@ To summarize there are two main goals of this project
 
 <h4>Tactip Sensor</h4>
 
-The way the Tactip Sensor functions is based on the interaction of the topography with  a deformable outer surface of the sensor that has 3D printed pins that are lit by internal LEDs. When the topology comes in contact with the sensor surface, the webcam feed will show the changes in the pattern of pins on the grid.
-This subtle changes in brightness that we observe in the webcam is the source of our data. One of the main tasks of our project is to create a suitable algorithm that transforms this data into a topograhy map which we will use to classify and make decisions.
+The way the tactip Sensor functions is based on the interaction of the topography with  a deformable outer surface of the sensor that has 3D printed pins that are lit by internal LEDs. When the topology comes in contact with the sensor surface, the web-cam feed will show the changes in the pattern of pins on the grid.
+This subtle changes in brightness that we observe in the web-cam is the source of our data. One of the main tasks of our project is to create a suitable algorithm that transforms this data into a topography map which we will use to classify and make decisions.
 
 
 <h4>Learning Algorithm</h4>
 
 <p>
-	Autonomy is a hard concept to define accurately as there is a moving boundary when it comes to allowing programs to make their own decisions, for the purposes of our project, we are using autonomy to mean there is a lack of preset rules for moving the robot; that is the robot control adapts to each new situation. What we want to do is provide the algorithm a set of training data which it should use to create its own rules and use them to analyse the data. It should also use the test data for training and learning to either creat new rules or solidifing its prior knowledge.
+	Autonomy is a hard concept to define accurately as there is a moving boundary when it comes to allowing programs to make their own decisions, for the purposes of our project, we are using autonomy to mean there is a lack of preset rules for moving the robot; that is the robot control adapts to each new situation. What we want to do is provide the algorithm a set of training data which it should use to create its own rules and use them to analyze the data. It should also use the test data for training and learning to either create new rules or solidifying its prior knowledge.
 </p>
 
 
 
 <h2>3 Progress</h2>
 <p>
-It has been possible to capture the feed from the webcam. The way it has been approached is via TCP/IP sockets.
-There were many problems involving the webcam, since it was an old webcam drivers for it was discontinued and could not to be opened via windows 8 drivers. Because of this and many other uncertanity surrounding the hardware and software, the whole system has made very modular and separate sub-systems comminucate to each other via sockets. It also helps that the method that we use talk to the robot is via TCP/IP .The ABB driver does this for us so we do not need to implement it from scratch.
+It has been possible to capture the feed from the web-cam. The way it has been approached is via TCP/IP sockets.
+There were many problems involving the web-cam, since it was an old web-cam drivers for it was discontinued and could not to be opened via windows 8 drivers. Because of this and many other uncertainty surrounding the hardware and software, the whole system has made very modular and separate sub-systems communicate to each other via sockets. It also helps that the method that we use talk to the robot is via TCP/IP .The ABB driver does this for us so we do not need to implement it from scratch.
 </p>
 
 <p>
-	The webcam captures images frames by frame and encodes it using <code>BASE64 </code> and <code>jpeg</code> compression and sends it via sockets to a remote server that stores individual frames as image onto the server file system. We can then run our algorithms on these files and send data to the robot.
+	The web-cam captures images frames by frame and encodes it using <code>BASE64 </code> and <code>jpeg</code> compression and sends it via sockets to a remote server that stores individual frames as image onto the server file system. We can then run our algorithms on these files and send data to the robot.
 </p>
 <p>
-	Since the robot is a expensive piece of equiment. We need to test it first on a platform called RobotStudio which is provided to us by ABB that acts as a virtual robot that can be used for testing and debugging purposes.
+	Since the robot is a expensive piece of equipment. We need to test it first on a platform called RobotStudio which is provided to us by ABB that acts as a virtual robot that can be used for testing and debugging purposes.
 	For the virtual robot it has been possible to send RAPID instructions from our server to the robot. The RAPID instruction will then be executed. We have not however been able to get response from our robot controller. Also we are unable to send data while RAPID execution to change the control execution dynamically.
 </p>
 
