@@ -2,6 +2,7 @@
 (function(){
   var ref$, io, JQ, tempConv, _, TM, move, __, log, CreateArray, SetValArray, ElementPointers, config;
   ref$ = require("./headers.js"), io = ref$.io, JQ = ref$.JQ, tempConv = ref$.tempConv, _ = ref$._, TM = ref$.TM, move = ref$.move, __ = ref$.__;
+  console.log("hello");
   log = function(X){
     return console.log(JSON.parse(JSON.stringify(X)));
   };

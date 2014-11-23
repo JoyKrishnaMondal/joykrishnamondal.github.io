@@ -1,6 +1,7 @@
 
 {io,JQ,tempConv,_,TM,move,__} = require "./headers.js"
 
+console.log "hello"
 
 #mithril exposed as m
 log = (X) -> console.log(JSON.parse(JSON.stringify(X)))
