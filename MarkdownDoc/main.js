@@ -29,7 +29,7 @@
     return Ob;
   };
   JQ.get("test.html", function(doc){
-    var Mdoc, app, Signals, Nines, FindHeaders, CreateHeaderM, AddReferenceToHead, GetHeaders, NinesCompress, EditName, FoldFn, IndexM, Headers, OnMouseClick, FadeInTriangle, FadeOutTriangle;
+    var Mdoc, app, Signals, Nines, FindHeaders, CreateHeaderM, GetHeaders, NinesCompress, EditName, FoldFn, AddReferenceToHead, IndexM, Headers, GetName, ListOfNames, OnMouseClick, FadeInTriangle, FadeOutTriangle;
     Mdoc = eval(tempConv.Template(doc).toString());
     app = {};
     Signals = {};
@@ -95,7 +95,7 @@
         _.each(Second, First);
         return First;
       };
-      Fn = function(x, dept){
+      Fn = function(x){
         var indent, out;
         indent = {
           "text-decoration": "none",
@@ -103,9 +103,7 @@
           "padding-left": "5%"
         };
         out = [
-          m("li", {
-            style: indent
-          }, m("a", {
+          m("li", m("a", {
             style: style,
             href: "#" + x.name
           }, x.name)), m("ol", {
@@ -125,11 +123,6 @@
       return m("ol", {
         style: topCSS
       }, _.map(Fn, Stuff));
-    };
-    AddReferenceToHead = function(x){
-      return x.children[0] = m("a", {
-        name: x.children[0]
-      }, x.children[0]);
     };
     GetHeaders = function(x){
       return _.filter(function(x){
@@ -178,10 +171,21 @@
       EditName(post);
       return post;
     };
+    AddReferenceToHead = function(x, name){
+      return x.children[0] = m("a", {
+        name: name
+      }, x.children[0]);
+    };
     IndexM = CreateHeaderM(FindHeaders(Mdoc));
     Headers = GetHeaders(Mdoc);
+    GetName = function(headers){
+      return _.map(function(x){
+        return x.children[0];
+      }, headers);
+    };
+    ListOfNames = GetName(Headers);
     _.fold(FoldFn, EditName(_.head(Headers)), _.tail(Headers));
-    _.map(AddReferenceToHead, Headers);
+    _.zipWith(AddReferenceToHead, Headers, ListOfNames);
     app.controller = function(){};
     OnMouseClick = function(){
       if (Signals.OpenIndex === false) {

@@ -89,12 +89,13 @@ JQ.get "test.html", (doc) ->
 			_.each Second,First
 
 			First
-		Fn = (x,dept) ->
+		Fn = (x) ->
 			indent =
 				"text-decoration":"none"
 				"padding":"1%"
 				"padding-left":"5%"
-			out = [(m "li",(style:indent),( m "a",(style:style,href:("#" + x.name)),x.name)),(m "ol",(style:indent),(_.map Fn,x.kid))]
+
+			out = [(m "li",( m "a",(style:style,href:("#" + x.name)),x.name)),(m "ol",(style:indent),(_.map Fn,x.kid))]
 
 			out
 
@@ -109,7 +110,7 @@ JQ.get "test.html", (doc) ->
 
 		m "ol",(style:topCSS),(_.map Fn, Stuff)
 
-	AddReferenceToHead = (x) -> x.children[0] = m "a",(name:x.children[0]), x.children[0]
+
 
 	GetHeaders = (x) -> _.filter (x) ->
 
@@ -152,14 +153,20 @@ JQ.get "test.html", (doc) ->
 		EditName post
 
 		post
+	AddReferenceToHead = (x,name) ->
+		x.children[0] = m "a",(name:name), x.children[0]
 
 	IndexM = CreateHeaderM FindHeaders Mdoc
 
 	Headers = GetHeaders Mdoc
+	GetName = (headers) ->
+		_.map ((x)->x.children[0]) ,headers
+
+	ListOfNames = GetName Headers
 
 	_.fold FoldFn ,(EditName _.head Headers) , _.tail Headers
 
-	_.map AddReferenceToHead,Headers
+	_.zip-with AddReferenceToHead,Headers,ListOfNames
 
 	app.controller = ->
 
