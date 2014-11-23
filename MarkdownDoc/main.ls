@@ -193,7 +193,8 @@ JQ.get "test.html", (doc) ->
 	app.view = (ctrl) ->
 
 		CMUN = m "link",(rel:"stylesheet" href: "Serif/cmun-serif.css")
-		head = m "head",[CMUN]
+		media = m "link",(rel:"stylesheet" href: "media.css")
+		head = m "head",[CMUN,media]
 
 		triangleCSS =
 			width: "0"
@@ -225,13 +226,14 @@ JQ.get "test.html", (doc) ->
 			"padding-left":"10%"
 			"padding-right":"10%"
 			"text-align":"justify"
-			"font-size":"10pt"
+			"font-size":"15pt"
 			"position":"absolute"
-			"overflow-y": "auto"
+			"overflow-y": "auto;"
+
 		IndexCSS =
 			"top":"0"
 			"left":"-20%"
-			"font-size":"10pt"
+			"font-size":"15pt"
 			"width":"20%"
 			"height":"100%"
 			"-webkit-transform": "translateZ(0)"
@@ -254,7 +256,7 @@ JQ.get "test.html", (doc) ->
 		# Doc = m "div",(config:((e)->e = ElementPointers.body)),
 
 
-		doc = m "div",(style:styleTextBody,config:config "doc"),[Mdoc]
+		doc = m "div",(class:"Print",style:styleTextBody,config:config "doc"),[Mdoc]
 
 		body = m "body",(config:config "body"),[doc]
 

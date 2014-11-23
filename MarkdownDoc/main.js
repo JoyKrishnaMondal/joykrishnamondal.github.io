@@ -226,12 +226,16 @@
       });
     };
     app.view = function(ctrl){
-      var CMUN, head, triangleCSS, triangleM, styleMain, styleTextBody, IndexCSS, Index, hello, doc, body, html;
+      var CMUN, media, head, triangleCSS, triangleM, styleMain, styleTextBody, IndexCSS, Index, hello, doc, body, html;
       CMUN = m("link", {
         rel: "stylesheet",
         href: "Serif/cmun-serif.css"
       });
-      head = m("head", [CMUN]);
+      media = m("link", {
+        rel: "stylesheet",
+        href: "media.css"
+      });
+      head = m("head", [CMUN, media]);
       triangleCSS = {
         width: "0",
         height: "0",
@@ -257,14 +261,14 @@
         "padding-left": "10%",
         "padding-right": "10%",
         "text-align": "justify",
-        "font-size": "10pt",
+        "font-size": "15pt",
         "position": "absolute",
-        "overflow-y": "auto"
+        "overflow-y": "auto;"
       };
       IndexCSS = {
         "top": "0",
         "left": "-20%",
-        "font-size": "10pt",
+        "font-size": "15pt",
         "width": "20%",
         "height": "100%",
         "-webkit-transform": "translateZ(0)",
@@ -280,6 +284,7 @@
         config: config("hello")
       }, "hello world");
       doc = m("div", {
+        'class': "Print",
         style: styleTextBody,
         config: config("doc")
       }, [Mdoc]);
