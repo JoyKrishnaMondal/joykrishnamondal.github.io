@@ -1,0 +1,87 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files (x86)\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'UDC' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.32
+4 verbose node symlink C:\Program Files (x86)\nodejs\\node.exe
+5 warn package.json simple-livescript-watch@1.0.8 No repository field.
+6 verbose cache add [ 'UDC', null ]
+7 verbose cache add name=undefined spec="UDC" args=["UDC",null]
+8 verbose parsed url { protocol: null,
+8 verbose parsed url   slashes: null,
+8 verbose parsed url   auth: null,
+8 verbose parsed url   host: null,
+8 verbose parsed url   port: null,
+8 verbose parsed url   hostname: null,
+8 verbose parsed url   hash: null,
+8 verbose parsed url   search: null,
+8 verbose parsed url   query: null,
+8 verbose parsed url   pathname: 'UDC',
+8 verbose parsed url   path: 'UDC',
+8 verbose parsed url   href: 'UDC' }
+9 silly lockFile 38d074d8-UDC UDC
+10 verbose lock UDC C:\Users\joy\AppData\Roaming\npm-cache\38d074d8-UDC.lock
+11 silly lockFile 38d074d8-UDC UDC
+12 silly lockFile 38d074d8-UDC UDC
+13 verbose addNamed [ 'UDC', '' ]
+14 verbose addNamed [ null, '*' ]
+15 silly lockFile 76898de6-UDC UDC@
+16 verbose lock UDC@ C:\Users\joy\AppData\Roaming\npm-cache\76898de6-UDC.lock
+17 silly addNameRange { name: 'UDC', range: '*', hasData: false }
+18 verbose request where is /UDC
+19 verbose request registry https://registry.npmjs.org/
+20 verbose request id d2b0ba1027400b56
+21 verbose url raw /UDC
+22 verbose url resolving [ 'https://registry.npmjs.org/', './UDC' ]
+23 verbose url resolved https://registry.npmjs.org/UDC
+24 verbose request where is https://registry.npmjs.org/UDC
+25 info trying registry request attempt 1 at 23:36:04
+26 http GET https://registry.npmjs.org/UDC
+27 http 404 https://registry.npmjs.org/UDC
+28 verbose headers { date: 'Sat, 22 Nov 2014 23:36:06 GMT',
+28 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R14B04)',
+28 verbose headers   'content-type': 'application/json',
+28 verbose headers   'cache-control': 'max-age=0',
+28 verbose headers   'content-length': '52',
+28 verbose headers   'accept-ranges': 'bytes',
+28 verbose headers   via: '1.1 varnish',
+28 verbose headers   age: '0',
+28 verbose headers   'x-served-by': 'cache-ams4143-AMS',
+28 verbose headers   'x-cache': 'MISS',
+28 verbose headers   'x-cache-hits': '0',
+28 verbose headers   'x-timer': 'S1416699366.149239,VS0,VE101',
+28 verbose headers   'keep-alive': 'timeout=10, max=50',
+28 verbose headers   connection: 'Keep-Alive' }
+29 silly registry.get cb [ 404,
+29 silly registry.get   { date: 'Sat, 22 Nov 2014 23:36:06 GMT',
+29 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R14B04)',
+29 silly registry.get     'content-type': 'application/json',
+29 silly registry.get     'cache-control': 'max-age=0',
+29 silly registry.get     'content-length': '52',
+29 silly registry.get     'accept-ranges': 'bytes',
+29 silly registry.get     via: '1.1 varnish',
+29 silly registry.get     age: '0',
+29 silly registry.get     'x-served-by': 'cache-ams4143-AMS',
+29 silly registry.get     'x-cache': 'MISS',
+29 silly registry.get     'x-cache-hits': '0',
+29 silly registry.get     'x-timer': 'S1416699366.149239,VS0,VE101',
+29 silly registry.get     'keep-alive': 'timeout=10, max=50',
+29 silly registry.get     connection: 'Keep-Alive' } ]
+30 silly lockFile 76898de6-UDC UDC@
+31 silly lockFile 76898de6-UDC UDC@
+32 error 404 404 Not Found: UDC
+32 error 404
+32 error 404 'UDC' is not in the npm registry.
+32 error 404 You should bug the author to publish it
+32 error 404
+32 error 404 Note that you can also install from a
+32 error 404 tarball, folder, or http url, or git url.
+33 error System Windows_NT 6.2.9200
+34 error command "C:\\Program Files (x86)\\nodejs\\\\node.exe" "C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "UDC"
+35 error cwd C:\LatestGit\joykrishnamondal.github.io\MarkdownDoc
+36 error node -v v0.10.32
+37 error npm -v 1.4.28
+38 error code E404
+39 verbose exit [ 1, true ]

@@ -91,7 +91,7 @@ This subtle changes in brightness that we observe in the web-cam is the source o
 
 
 
-<h2>3 Progress</h2>
+<h2>Progress</h2>
 <p>
 It has been possible to capture the feed from the web-cam. The way it has been approached is via TCP/IP sockets.
 There were many problems involving the web-cam, since it was an old web-cam drivers for it was discontinued and could not to be opened via windows 8 drivers. Because of this and many other uncertainty surrounding the hardware and software, the whole system has made very modular and separate sub-systems communicate to each other via sockets. It also helps that the method that we use talk to the robot is via TCP/IP .The ABB driver does this for us so we do not need to implement it from scratch.
@@ -104,6 +104,7 @@ There were many problems involving the web-cam, since it was an old web-cam driv
 	Since the robot is a expensive piece of equipment. We need to test it first on a platform called RobotStudio which is provided to us by ABB that acts as a virtual robot that can be used for testing and debugging purposes.
 	For the virtual robot it has been possible to send RAPID instructions from our server to the robot. The RAPID instruction will then be executed. We have not however been able to get response from our robot controller. Also we are unable to send data while RAPID execution to change the control execution dynamically.
 </p>
+
 
 
 

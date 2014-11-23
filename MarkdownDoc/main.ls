@@ -32,49 +32,8 @@ JQ.get "test.html", (doc) ->
 	app = {}
 	Signals = {}
 	Signals.OpenIndex = false
-	
-
 	Nines = CreateArray 7,0
-	
-	
-	
-	NinesCompress =->
-
-		WithNum = _.filter ((x)-> if x == 0 then false else true),Nines
-		
-		_.fold (acc,post)->
-			acc + "." + post
-		,"",WithNum
-
-	_.fold1 (pre,post) ->
-		
-
-		Last = (parseInt _.tail pre.tag) - 2
-		Next = (parseInt _.tail post.tag) - 2
-		# console.log [Last,Next]
-		if Next > Last
-			Nines[Last]++
-			SetValArray Nines,Last+1,0
-		if Last == Next
-			Nines[Last]++
-			SetValArray Nines,Last+1,0
-		if Next < Last
-			Nines[Last]++
-
-		pre.children[0] = (_.tail NinesCompress!) + " " + pre.children[0]
-		
-
-		post
-	,_.filter (x)->
-
-		test = /h[2-9]/.exec x.tag
-		
-		if test != null 
-
-			return true
-		else return false
-
-	,Mdoc
+	Nines[0] = 1
 	FindHeaders = (doc)->
 
 		listofHeaders = []
@@ -89,7 +48,6 @@ JQ.get "test.html", (doc) ->
 			if find != null
 
 				Output.name = elem.children[0]
-				elem.children[0] = m "a",(name:Output.name), Output.name
 				Output.height = find[1]
 				Output.dept = dept
 				listofHeaders.push Output
@@ -100,18 +58,13 @@ JQ.get "test.html", (doc) ->
 		_.map ((x)-> Search x,0),doc
 
 		listofHeaders
-
 	CreateHeaderM = (list)->
-
 		style =
 			"text-decoration": "none"
 			"color":"black"
-
-
 		nest = (accum,next)->
 
 			CurrentHeight = (_.last accum).height
-
 			if CurrentHeight < next.height
 				(_.last accum).kid.push next
 			else if CurrentHeight >= next.height
@@ -136,28 +89,75 @@ JQ.get "test.html", (doc) ->
 
 			First
 		Fn = (x) ->
-			# <a href="#headline1">1</a>
-			[(m "li",( m "a",(style:style,href:("#" + x.name)),x.name)),(m "ol",(_.map Fn,x.kid))]
 
+			out = [(m "li",( m "a",(style:style,href:("#" + x.name)),x.name)),(m "ol",(_.map Fn,x.kid))]
+			
+			out
 
 		_.each ((x)-> x.kid = []),list
 
 		Stuff = Recur list
 
-			# console.log E.name
-			# console.log index
-			# LastName = E.Name
-			# E.name = index + " " LastName
-
 		m "ol",(_.map Fn, Stuff)
 
+	AddReferenceToHead = (x) -> x.children[0] = m "a",(name:x.children[0]), x.children[0]
+
+	GetHeaders = (x) -> _.filter (x) ->
+
+		test = /h[2-9]/.exec x.tag
+		
+		if test != null 
+
+			return true
+		else return false
+	,x
+
+	NinesCompress =->
+
+		WithNum = _.filter ((x)-> if x == 0 then false else true),Nines
+		
+		_.fold (acc,post)->
+			acc + "." + post
+		,"",WithNum
+
+	EditName = (elem) ->
+
+		elem.children[0] = _.tail NinesCompress! + " " + elem.children[0]
+
+		elem
+
+	FoldFn = (pre,post) ->
+		
+		
+		
+		Last = (parseInt _.tail pre.tag) - 2
+		Next = (parseInt _.tail post.tag) - 2
+		if Next > Last
+			Nines[Next]++
+			SetValArray Nines,Next+1,0
+		if Last == Next
+			Nines[Last]++
+			SetValArray Nines,Last+1,0
+		if Next < Last
+			Nines[Next]++
+			SetValArray Nines,Last,0
+
+
+		EditName post
+
+		post
+
+	
+
 	IndexM = CreateHeaderM FindHeaders Mdoc
-	# FindHeaders Mdoc
+
+	Headers = GetHeaders Mdoc
+	
+	_.fold FoldFn ,(EditName _.head Headers) , _.tail Headers
+	
+	_.map AddReferenceToHead,Headers
+	
 	app.controller = ->
-
-
-	OnScroll = ->
-		m.redraw!
 
 	OnMouseClick = ->
 
@@ -172,7 +172,6 @@ JQ.get "test.html", (doc) ->
 			TM.to ElementPointers.doc, 0.5, (left:"0%","padding-right":"10%")
 			TM.to ElementPointers.Index, 0.5,(left:"-20%")
 		Signals.OpenIndex = !Signals.OpenIndex
-
 
 	FadeInTriangle = ->
 		TM.to ElementPointers.triangle,0.5,("opacity":0.5)
@@ -222,7 +221,7 @@ JQ.get "test.html", (doc) ->
 			"top":"0"
 			"left":"-20%"
 			"font-size":"10pt"
-			# "margin": "0px"
+			# "margi	n": "0px"
 			# "padding": "0px"
 			"width":"20%"
 			"height":"100%"
@@ -240,9 +239,9 @@ JQ.get "test.html", (doc) ->
 		# IndexStyle =
 			# "position":"fixed"
 			# "left":"0px"
+		# console.log Mdoc
 
 		hello = m "div",(config:config "hello"),"hello world"
-		# console.log Mdoc
 		# Doc = m "div",(config:((e)->e = ElementPointers.body)),
 
 
@@ -252,7 +251,7 @@ JQ.get "test.html", (doc) ->
 
 		html  = m "html",(style:styleMain),[head,triangleM,body,Index]
 
-		# console.log Mdoc
+
 
 		html
 

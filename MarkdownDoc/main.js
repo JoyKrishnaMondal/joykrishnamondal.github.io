@@ -29,51 +29,13 @@
     return Ob;
   };
   JQ.get("test.html", function(doc){
-    var Mdoc, app, Signals, Nines, NinesCompress, FindHeaders, CreateHeaderM, IndexM, OnScroll, OnMouseClick, FadeInTriangle, FadeOutTriangle;
+    var Mdoc, app, Signals, Nines, FindHeaders, CreateHeaderM, AddReferenceToHead, GetHeaders, NinesCompress, EditName, FoldFn, IndexM, Headers, OnMouseClick, FadeInTriangle, FadeOutTriangle;
     Mdoc = eval(tempConv.Template(doc).toString());
     app = {};
     Signals = {};
     Signals.OpenIndex = false;
     Nines = CreateArray(7, 0);
-    NinesCompress = function(){
-      var WithNum;
-      WithNum = _.filter(function(x){
-        if (x === 0) {
-          return false;
-        } else {
-          return true;
-        }
-      }, Nines);
-      return _.fold(function(acc, post){
-        return acc + "." + post;
-      }, "", WithNum);
-    };
-    _.fold1(function(pre, post){
-      var Last, Next;
-      Last = parseInt(_.tail(pre.tag)) - 2;
-      Next = parseInt(_.tail(post.tag)) - 2;
-      if (Next > Last) {
-        Nines[Last]++;
-        SetValArray(Nines, Last + 1, 0);
-      }
-      if (Last === Next) {
-        Nines[Last]++;
-        SetValArray(Nines, Last + 1, 0);
-      }
-      if (Next < Last) {
-        Nines[Last]++;
-      }
-      pre.children[0] = _.tail(NinesCompress()) + " " + pre.children[0];
-      return post;
-    }, _.filter(function(x){
-      var test;
-      test = /h[2-9]/.exec(x.tag);
-      if (test !== null) {
-        return true;
-      } else {
-        return false;
-      }
-    }, Mdoc));
+    Nines[0] = 1;
     FindHeaders = function(doc){
       var listofHeaders, Output, Search;
       listofHeaders = [];
@@ -87,9 +49,6 @@
         find = /h([2-9])/.exec(elem.tag);
         if (find !== null) {
           Output.name = elem.children[0];
-          elem.children[0] = m("a", {
-            name: Output.name
-          }, Output.name);
           Output.height = find[1];
           Output.dept = dept;
           return listofHeaders.push(Output);
@@ -137,12 +96,14 @@
         return First;
       };
       Fn = function(x){
-        return [
+        var out;
+        out = [
           m("li", m("a", {
             style: style,
             href: "#" + x.name
           }, x.name)), m("ol", _.map(Fn, x.kid))
         ];
+        return out;
       };
       _.each(function(x){
         return x.kid = [];
@@ -150,11 +111,63 @@
       Stuff = Recur(list);
       return m("ol", _.map(Fn, Stuff));
     };
-    IndexM = CreateHeaderM(FindHeaders(Mdoc));
-    app.controller = function(){};
-    OnScroll = function(){
-      return m.redraw();
+    AddReferenceToHead = function(x){
+      return x.children[0] = m("a", {
+        name: x.children[0]
+      }, x.children[0]);
     };
+    GetHeaders = function(x){
+      return _.filter(function(x){
+        var test;
+        test = /h[2-9]/.exec(x.tag);
+        if (test !== null) {
+          return true;
+        } else {
+          return false;
+        }
+      }, x);
+    };
+    NinesCompress = function(){
+      var WithNum;
+      WithNum = _.filter(function(x){
+        if (x === 0) {
+          return false;
+        } else {
+          return true;
+        }
+      }, Nines);
+      return _.fold(function(acc, post){
+        return acc + "." + post;
+      }, "", WithNum);
+    };
+    EditName = function(elem){
+      elem.children[0] = _.tail(NinesCompress() + " " + elem.children[0]);
+      return elem;
+    };
+    FoldFn = function(pre, post){
+      var Last, Next;
+      Last = parseInt(_.tail(pre.tag)) - 2;
+      Next = parseInt(_.tail(post.tag)) - 2;
+      if (Next > Last) {
+        Nines[Next]++;
+        SetValArray(Nines, Next + 1, 0);
+      }
+      if (Last === Next) {
+        Nines[Last]++;
+        SetValArray(Nines, Last + 1, 0);
+      }
+      if (Next < Last) {
+        Nines[Next]++;
+        SetValArray(Nines, Last, 0);
+      }
+      EditName(post);
+      return post;
+    };
+    IndexM = CreateHeaderM(FindHeaders(Mdoc));
+    Headers = GetHeaders(Mdoc);
+    _.fold(FoldFn, EditName(_.head(Headers)), _.tail(Headers));
+    _.map(AddReferenceToHead, Headers);
+    app.controller = function(){};
     OnMouseClick = function(){
       if (Signals.OpenIndex === false) {
         TM.to(ElementPointers.triangle, 0.5, {

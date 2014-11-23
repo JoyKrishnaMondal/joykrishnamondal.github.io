@@ -11,5 +11,6 @@ H.JQ = (require "jquery")
 H.TM = require "./TweenMax.min.js"
 H.tempConv = require "./template-converter.js"
 H.__ = (require "underscore")
+H.udc = require "udc"
 
 module.exports = H
