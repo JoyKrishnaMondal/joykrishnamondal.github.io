@@ -2,7 +2,6 @@
 (function(){
   var ref$, io, JQ, tempConv, _, TM, move, __, log, CreateArray, SetValArray, ElementPointers, config;
   ref$ = require("./headers.js"), io = ref$.io, JQ = ref$.JQ, tempConv = ref$.tempConv, _ = ref$._, TM = ref$.TM, move = ref$.move, __ = ref$.__;
-  console.log("hello");
   log = function(X){
     return console.log(JSON.parse(JSON.stringify(X)));
   };
@@ -65,7 +64,7 @@
       return listofHeaders;
     };
     CreateHeaderM = function(list){
-      var style, nest, RunForEachKid, Recur, Fn, Stuff;
+      var style, nest, RunForEachKid, Recur, Fn, Stuff, topCSS;
       style = {
         "text-decoration": "none",
         "color": "black"
@@ -96,13 +95,22 @@
         _.each(Second, First);
         return First;
       };
-      Fn = function(x){
-        var out;
+      Fn = function(x, dept){
+        var indent, out;
+        indent = {
+          "text-decoration": "none",
+          "padding": "1%",
+          "padding-left": "5%"
+        };
         out = [
-          m("li", m("a", {
+          m("li", {
+            style: indent
+          }, m("a", {
             style: style,
             href: "#" + x.name
-          }, x.name)), m("ol", _.map(Fn, x.kid))
+          }, x.name)), m("ol", {
+            style: indent
+          }, _.map(Fn, x.kid))
         ];
         return out;
       };
@@ -110,7 +118,13 @@
         return x.kid = [];
       }, list);
       Stuff = Recur(list);
-      return m("ol", _.map(Fn, Stuff));
+      topCSS = {
+        "left": "-20px",
+        "margin-left": "2%"
+      };
+      return m("ol", {
+        style: topCSS
+      }, _.map(Fn, Stuff));
     };
     AddReferenceToHead = function(x){
       return x.children[0] = m("a", {

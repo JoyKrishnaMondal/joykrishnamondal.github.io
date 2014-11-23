@@ -1,14 +1,14 @@
 
 {io,JQ,tempConv,_,TM,move,__} = require "./headers.js"
 
-console.log "hello"
+
 
 #mithril exposed as m
 log = (X) -> console.log(JSON.parse(JSON.stringify(X)))
 
-CreateArray = (size,val= 0) -> 
+CreateArray = (size,val= 0) ->
 	Arr = []
-	
+
 	for I from 0 to (size - 2)
 		Arr.push(val)
 
@@ -20,7 +20,6 @@ SetValArray = (list,index,val)->
 	for I in ( __.range index,list.length )
 		list[I] = val
 	list
-
 
 ElementPointers = {}
 
@@ -63,6 +62,7 @@ JQ.get "test.html", (doc) ->
 		style =
 			"text-decoration": "none"
 			"color":"black"
+
 		nest = (accum,next)->
 
 			CurrentHeight = (_.last accum).height
@@ -89,25 +89,33 @@ JQ.get "test.html", (doc) ->
 			_.each Second,First
 
 			First
-		Fn = (x) ->
+		Fn = (x,dept) ->
+			indent =
+				"text-decoration":"none"
+				"padding":"1%"
+				"padding-left":"5%"
+			out = [(m "li",(style:indent),( m "a",(style:style,href:("#" + x.name)),x.name)),(m "ol",(style:indent),(_.map Fn,x.kid))]
 
-			out = [(m "li",( m "a",(style:style,href:("#" + x.name)),x.name)),(m "ol",(_.map Fn,x.kid))]
-			
 			out
 
 		_.each ((x)-> x.kid = []),list
 
 		Stuff = Recur list
+		topCSS =
+			"left":"-20px"
+			"margin-left":"2%"
+			# "text-decoration":"underline"
 
-		m "ol",(_.map Fn, Stuff)
+
+		m "ol",(style:topCSS),(_.map Fn, Stuff)
 
 	AddReferenceToHead = (x) -> x.children[0] = m "a",(name:x.children[0]), x.children[0]
 
 	GetHeaders = (x) -> _.filter (x) ->
 
 		test = /h[2-9]/.exec x.tag
-		
-		if test != null 
+
+		if test != null
 
 			return true
 		else return false
@@ -116,7 +124,7 @@ JQ.get "test.html", (doc) ->
 	NinesCompress =->
 
 		WithNum = _.filter ((x)-> if x == 0 then false else true),Nines
-		
+
 		_.fold (acc,post)->
 			acc + "." + post
 		,"",WithNum
@@ -128,9 +136,7 @@ JQ.get "test.html", (doc) ->
 		elem
 
 	FoldFn = (pre,post) ->
-		
-		
-		
+
 		Last = (parseInt _.tail pre.tag) - 2
 		Next = (parseInt _.tail post.tag) - 2
 		if Next > Last
@@ -143,21 +149,18 @@ JQ.get "test.html", (doc) ->
 			Nines[Next]++
 			SetValArray Nines,Last,0
 
-
 		EditName post
 
 		post
 
-	
-
 	IndexM = CreateHeaderM FindHeaders Mdoc
 
 	Headers = GetHeaders Mdoc
-	
+
 	_.fold FoldFn ,(EditName _.head Headers) , _.tail Headers
-	
+
 	_.map AddReferenceToHead,Headers
-	
+
 	app.controller = ->
 
 	OnMouseClick = ->
@@ -181,7 +184,7 @@ JQ.get "test.html", (doc) ->
 		TM.to ElementPointers.triangle,0.5,("opacity":0.1)
 
 	app.view = (ctrl) ->
-		
+
 		CMUN = m "link",(rel:"stylesheet" href: "Serif/cmun-serif.css")
 		head = m "head",[CMUN]
 
@@ -222,8 +225,6 @@ JQ.get "test.html", (doc) ->
 			"top":"0"
 			"left":"-20%"
 			"font-size":"10pt"
-			# "margi	n": "0px"
-			# "padding": "0px"
 			"width":"20%"
 			"height":"100%"
 			"-webkit-transform": "translateZ(0)"
