@@ -1,0 +1,195 @@
+
+<h1 align = "center">Abatement Potential of ICT on Climate Change</h1>
+<div align="center">Joy Krishna Mondal </div>
+<div align = "center">
+	jm12752@my.bristol.ac.uk
+</div>
+
+<h2>Introduction</h2>
+<p>
+	Computers and all the things that have branched out its invention - Information Technology, PC,internet,smartphones,etc - have and has been one of the most revolutionary enablers in modern times. It has been used as a tool exponentially increase the capacity for humans to be productive, network, and learn resulting in massive increase in wealth, knowledge and living standards across the globe in both poor and rich nations <cite>reduce</cite><cite>reduce1</cite>. <!-- There has been many important events throughout history, and it can be argued for any-one of those events to be the most crucial event for humanity - fall of the roman empire, rise of the Mongols, European Imperialism, World War 1, World War 2, etc - but none of them from empirical data show any significant inflection point to be considered any different. The only data point that lead to the direct permanent change in the human condition was the invention of the steam engine. It significantly enhanced our capacity to move things from point A to point B which was previously done by our muscles. Similarly computers allow us to automate tasks that were previously done by our brain muscles, it will be difficult to state that this piece of technology is not at par with that of the steam engine when it comes to improving the human condition. -->
+</p>
+<p>
+	At the time of this writing it seems we are living in an era of abundance but the reality is that this abundance is created at the great cost to our environment <cite>globalWarming</cite>, and the abundance is also not shared with half of the world's humans population <cite>gini</cite>, who along with the rest of the animal <cite>animal</cite> and plant kingdom invariantly pay the most price for its destruction <cite>proverty</cite><cite>proverty1</cite>.
+</p>
+
+<p>
+	Computers and its derivative technologies specifically ICT can greatly help us if we are to combat the problem of both anthropogenic climate change, and the general lack of accountability and awareness about it. It needs to be noted that in some specific cases ICT  might have <b>exacerbated</b> the problem <cite>paper</cite> however the positive effects outweighs the negative ones by orders of magnitude. The point I am making is that ICT is just a tool, and if not managed well can result in undesirable outcome.
+</p>
+
+<p>
+	Thus this report is created with the goal of allowing policy makers to make the right decisions when it comes to dealing with ICT in a way to maximize the benefit it would provide in the context of combating the problem of climate change. We reach this goal by first raising awareness on the latest development and future trends in ICT that would have significant impact on CO<sub>2</sub> emissions, after which we suggest suitable policies that could be adopted. We base our report heavily on the Smarter2020 report <cite>smarter2020</cite> and using their format call each development of interest in ICT a <b>sublever</b>.
+</p>
+<p>We analyze each sublever in great detail starting from the main assumptions that was done in the SMARTer2020 report <cite>smarter2020</cite>  for each sublever, to understanding their analysis and the conclusions they have drawn from it. We then make a subjective judgment regarding the validity of their conclusions from their assumptions and analysis. We also if possible try to improve upon the models created in the SMARTer2020 report <cite>smarter2020</cite>.
+</p>
+
+
+<h2>Sublevers</h2>
+<h3>Calculating Abatement Potential</h3>
+<p>
+	All sublevers in the SMARTer2020 report <cite>smarter2020</cite> use a common model for calculating abatement potential
+</p>
+<equ name = "main">
+	y = \\alpha  x
+</equ>
+Where
+<ul>
+	<li><equin>y</equin> is the abatement potential in units of GtCO<sub>2</sub>e.</li>
+	<li><equin>x</equin> is the addressable emissions in units of GtCO<sub>2</sub>e.</li>
+	<li><equin>\\alpha</equin> is the saving potential as a percentage.</li>
+</ul>
+
+The way this calculation is done is fairly transparent in the SMARTer2020 report <cite>smarter2020</cite> however they have not specified how they got the values for <equin>x</equin> and <equin>\\alpha</equin> in their report. For some sublevers it has been possible to find the values for <equin>x</equin>, <equin>\\alpha</equin> or both given the source.
+
+
+<h3>E-Commerce</h3>
+<p>
+	E-commerce has been the most serious businesses built on top of the Internet. Its adoption has been widely welcomed by the public in Europe and North America. Over the last decade companies like Amazon went from being just a simple on-line bookstore to having revenue comparable to the top retailers world-wide  <cite>amazon</cite> <cite>retail</cite>.
+</p>
+<h4>Calculating Abatement potential from the SMARTer2020 report </h4>
+<p>
+	The SMARTer2020 report gives us an abatement potential of 0.09 GtCO<sub>2</sub>e which they have calculated using equation <equref>main</equref>
+	however it has not been possible to track down how they have modeled the values of both <equin>x</equin> and <equin>\\alpha</equin> which they have assumed to be 1.14 and 7.5% respectively. They have provided us with two sources:
+	<ol>
+	<li>
+	The first one <cite>wallstreet</cite> is a blog post by an author who is a sports reporter <cite>sportsreport</cite> where he does not directly link to the source of his information, he only vaguely states that his numbers are sources from a firm called forrester research. From the Forester website it seems that they have published two reports <cite>forest1</cite> <cite>forest2</cite> which the author <i>might</i> have used. The two reports also are behind a paywall of unreasonable cost ( $2495 and $499 respectively ). In anycase <i>even</i> if we do get access to the reports, they only forcast e-commerce growth in the United States and Europe. The SMARTer2020 report values are supposed to predict the abatement potential <b>globally</b>. How they have projected or mapped the values from their sources is unclear.
+	</li>
+	<li>
+		For the second source they have only pointed us to IEA with no link to the exact IEA source. The IEA has however published a data book containing their recoding of global CO<sub>2</sub> emission for the year 2013 <cite>IEA</cite> which <i>might</i> have been used. This source gives us the breakdown of CO<sub>2</sub> emission by sectors, however the sectors are really broad - industry, electricity and heat, transport, residential and others. E-commerce does not fit eaisly in any of these categories and can be assumed to create overlaps, as we will say later using our Life-Cycle Assesment model below.
+	</li>
+	</ol>
+</p>
+<p>
+<h4>Calculating Abatement potential using Life Cycle Assesment</h4>
+	The effect of e-commerce on reducing CO<sub>2</sub> emission has been studied using Life Cycle Assessment <cite>lca</cite>. The conclusion from the study done tells us on average there is a 30% reduction in CO<sub>2</sub> emission compared to traditional retail store. The study uses Monte Carlo simulation using scenario analysis for their model.
+</p>
+<center>
+	<figure>
+  <img style = "width:70%;" src="/images/last_mile.jpg">
+  <figcaption caption = "lastmile" >Stacked Bar Chart showing  the different sources of carbon-di-oxide emission when shopping in a traditional retail store verses ordering from an on-line retailer <cite>lca</cite></figcaption>
+</figure>
+</center>
+
+<p>
+	<ImageRef>lastmile</ImageRef> taken from their study is an interesting graph to study. It tells us some important facts:
+</p>
+<ol>
+	<li>
+		Last Mile Delivery creates significantly less CO<sub>2</sub>e emission compared to Customer Transport - by about 1.35 Kg/item. This means just by switching to an online retailer we reduce our CO<sub>2</sub>e emission by a significant margin.
+</li>
+	<li>
+	 A fair assumption can be made that last mile delivery and warehousing for e-commerce are all linearly related to the distance between the customer and warehouse. So the model does suggest that the <b>best</b> way to reduce CO<sub>2</sub>e emissions further than that offered by just switching to e-commerce would be to reduce the CO<sub>2</sub>e emissions from road transportation in general. What this means from a public policy perspective is that the best way to help e-commerce companies  reduce their emissions would be to invest in energy efficiency in cars or to design cities with more concentrate logistics cores, verses investing in making data centers more energy efficient as it only accounts for a much smaller part of their overall  CO<sub>2</sub>e emissions.
+	</li>
+	<li>
+		The model has a large variance because its impossible to predict what a customer might buy, increasing the uncertainty of our model, but we can make a fair assumption that for large enough sample size the variance would cancel out errors, thus as e-commerce becomes more widely adopted this model would get more accurate, which is not the case for many models that use an empirical datasets or top-down approach for finding their abatement potential as it is only accurate for past trends.
+	</li>
+</ol>
+</p>
+
+<script>
+	
+</script>
+<p>
+The IEA handbook gives us an estimate for global CO<sub>2</sub> emission at 3.13423   GtCO<sub>2</sub>e <cite>IEA</cite>.
+We can make a fairly good assumption that this emission is created due to the sum of all economical activity. OECD has defined GDP as a measure for economical activity within a country or region <cite>GDP</cite>. From the CIA factbook we get the global GDP at $84.97 trillion. We also have data on the relative growth of E-Commerce in the past 10 years
+</p>
+
+<chart>COe</chart>
+
+<p> Our calulations however has a lot of uncertainity associated with it:
+<ol>
+	<li>
+	E-commerce and retail are both growing industries. Both are competing in unique and similar markets , for which we do not have much data, making it non-trivial to state that all e-commerce growth is taking value out of retail. To put it fundamentally, we cannot model the markets as a zero-sum game
+	</li>
+	<li>
+	The saving potential of e-commerce vs retail we have extracted from the life-cylce assement is based on electronic items and not on other items. We have assumed that this saving would map linearly to other items which will not always be true.
+	</li>
+</ol>
+<center>
+	<figure>
+  <img style = "width:70%;" src="/images/ecommercegrowth.jpg">
+  <figcaption caption = "ecommercegrowth" > This graph shows the projected growth rate for e-commerce sales worldwide</figcaption>
+</figure>
+</center>
+We can apply simple linear regression to predict the overall sales
+<h2>Conclusion</h2>
+
+<center>
+	<figure>
+  <img style = "width:65%;" src="/images/earth-full-view.jpg">
+  <figcaption caption = "EarthImage" > The Blue Marble <cite>blue</cite> </figcaption>
+</figure>
+</center>
+<p>
+	 <ImageRef>EarthImage</ImageRef>  is an iconic picture published during the 1980s  which captures the essence of what it would require to solve the complex problem of climate change. It makes it apparent to the fact that their are no border between countries, It also captures the fact that every human regardless of social or economic status is enclosed in a shared 3D sphere.
+</p><p>
+	Climate change is a problem that cannot be solved by one individual, nation or even a sub-collection of nations. It requires active participation at every level of human organization. The fastest way to get there in my opinion is just awareness to the fact that the conditions and actions of every one of us has a direct effect on the rest of us. From the reference frame of <ImageRef>EarthImage</ImageRef>  the earth looks more like a fragile spaceship, and as far as our knowledge goes there is nothing similar to it for trillions of miles around us that we can just "relocate" to if things do not work out.
+</p>
+
+
+<h2>References</h2>
+<p>All references were accessed last on 15th December 2014</p>
+<References>
+	<ol>
+		<li tag = "lca" href = "http://www.ce.cmu.edu/~greendesign/research/Buy_com_report_final_030209.pdf">
+			Life Cycle Comparison of Traditional Retail and E-commerce Logistics for Electronic Products: A Case Study of buy.com, March 8, 2011
+		</li>
+		<li tag = "amazon" href = "https://www.google.com/finance?q=NASDAQ:AMZN&fstype=ii&ei=6jMJUaCeKoOckAWR1AE">
+			"Financial Statements of Amazon"
+		</li>
+		<li tag = "retail" href = "https://nrf.com/news/global/global-powers-of-retailing-top-250-highlights-1">
+			 "2013 Top 250 Global Retailers"
+		</li>
+		<li tag = "gini" href = "ftp://ftp.fao.org/docrep/fao/012/ak968e/ak968e00.pdf">
+			Evan Hillebrand (June 2009). "Poverty, Growth, and Inequality over the Next 50 Years" , United Nations – Economic and Social Development Department.
+		</li>
+		<li tag = "reduce" href = "http://eprints.lse.ac.uk/2179/1/Geography_and_International_Inequalities_the_Impact_of_New_Technologies.pdf">
+			Geography and International Inequalities: the Impact of New Technologies Anthony J. Venables,September 2001
+		</li>
+		<li tag = "reduce1" href = "http://www.w3.org/2008/02/MS4D_WS/papers/position_paper-diga-2008pdf.pdf">
+			Mobile Cell Phones and Poverty Reduction: Technology Spending Patterns and Poverty Level Change among Households in Uganda, Ms Kathleen Diga, M.Dev, B.Comm , International Development Research Centre - April 2008.
+		</li>
+		<li tag = "globalWarming" href = "http://www.aaas.org/sites/default/files/content_files/1021climate_letter.pdf">
+			 Joint-statement on climate change by leaders of 18 scientific organizations , Washington DC, USA: American Association for the Advancement of Science, October 21, 2009.
+		</li>
+		<li tag = "proverty" href = "http://www.wwf.org.uk/what_we_do/making_the_links/climate_change_and_poverty">
+				Climate change and poverty
+		</li>
+		<li href = "http://www.oecd.org/env/cc/2502872.pdf" tag ="proverty1">
+			Poverty and Climate Change , Reducing the Vulnerability of the Poor through Adaptation </li>
+		<li href = "http://www.nature.com/nature/journal/v427/n6970/abs/nature02121.html" tag="animal">
+			Extinction risk from climate change - www.Nature.com
+		</li>
+		<li tag  = "paper" href = "http://www.pbs.org/mediashift/2010/03/is-digital-media-worse-for-the-environment-than-print090/" >
+			"Is Digital Media Worse for the Environment Than Print ? " - March 2010
+		</li>
+		<li tag = "smarter2020"  href = "http://gesi.org/SMARTer2020">
+			"GeSI SMARTer2020: The Role of ICT in Driving a Sustainable Future" - 2014
+		</li>
+		<li tag = "blue" href = "http://www.nasa.gov/images/content/115334main_image_feature_329_ys_full.jpg">
+			Photograph of the Earth, taken on December 7, 1972, by the crew of the Apollo 17 spacecraft, at a distance of about 45,000 kilometers published by NASA.
+		</li>
+		<li tag = "wallstreet" href = "http://blogs.wsj.com/digits/2011/02/27/e-commerce-will-keep-rolling-research-firm-says">
+			"E-commerce Will Keep Rolling, Research Firm Says"
+		</li>
+		<li tag ="sportsreport" href = "http://www.wsj.com/news/author/5578">
+		Stu Woo Reporter biography, The Wall Street Journal.
+		</li>
+		<li tag = "forest1" href = "https://www.forrester.com/Data+Essentials+US+Retail/fulltext/-/E-RES56552">
+			"Data Essentials: US Retail – A Social Computing Report"
+		</li>
+		<li tag = "forest2" href = "https://www.forrester.com/Key+Sources+For+B2B+eCommerce+Benchmarking+Data/fulltext/-/E-RES100461">
+			"Key Sources For B2B eCommerce Benchmarking Data"
+		</li>
+		<li tag = "IEA" href = "http://www.iea.org/publications/freepublications/publication/co2emissionsfromfuelcombustionhighlights2013.pdf">
+			CO <sub>2</sub>  emissions from fuel combustion highlights 2013 publsihed by IEA
+		</li>
+		<li tag = "CIAFactbook" href = "https://www.cia.gov/library/publications/download/download-2013/index.html">
+			 CIA World Factbook  ISB - 1553-8133
+		</li>
+		<li tag = "GDP" href = "http://stats.oecd.org/glossary/detail.asp?ID=1163">
+			"Glossary of Stastical Terms" by OECD
+		</li>
+		<li>
+		</ol>
+</References>

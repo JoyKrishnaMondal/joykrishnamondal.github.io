@@ -1,0 +1,101 @@
+
+<h1 align = "center">Non-Linear Dynamics and Chaos Coursework</h1>
+<div align="center">Joy Krishna Mondal </div>
+<div align = "center">
+	jm12752@my.bristol.ac.uk
+</div>
+
+<h2>Introduction</h2>
+<p>
+For this coursework we are investigating the dynamics of Aero-elastic flutter. Specefiting we are trying to locate the bifurcations that happens as flow speed <equin>U</equin>  which corrosponds to the speed of the plane is increased.
+We Also investigate how different pitch stiffeness changes the flow speed at which bifurcation occurs.
+We have been already provide with two 2<sup>nd</sup> Order Sets of equation. It might be helpful to first rewrite this equation in matrix form.
+</p>
+
+<equ name = "main">M \\ddot{q} + C \\dot{q} + Kq + N(q) = 0 </equ>
+<br>
+<equ name = "matrix">M [\\ddot{h},\\ddot{\\alpha}]^{T} + C [\\dot{h},\\dot{\\alpha}]^{T} + K[{h},{\\alpha}]^{T} + N([0,k_{\\alpha_{1}}\\alpha^2 +k_{\\alpha_{2}}\\alpha^3]^{T}) = 0 </equ>
+<br>
+
+<p>Since <equin>\\ddot{q}</equin> and <equin>\\dot{q}</equin> represet the linear and rotational velocties and acceleration.
+They tend to zero at equilbirum point hence the equation can be simplified to:</p>
+<equ > K[{h},{\\alpha}]^{T} + N([0,k_{\\alpha_{1}}\\alpha^2 +k_{\\alpha_{2}}\\alpha^3]^{T}) = 0 </equ>
+<p>Finding the roots of the derivatives of this will give the equilibrium point, in other words we will get the point of 0 displacement. For 2D systems this means finding the determinant of the jacobian matrix. </p>
+<!-- <p>For state space form we replace the variables <equin>h</equin> with h</p> -->
+
+<h2>Effect on bifurcation by varying Speed Flow</h2>
+<h3>Finding the jacobian matrix</h3>
+<p>
+We can find the jacobian matrix by first expressing each of our equations as  <equin>F_n</equin> where <equin>n</equin> is the row number of our matrix. </p>
+<equ>F_{1} = k_{{w}_{0}}h + 2 \\pi \\rho h U \\alpha  </equ>
+<br>
+<equ>F_{2} =\\alpha k_{{\\alpha}_{0}} - 2 \\pi \\alpha^{2}(0.5 + a)\\rho b^2 U^2
+- k_{\\alpha_{1}} {\\alpha}^{2} - k_{\\alpha_{2}} {\\alpha}^{3}    </equ>
+<br>
+<p>Finding the partial derivitives</p>
+<equ>\\frac{\\partial F_{1}}{\\partial h} = k_{{w}_{0}}</equ>
+<br>
+<equ>\\frac{\\partial F_{1}}{\\partial \\alpha} = 2 \\pi \\rho  U </equ>
+
+<p><equin>\\frac{\\partial F_{2}}{\\partial h} </equin> is 0</p>
+<equ>\\frac{\\partial F_{2}}{\\partial \\alpha}  =k_{{\\alpha}_{0}} - 4 \\pi \\alpha (0.5 + a)\\rho b^2 U^2
+-2k_{\\alpha_{1}} {\\alpha} - 3k_{\\alpha_{2}} {\\alpha}^{2}
+</equ>
+<br>
+<p>
+	From the parameters values given to us we notice that <equin>a</equin> is -0.5 which given the above equation means further simplification of <equin>\\frac{\\partial F_{2}}{\\partial \\alpha}</equin> to:
+</p>
+<equ>
+	\\frac{\\partial F_{2}}{\\partial \\alpha}  =k_{{\\alpha}_{0}} -2k_{\\alpha_{1}} {\\alpha} - 3k_{\\alpha_{2}} {\\alpha}^{2}
+</equ>
+
+<p>
+	We notice something interesting here, the partial deveritive of <equin>\\frac{\\partial F_{2}}{\\partial \\alpha}</equin> is <b>not</b> dependent on either h or U.
+</p>
+<p>	Using equation (5) we managed to find the trival solution which is a value of <equin>\\alpha</equin> to be zero. The jacobian wasn't helpful in determing any good equilibrium points from the technqiue used above</p>
+
+<p>By ploting <equi>\\alpha</equi> and <equi>\\h</equi>  against <equi>\\t</equi> we managed to get an indication at to the type of bifurcation we were dealing with</p>
+<figure>
+<center><img style = "width:70%;" src="/images/U0.jpg"></center>
+</figure>
+<p>What this figures tells us that the motion of the wing is osillatory , dynamics such as this occurs when we have hopf bifurcation</p>
+<h3>Using MATLAB to determine the eigenvalues</h3>
+
+<p>By using MATLAB we were able to plot all thr eigenvalues for the linearized system for values of U from 0 to 50</p>
+
+<figure>
+<center><img style = "width:70%;" src="/images/eigenvalue.jpg"></center>
+</figure>
+
+<p>It is hard to see what is going on based on this figure however by analysing each values of flow speed through trail and error we were able to see that the eigenvalues crosses the real-axis at values of U between 14 and 15, in the figure below I have used a arror to show the direction of the eigenvalue movement, It can be seen that the eigenvalues that are crossing the imaginary axis are a pair of complex conjugate eigenvalue, this is also charecteristic of hofp bifurcation. </p>
+
+<figure>
+<center><img style = "width:70%;" src="/images/witharrow.jpg"></center>
+</figure>
+<p> The only question that is remaining to answer is is the hofman bifurcation is sub- or super critical. One thing we can study from the eigenvalue plot is that the rate at which the eigenvalue is approached is very slow, indicating a spiral downward trejectory from the limit cycle.</p>
+<p>
+	If we take values which really far away from the equilibirum we notice that the equation tends to very quickly converge to the limit cycle , this strongly indicates that we are dealing with a super critial hoftman bifurcation.
+</p>
+<h2>Analysing the effects of <equin>k_{{\\alpha}_{1}}</equin> on the system</h2>
+
+<p>
+Recalculating the equilibrium points for <equin>k_{{\\alpha}_{1}}</equin> = 20 gives us complex number just like we got previously. The only solution is at <equin>k_{{\\alpha}_{1}}</equin> = 0 which is the trivial solution as previously.
+</p>
+
+<p>
+	The question remains what happens when we increase <equin>k_{{\\alpha}_{1}}</equin> further
+</p>
+<equ>
+	f = k_{{\\alpha}_{1}}^{2}  - 4 k_{{\\alpha}_{2}}^{2} k_{{\\alpha}_{0}}
+</equ>
+<p>
+	is the charecteristic equation for our system, at <equin>k_{{\\alpha}_{1}}^{2} > 4 k_{{\\alpha}_{2}}^{2} k_{{\\alpha}_{0}}  </equin>  w should have real values for our equation thus giving us three equilibirum points including the trival one.
+	By solving this equation we get a value of 20.07924. This would the value at which we go from having one solution to three solutions. To make it easier for us to analyse the bifurcation as each of these points I have taken a arbitary large value of <equin>k_{{\\alpha}_{1}}</equin>. I have choosen a value of 30. Which gives me equilibriums at -412.07 and -435.73. The next thing to do would be find the values of <i>h</i> for our <equin>k_{{\\alpha}_{1}}</equin> values.
+</p>
+<p>
+	For considereing the effects of <equin>k_{{\\alpha}_{1}}</equin> we need to take into the account the non-linear term too since <equin>k_{{\\alpha}_{1}}</equin> only exists in the non-linear part. However we can linearilze it by getting rid of the powers of terms of <equin>{{\\alpha}}</equin> and rearraging the equations in our state state form to take that into account. After that we could replot the eigenvalues for each of the other two equilibrium points for  <equin>k_{{\\alpha}_{1}}</equin> to determine the type of bifurcation we can expect for having  <equin>k_{{\\alpha}_{1}}</equin> greater than 20.
+</p>
+
+
+
+<!-- <equ name = "main">M [\\ddot{ \\alp	ha },\\ddot{q}]^{T} + C \\dot{q} + Kq + N(q) = 0 </equ> -->
