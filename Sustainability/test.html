@@ -4,6 +4,9 @@
 <div align = "center">
 	jm12752@my.bristol.ac.uk
 </div>
+<div  align = "center">
+	Use link for references "http://joykrishnamondal.github.io/Sustainability/index.html"</a>
+</div>
 
 <h2>Introduction</h2>
 <p>
@@ -32,6 +35,7 @@
 <equ name = "main">
 	y = \\alpha  x
 </equ>
+<p>
 Where
 <ul>
 	<li><equin>y</equin> is the abatement potential in units of GtCO<sub>2</sub>e.</li>
@@ -40,9 +44,10 @@ Where
 </ul>
 
 The way this calculation is done is fairly transparent in the SMARTer2020 report <cite>smarter2020</cite> however they have not specified how they got the values for <equin>x</equin> and <equin>\\alpha</equin> in their report. For some sublevers it has been possible to find the values for <equin>x</equin>, <equin>\\alpha</equin> or both given the source.
-
+</p>
 
 <h3>E-Commerce</h3>
+<div>
 <p>
 	E-commerce has been the most serious businesses built on top of the Internet. Its adoption has been widely welcomed by the public in Europe and North America. Over the last decade companies like Amazon went from being just a simple on-line bookstore to having revenue comparable to the top retailers world-wide  <cite>amazon</cite> <cite>retail</cite>.
 </p>
@@ -52,7 +57,7 @@ The way this calculation is done is fairly transparent in the SMARTer2020 report
 	however it has not been possible to track down how they have modeled the values of both <equin>x</equin> and <equin>\\alpha</equin> which they have assumed to be 1.14 and 7.5% respectively. They have provided us with two sources:
 	<ol>
 	<li>
-	The first one <cite>wallstreet</cite> is a blog post by an author who is a sports reporter <cite>sportsreport</cite> where he does not directly link to the source of his information, he only vaguely states that his numbers are sources from a firm called forrester research. From the Forester website it seems that they have published two reports <cite>forest1</cite> <cite>forest2</cite> which the author <i>might</i> have used. The two reports also are behind a paywall of unreasonable cost ( $2495 and $499 respectively ). In anycase <i>even</i> if we do get access to the reports, they only forcast e-commerce growth in the United States and Europe. The SMARTer2020 report values are supposed to predict the abatement potential <b>globally</b>. How they have projected or mapped the values from their sources is unclear.
+	The first one <cite>wallstreet</cite> is a blog post by an author who is a sports reporter <cite>sportsreport</cite> where he does not directly link to the source of his information, he only vaguely states that his numbers are sources from a firm called forrester research. From the Forester website it seems that they have published two reports <cite>forest1</cite> <cite>forest2</cite> which the author <i>might</i> have used. The two reports also are behind a paywall of unreasonable cost ( $2495 and $499 respectively ). In anycase <i>even</i> if we do get access to the reports, they only forecast e-commerce growth in the United States and Europe. The SMARTer2020 report values are supposed to predict the abatement potential <b>globally</b>. How they have projected or mapped the values from their sources is unclear.
 	</li>
 	<li>
 		For the second source they have only pointed us to IEA with no link to the exact IEA source. The IEA has however published a data book containing their recoding of global CO<sub>2</sub> emission for the year 2013 <cite>IEA</cite> which <i>might</i> have been used. This source gives us the breakdown of CO<sub>2</sub> emission by sectors, however the sectors are really broad - industry, electricity and heat, transport, residential and others. E-commerce does not fit eaisly in any of these categories and can be assumed to create overlaps, as we will say later using our Life-Cycle Assesment model below.
@@ -87,33 +92,162 @@ The way this calculation is done is fairly transparent in the SMARTer2020 report
 </p>
 
 <script>
-	
+
 </script>
 <p>
 The IEA handbook gives us an estimate for global CO<sub>2</sub> emission at 3.13423   GtCO<sub>2</sub>e <cite>IEA</cite>.
-We can make a fairly good assumption that this emission is created due to the sum of all economical activity. OECD has defined GDP as a measure for economical activity within a country or region <cite>GDP</cite>. From the CIA factbook we get the global GDP at $84.97 trillion. We also have data on the relative growth of E-Commerce in the past 10 years
+We can make a fairly good assumption that this emission is created due to the sum of all economical activity. OECD has defined GDP as a measure for economical activity within a country or region <cite>GDP</cite>. We also have data on the growth of E-Commerce <b>worldwide</b><cite>WorldWideECommerce</cite> which we can use, however it has not been possible to get data for the year 2020.
+We applied a reasonable quadractic polynomial least square to extrapolate from the data we have to the year 2020 as shown in <ImageRef>predictE</ImageRef>.
+</p>
+<figure>
+<chart>ECommerce</chart>
+<figcaption caption = "predictE"> Forecast till 2018 was available <cite>WorldWideECommerce</cite> however since we need data for 2020 we had to use polynominal regression to create our own forecast for e-commerce growth till 2020.
+The y axis is in Trillions of Dollars and the x axis is is the year </figcaption>
+</figure>
+
+
+<figure>
+<chart>cube</chart>
+<figcaption caption = "gdp1"> the y-axis represents WorldWide GDP while the x axis represents year, this graph was created assuming a cubic model </figcaption>
+</figure>
+<figure>
+<chart>line</chart>
+<figcaption caption = "gdp2"> the y-axis represents WorldWide GDP while the x axis represents year, this graph was created assuming a linear model </figcaption>
+</figure>
+<figure>
+<chart>CO</chart>
+<figcaption caption = "COE"> the y-axis represents WorldWide CO<sub>2</sub> e emission in millions of tonne while the x axis represents year, this graph was created assuming a cubic model. A linear model gave us a very high estimate which given the fact that C0 <sub>2</sub> e emission has slowed down in the last couple of years it made more reasonable sense to use a cubic regression.We have used data from the IEA statistics handbook to make this prediction <cite>IEA</cite> </figcaption>
+</figure>
+<figure>
+<p>
+We now have all the values that is required to make our estimate about the global effects of ecommerce in the year 2020. The model we will be using is overly simplistic and makes a lot of assumptions. Its given in equation form below:
+</p>
+<equ>
+	y = \\alpha ab[c^{-1}]
+</equ>
+
+<p>Where:</p>
+<ul>
+	<li>
+	<equin>\\alpha</equin> is our Saving potential like in the equation from the SMARTer 2020 report. We will assume this to be 0.3 from our lifecycle assement.
+	</li>
+	<li>
+		<i>c</i> is our global GDP in the year 2020 that we have extrapolated using a conversative extrapolation.
+	</li>
+	<li>
+		<i>a</i> is the valuation of the e-commerce market in the year 2020 that we have extrapolated previously.
+	</li>
+	<li>
+		<i>b</i> is the total amout of C0 <sub>2</sub> emission that we expect to have in the year 2020 based on our cubic extrapolation.
+	</li>
+</ul>
+<p>
+	Using this model we arrive at a value of 0.2945 GtCO<sub>2</sub> e as our Abatement potential for e-commerce. It should be noted that this value is significantly higher then the predictions made by the SMARTer2020 report. We need to now look at the the majors assumptions and uncertainity involved with using our model:
 </p>
 
-<chart>COe</chart>
-
-<p> Our calulations however has a lot of uncertainity associated with it:
 <ol>
+<li>
+	Global GDP has been mostly turbulent due to the financial crisis and this makes it hard to predict how global GPD is going to look in 2020. Even discarding the period between 2008 to 2010 which is anomolous there is still a large variation in global growth rate on a yearly basis. We can see from the above figures that their is a very large uncertainity when it comes to predicting how fast global GPD is going to increase. However it is resonable to assume it will be a value somewhere in between the our cubic and linear model.
+</li>
 	<li>
-	E-commerce and retail are both growing industries. Both are competing in unique and similar markets , for which we do not have much data, making it non-trivial to state that all e-commerce growth is taking value out of retail. To put it fundamentally, we cannot model the markets as a zero-sum game
+	E-commerce and retail are both growing industries. Both are competing in unique and similar markets , for which we do not have much data, making it non-trivial to state that all e-commerce growth is taking value out of retail. To put it fundamentally, we cannot model the markets as a zero-sum game. We cannot just state that all growth generated by e-commerce will result in the prevention of expansion of retail markets. It may well be that e-commerce accelerates the growth of retail.
 	</li>
 	<li>
 	The saving potential of e-commerce vs retail we have extracted from the life-cylce assement is based on electronic items and not on other items. We have assumed that this saving would map linearly to other items which will not always be true.
 	</li>
+	<li>
+		We have equated global GDP directly onto CO <sub>2</sub> e emissions. Even though this mapping makes a lot of sense if we actually take each of the economies in the world individually It is still a very weak notion. As information technology becames a bigger part of our economies this assumption will get weaker and weaker.
+	</li>
+	<li>
+		We have taken the  overall sales generated by e-commerce as an indicator towards the size of e-commerce in relation to the world's entire economy. There are some solid estimates as to how much of e-commerce is part of an country's economy. Using those estimates would actually prove  a more accurate model than this.
+	</li>
 </ol>
-<center>
-	<figure>
-  <img style = "width:70%;" src="/images/ecommercegrowth.jpg">
-  <figcaption caption = "ecommercegrowth" > This graph shows the projected growth rate for e-commerce sales worldwide</figcaption>
-</figure>
-</center>
-We can apply simple linear regression to predict the overall sales
-<h2>Conclusion</h2>
+</div>
 
+<h3>Tele-commuting</h3>
+<p>
+	Tele-commuting is something that is fairly common in the IT industry however it has poised to become much more common in the rest of the economy <cite>futuretele</cite>. Already 1 in 5 workers telecomunicate at least 10% everyday <cite>tele</cite>. Apps like Trello <cite>trello</cite> have made is very convinient for even large organizations which traditionally prefered a centralized working environment to start having decentralized work networks.
+</p>
+<p>
+	Globalization also plays a key role is pushing tele-communting as a serious alternative to traditional office time work. Work is no more limited to 9-5 but business happens all the time throughout the world in all the different time-zones. Tele-commuting offers businesses the opportunity to keep there offices "open" unofficially after work hours.
+</p>
+<p>
+	As the IEA statistics  <cite>IEA</cite> show transportation is responsible for 22% of our CO <sub>2</sub> e emission globally. This number is poised to grow as suburbia and other cities grow in size specially in developing countries <cite>suburbs</cite>. Also if fuel cost stays cheap like it is as of this writing of the report <cite>oil</cite>. The cost of living further from your work place will become much more affordable for the average middle class person. Given all this information - slowing down the adoption of telecommuting is going to make is much more harder to effectively control CO <sub>2</sub> e emissions.
+</p>
+<p>
+	From the policy prespective it should be made more easy for telecomunicating workers to obtain the same legal rights and status as their counterparts working in a cubicle. Some stricts but controvertial policies may accelerate the growth of  telecommunicating even further, namely increasing the price of living near large city centers. However there is a lot of uncertainity with such policies and it might actually increase traffic jams and pollution in the short term. A much more subtle approach would be to give benefits to workers from staying off the road for a few days a week. By giving incentives to workers to not travel to work it would make it much more acceptable in the offices to not come at the office for everyday of the week.
+</p>
+<p>
+	In the SMARTer 2020 report the saving potential for telecomuting is not even given. They only reference to the SMART 2020 report which also does not provide any information as to how such a calculation was done.
+</p>
+<h3>Optimizing of Truck Planning Route</h3>
+<p>
+One of the studies I have done in the past involved Autnomous modelling of Truck Platoonoing in Mines. The kind of efficiecies that can be gained by such optimziing is very significant. For example in 2011 about 25% of all distances traveled by automobiles in the United States were driven on such roads as the M4 Motorway [known in the US as the Interstate Highway System ] <cite>road1</cite>. China has built in the last decade about 85,000 kilometers of such road <cite>road2</cite>. There are many factors contributing to rise of long distance travel via roadway. Improved fuel efficiency in cars allows cars to travel more distance more cheaply, our need for resources such as fossil fuel and the depletion of them from easy to access places near to cities and industrial zones has caused us to create mining operations in more remote places. Globalization has lead to a economical reality where its easier to transport what you need from far away countries than be self-reliant. All of these tells us that this trend will continue in the near future as we create more roads to connect remotes regions on the planet to gain access to fewer and fewer resources.
+</eing stuck in traffic or behind other slower trucks. Such ineffiencies will not exist when autonmous swarm trucks are deployed.
+</p>
+<p>
+	From a public policy prespective it needs to made easy for IT companies to test such truck platoons on actual public road. The health and safety of ordinary drivers are of utmost importance however there are a lot of remote roads all across the country where we are able to minimize the risks that might be faced by ordinary citizens. By rigourous testing will we only be able to deploy such system enmass to reap the maximum benefit both in the realm of cost saving and reduction in C0 <sub>2</sub> e emissions.
+</p>
+<p>Abatment potential is calcuated using equation <equref>main</equref> in the SMARTer2020 report</p>
+<h3>Integration of renewables in commercial and residential buildings</h3>
+<p>
+There is a fundamental physics law that I always use to think aobut local energy sources and that is that of power loss in long distance transmission. The phenomenon is called ohmic heating which basically means that long distance transmission of power is unfeasable ( example generating electricity in the sahara desert and powering europe ) within our current framework of physics and engineering.
+</p>
+<p>
+	Local power sources are always more efficient due to this than centeralized grids.  A great example of how significant such a technology is to look at bangladesh. Already by 2010 8.4 million people are using solar as to power their homes <cite>bangla</cite> in bangladesh. It has been striking to have seen such a revolution by myself. Solar power is well integrated into people's home. Because of the simple design of homes in bangladesh it has proven non-trival to install solar panels in rooftops. Such integrated low power systems is also much more sensible for usage in developing countries verses developed countries who usually have significantly higher demand in electricity. For developed countries however the opportunity exists in the cutting edge of ICT which is the concept of "Internet of things". These are low powered devices that would surround every person's home. It does not make much sense to have wires connected all these devices, rather these devices could be powered by solar, ambient heat, etc. These types of systems also prevent the proliferation of vampire power. Vampire power is caused by electrical leaking from devices that are technically switched off. A study in 2004 found that about  9 kWh of energy per year per household is wasted on electrical leaking of such kind <cite>vampire</cite>. These types of saving may be small but they do add up and represent low hanging friuts when it comes to reducing CO <sub>2</sub> e emissions.
+</p>
+<p>
+	Such Systems also provide consumers an added incentive. Rather than be passive participtors in taking care of their local elecrical grid. They now have positive incentive to reduce their power consumption and contribute to the grid. Decentralizing the power grid by allowing commercial and residential building to have renewable energy embedded in them also has the added advantage of not requiring the maintaince of expensive sub-stations and transformers. Transformers for example have non-negligible loss due to eddy current in them when switching voltage.
+</p>
+<p>
+	From a policy prespective the best way to enhance its development is to allow a a more open energy market. As of right most of the energy markets in North American and Europe are controlled by large commododized private monopolies that ditate the price of energy.
+	By allowing each household to take control of the source of their energy we will make is much more easier to stir up innovation and generate the interest of investors.
+</p>
+
+<h3>Building Management Systems</h3>
+<p>
+Most buiding in the western hemisphere are built nearly half a century ago. This has given developing countries who do not have any legacy infastucture to try out really innovative idea. I would like to spend some time studying a particular case of great interest to me and that is of Masdar City <cite>masdar</cite>.
+</p>
+<p>	The reason why Masdar City is a really interesting case study is because it has has proven nutoriasly difficult to have low powered living solutions in desert environment. Most countries that top the list of highest per capita CO<sub>2</sub> emissions are from around the Middle East  <cite>Qatar</cite></p>
+<p>
+	Masdar City's Plan is to create a zero carbon city in the middle of the hot middle eastern desert environment. Some of the things they have managed to do is save about 55% of electricity and water consumption by just implementing movement sensors for every light and water tap in the city .Another interesting thing is the use of clever ventilation to prevent the need for Air Conditioning for the city streets <cite>masdar1</cite>.
+</p>
+<p>
+	Another great example of cutting edge building management system is in South Korea, who have built an entirely new eco-city. There are many facinating things about the city - for example there is minimal flushing required since the entire city's sewage system is connected to a massive vaccum pump that sucks in all the waste reducing the need for using water . The city has 100 acre of green space and every building as a green roof. About 75% of the waste generated from the construction of the city is recylced  and most of travel is either short distance or their is easily avialable mass transit options <cite>SouthKorea</cite>.
+</p>
+<p>
+	The undertaking of massive ambitious projects like Masdar city and Songdo is really important if we are to simulate innovation that will lead to great reduction in CO <sub>2</sub> emissions in the shortest period of time. Such cities form centers of innovative that are cruitial. The way to start such project would have to come from the higest level of governence , since it require a lot of organization that is not possible for a private sector company to do, as there is a lot of risk.
+</p>
+
+<p>The abatment potential is calculated using equation <equref>main</equref> </p>.
+<h3>Deforestation Prevention</h3>
+<p>	RainForests are one of our largest carbon sinks. The only sure way to get carbon from the atmosphere onto the  ground is through rainforests. Some develped counties like norway and sweden are actually now paying less developed countries pay to prevent from cutting down rainforest <cite>Norway</cite>. This type of action is really powerful in the short-term but sets a very wrong precedence in the long run. It allows certain countries to hold other countries 'climate hostage'.
+</p>.
+<p>The reason why such routes to fighing climate change is actually working is mainly due to development in ICT that has enabled many large countires to essential keep survellience over other less developed countries using satellite. This again in my opinion sets the wrong precedence since it seems one country is indirectly in charge of another's country soverneignity.</p>
+
+<p>
+	A better approach would be create policies that would make it easy for developing countries to monotize greatly from keeping their rainforests intact and preserved. The most simplest of such investment would be in tourism and medical research - as rainforests represent the majority of diversity of life.
+</p>
+<p>
+	An ICT enabled solution would be virtualized real-time rainforests for people to enjoy. These types of solutions are not only more effective in the long term but also greatly improves awarenesss of climate change in the general public. Creating Market oppurtunities for business to reap benefit from a certain aciton the governtment wants to be done is nothing is new.
+	The only potential problem is curroption, here ICT can be effectively used to track the flow of money and investment to prevent theft of any kind.
+</p>
+<h2>Conclusion</h2>
+<p>
+	Overall the SMARTer2020 report does a decent reporting on the current trends in ICT and what it means for Climate Change. It also to some extent does try to qunatify those effects in an meaningful way.
+</p>
+<p>
+	My biggest concern from the report is the lack of good sourcing for a lot of data points that they provided us with. Many of the sub-levers I had to study had data points that just stated N/A with no furthe explanation as to why that was the case.
+</p>
+<p>
+	Also there hasn't been any examples of uncertainity analysis in their report - for example error bars, maximum and minimum estiatmation. It is a bold claim to make that the values they have found have no uncertainity associated with it.
+</p>
+<p>
+	Some other things that I think the report fails to address is how ICT is enabling change in other domains to indirectly tackle climate change. One of the main reason why developing countries are a cause of concern has to do the income disparity between rich and poor nations. ICT has enabled this to change giving people from poorer nations access to world class education and job opportunities. These types of things help to tackle one of the more fundamental problem with trying to negotiage a worldwide consesus on climate change. Many of the problems associated with climate change stems from people being desperate. Tackling this desperating caused by inequality is as crutial to solving climate change as the improvement in technology. There are many lineked human related problems to Climate change. The problem of proverty, overpopulation, etc. ICT is helping to solve all these other problems that are directly feeding into help tackle the problem of climate change. Qunatifying this would be a difficult and interesting challeage but should be possible with enought data.
+</p>
+<p>
+
+</p>
 <center>
 	<figure>
   <img style = "width:65%;" src="/images/earth-full-view.jpg">
@@ -122,13 +256,14 @@ We can apply simple linear regression to predict the overall sales
 </center>
 <p>
 	 <ImageRef>EarthImage</ImageRef>  is an iconic picture published during the 1980s  which captures the essence of what it would require to solve the complex problem of climate change. It makes it apparent to the fact that their are no border between countries, It also captures the fact that every human regardless of social or economic status is enclosed in a shared 3D sphere.
-</p><p>
+</p>
+<p>
 	Climate change is a problem that cannot be solved by one individual, nation or even a sub-collection of nations. It requires active participation at every level of human organization. The fastest way to get there in my opinion is just awareness to the fact that the conditions and actions of every one of us has a direct effect on the rest of us. From the reference frame of <ImageRef>EarthImage</ImageRef>  the earth looks more like a fragile spaceship, and as far as our knowledge goes there is nothing similar to it for trillions of miles around us that we can just "relocate" to if things do not work out.
 </p>
 
 
 <h2>References</h2>
-<p>All references were accessed last on 15th December 2014</p>
+<p>All references were accessed last on 17th December 2014</p>
 <References>
 	<ol>
 		<li tag = "lca" href = "http://www.ce.cmu.edu/~greendesign/research/Buy_com_report_final_030209.pdf">
@@ -190,6 +325,51 @@ We can apply simple linear regression to predict the overall sales
 		<li tag = "GDP" href = "http://stats.oecd.org/glossary/detail.asp?ID=1163">
 			"Glossary of Stastical Terms" by OECD
 		</li>
-		<li>
+		<li tag = "WorldWideECommerce" href = "http://www.retailcustomerexperience.com/news/worldwide-e-commerce-sales-to-increase-nearly-20-percent-in-2014/">
+			"WorldWide E-Commerce Forcast"
+		</li>
+		<li tag = "tele" href = "http://www.reuters.com/article/2012/01/24/us-telecommuting-idUSTRE80N1IL20120124">
+				"Reuters Poll on telecommunting"
+		</li>
+		<li tag = "trello" href = "https://trello.com/">
+			"Trello"
+		</li>
+		<li tag = "suburbs" href = "http://www.economist.com/suburbs">
+			"The world is becoming ever more suburban, and the better for it" published by the Economist
+		</li>
+		<li tag = "oil" href = "http://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=F000000__3&f=M">
+			"oil prices in 2014"
+		</li>
+		<li tag = "futuretele" href = "http://www.forbes.com/sites/meghanbiro/2014/01/12/telecommuting-is-the-future-of-work/">
+			"Telecommuting - The future of work ? "
+		</li>
+		<li tag = "road1" href = "http://www.fhwa.dot.gov/policyinformation/statistics/2011/vm1.cfm">
+			"United States Automobile statistics"
+		</li>
+		<li tag = "road2" href = "http://nexus.umn.edu/Courses/ce5212/Case4/articles/Journal%20of%20Transport%20Geography,%20vol.%209%20(2001).pdf">
+			"Chinese Interstate Highway"
+		</li>
+		<li  tag = "rio" href =  "http://www.riotinto.com/ironore/mine-of-the-future-9603.aspx">
+			"Mine of the Future™"
+		</li>
+		<li tag = "bangla" href = "http://cleantechnica.com/2014/10/25/solar-energy-revolution-everyones-ignoring-bangladesh/">
+			"The Solar Energy Revolution Everyone’s Ignoring… Is In Bangladesh"
+		</li>
+		<li tag = "vampire" href = "http://www.eia.gov/tools/faqs/#electricity_use_home"> "Frequently Asked Questions – Electricity". U.S. Energy Information Administration. July 2010. Retrieved Jan 6, 2011. </li>
+		<li tag = "masdar" href = "http://www.economist.com/node/12673433?story_id=12673433">
+			"Masder Plan" - Economist
+		</li>
+		<li tag = "masdar1" href = "http://www.wired.co.uk/magazine/archive/2013/12/features/reality-hits-masdar">
+			"Masdar: the shifting goalposts of Abu Dhabi's ambitious eco-city"
+		</li>
+		<li tag = "Qatar" href = "http://cdiac.ornl.gov/">
+			"CO2 Per Capita List"
+		</li>
+		<li tag ="SouthKorea" href = "http://www.songdo.com/songdo-international-business-district/news/in-the-news.aspx/d=97/title=Songdo_IBD_South_Koreas_New_Eco_City">
+			Songdo City South Korea
+		</li>
+		<li tag = "Norway" hreg = "Norway puts $1.6B into rainforest conservation ">
+			"Norway puts $1.6B into rainforest conservation"
+		</li>
 		</ol>
 </References>
