@@ -15,9 +15,99 @@ At the start of the year I was tasked to solve problems involving robotics and c
 <h2>
 	Developer Operations
 </h2>
+<h3>Browserify</h3>
 <p>
 	The application is structured as a <code>node.js</code> application using the <CODE>require</CODE> syntax. Initially the application was run only using atom-shell - A stripped down chrome execution created by github. However for the purposes of this project I have to make sure it runs on the browser. For this reason I used a popular <code>node.js</code> library called <code>browserify.js</code> that packages your source file into a target file with its dependencies. Now its possible to include your file in a script tag and to access the module you again use the <code>require</code> syntax.
 </p>
+<p>
+	The main strength of browserify lies in the the same advantage provided by <code>node</code> and <code>npm</code>.
+	It takes care of circular-dependencies.
+</p>
+<center>
+	<figure>
+  <img style = "width:50%;" src="/images/brow.jpg">
+  <figcaption caption = "browserify" > Browserify Managing circular dependencies -
+  As you can see dependencies graph for a script can grow quite complex with high instances of reuse ability
+  </figcaption>
+</figure>
+</center>
+<h3>LiveScript</h3>
+<p>
+	Livescript is a simple language that compiles down to javascript. The main advantage of Livescript is it adds syntactic sugar to make it easier to do functional type programming.Javascript syntax is derived from the algo family of programming langauge which are mostly imperative  however javascript also allows you to write functional style programming like the languages from the ML family however the syntax is quite different from the languages of that family ( haskell,etc ).Livescript files end with the extension <code>.ls</code> and all my source code is written in Livescript - expect for one module that I had to write in pure javascript for squeezing out performance for my algorithms.
+</p>
+<h2>Control Flow and Module Structure </h2>
+<p>To help navigate the control flow of my application I have drawn a simple diagram showing a rough structure of how the different files relate to each other.</p>
+<center>
+	<figure>
+  <img style = "width:100%;" src="/images/source.jpg">
+  <figcaption caption = "source" > Graph showing source Map for the different modules present in the application. Each module is specialized to do a certain task for the application.
+  </figcaption>
+</figure>
+</center>
+<ol>
+	<li>
+		<code>Main.ls</code>
+		<p>The main entry point for the application. The logic for the application is structured using a MVC pattern that is quite popular among modern web-developers. The application contains a global object called <CODE>app</CODE> that has two methods <CODE>app.controller</CODE> - acts a intermediate data-structure that holds all our getters and setter methods and <code>app.view</code> - which contains our <CODE>HTML</CODE> logic</p>
+	</li>
+	<li>
+		<code>Camera.ls</code>
+		<p>
+			This module holds roughly all the logic that does canvas manipulation and finding all the cameras on your computer. Its main function is to signal which of the lower level functions needs to called. The module is highly stateful  with a lot of variables - it was not possibel to avoid having to do this due to the nature of GUIs that tend to have many different path of execution.
+		</p>
+
+	</li>
+	<li>
+		<CODE>Pure.js</CODE>
+		<p>
+			This module contains very few methods. Some of the methods are for drawing onto the canvas but the others are related to computer vision. Mainly for tasks such as gray-scale filter.
+		</p>
+
+	</li>
+	<li>
+		<CODE>MaxMath.ls</CODE>
+		<p>
+		Similar to <CODE>Pure.js</CODE> but implements a algorithm from graph theory for maximizing matches on a weighted bipartite graph.
+		</p>
+<li><CODE>CSS.ls</CODE>
+	<p>
+		This module contains all the <code>CSS</code> related logic for our GUI. We expose the module in <CODE>Main.ls</CODE>
+	</p>
+</li>
+
+	</li>
+</ol>
+<h2>Externa Libraries</h2>
+	<p>
+		For creating this application I have used three external libraries.
+	</p>
+	<ol>
+		<li>
+			<code>Lodash.js</code>
+			<p>
+				<code>Lodash.js</code> is a succesor to a very popular utlity module called <code>underscore.js</code>. The main difference lies in the fact that <code>Lodash.js</code> was created with performance in mind. It also extends the functionaliy of <code>underscore.js</code>.
+			</p>
+			<p>
+				Both the libraries act as the defacto standard libraries for programmers who do functional programming in javascript. They provide utiliy method that are similar to what you would find in the standard libraries of programming languages like haskell or scheme.
+			</p>
+					</li>
+			<li>GASP
+			<p>
+				GSAP is a collection of javascript animation libraries. I have mainly used the funtionality provided by <code>TweenMax.js</code>. GSAP emphasis is performance when it comes to animation. I have found animating using GSAP to be much more responsive then animating using any other means. It also gives me fine control on my animation.
+			</p>
+			</li>
+			<li>
+				<code>mithril.js</code>
+				<p>
+					This is a MVC library that was inspired by the library created by <code>facebook</code> for doing bi-direcitonal data binding on DOM elements. After a lot of emprical benchmarks the engineers at <code>facebook</code> realized that doing DOM manipulation was expensive while javascript was much faster. Based on this idea they created <code>react.js</code> and it proved to be quite performant and simple compared to its competition. However I refrained from using <code>react.js</code> mainly because the library requires use to use a custom <code>HTML</code> like language called <code>JSX</code>.
+				</p>
+				<p>
+					<code>mithril.js</code> takes the idea of virtual DOM from <code>react.js</code> however it doen't use <code>JSX</code> or any <code>XML</code> like language but pure <code>JSON</code> and <code>Array</code> structure to represent its view.
+					This idea to me was very elegant since  objects and arrays are the most fundamental data-strcutures in comptuter science.
+				</p>
+			</li>
+
+	</ol>
+
 <!-- <p>
 	The web has come a long since the days of Netscape. The internet is no more restricted to just desktop but is available in devices of various sizes and shapes. The gateway to the internet for most people is their browser. Therefore its not surprising that the amount of development in web-technologies has skyrocketed in the past 5 years. People who might have been experts in web-technologies even 6 years ago will find that modern web is nothing like what it used to be and that is a good thing.
 </p>

@@ -1,102 +1,19 @@
 
 {io,JQ,tempConv,_,TM,move,__,udc,katex,Chart,reg} = require "./headers.js"
-log = (X) -> console.log(JSON.parse(JSON.stringify(X)))
-
-GlobalCOe = (pol,name) ->
-
-	y = [14079.8, 15685.0, 18061.0, 18641.4, 20988.7, 21851.0, 23758.6, 27501.4, 28966.4, 30509.4, 31342.3, null,null,null,null,null]
-
-	x = [1971,1975,1980,1985,1990,1995,2000,2005,2009,2010,2011,2012,2013,2014,2015,2020]
-
-	vals = reg 'polynomial',(_.zip x , y),pol
-	array = vals.points
-
-	R = {}
-	R.name = name
-	R.y = _.map ((arr)-> arr[1]),array
-	R.Label = _.map ((x) -> x.toString!), x
-	R.type = "Line"
-	R.x = x
-
-	R
-
-GlobalGDP = (pol,name)->
-
-	y = [41016,null,null,null,null,43070,null,null,null,null,62220,null,null,71830,74909,null,null,null,null,null,null,null]
-	# R.x = [2013,2012,2010,2005,2000]
-	x = [2000 to 2020]
-	vals = reg 'polynomial',(_.zip x , y),pol
-	array = vals.points
 
 
-	R = {}
-	R.name = name
-	R.y = _.map ((arr)-> arr[1]),array
-	R.Label = _.map ((x) -> x.toString!), x
-	R.type = "Line"
-	R.x = x
-
-	R
-
-ECommerce = ->
-	#Using cubic regression for e-commerce sales worldwide to predict sales in 2020.
-	x = [2013,2014,2015,2016,2017,2018,2019,2020]
-	y = [1.233,1.471,1.700,1.922,2.143,2.356,null,null]
-	vals = reg 'polynomial',(_.zip x , y),2
-	array = vals.points
-	y = _.map ((arr)-> arr[1]),array
-	Label = _.map ((x) -> x.toString!), x
-	R = {}
-	R.name = "ECommerce"
-	R.type = "Bar"
-	R.x = x
-	R.y = y
-	R.Label = Label
-
-	return R
 
 
-CreateR = (R) ->
-	R.options =
-		scaleShowGridLines : true
-		scaleGridLineColor : "rgba(0,0,0,.05)"
-		scaleGridLineWidth : 1
-		bezierCurve : true
-		bezierCurveTension : 0.4
-		pointDot : true
-		pointDotRadius : 7
-		pointDotStrokeWidth : 1
-		pointHitDetectionRadius : 20
-		datasetStroke : true
-		datasetStrokeWidth : 2
-		datasetFill : true
-		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
-	R.data =
-		labels:R.Label
-		datasets:
-			[
-				label: "My First dataset"
-				fillColor: "rgba(176,97,97,0.3)"
-				strokeColor: "rgba(220,220,220,1)"
-				pointColor: "rgba(225,225,225,1)"
-				pointStrokeColor: "\#fff"
-				pointHighlightFill: "rgba(225,225,225,1)"
-				pointHighlightStroke: "rgba(220,220,220,1)"
-				data:R.y
-			]
-	R
 
-ChartArray = _.map CreateR,[ECommerce!,(GlobalGDP 3,"cube"),(GlobalGDP 1,"line"),(GlobalCOe 1,'CO')]
-# ChartArray = _.map Calculations,[ECommerce!]
+
+
+
+
+
+
 #mithril exposed as m
 
-CreateArray = (size,val= 0) ->
-	Arr = []
 
-	for I from 0 to (size - 2)
-		Arr.push(val)
-
-	Arr
 
 
 SetValArray = (list,index,val)->
@@ -311,7 +228,6 @@ JQ.get "test.html", (doc) ->
 
 		Cinsert = (x) ->
 			child = x.children[0]
-
 			name = __.each ChartArray, (y,i)->
 				console.log i
 				if y.name == child
