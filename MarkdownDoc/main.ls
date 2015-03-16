@@ -24,8 +24,10 @@ SetValArray = (list,index,val)->
 ElementPointers = {}
 
 config = (Name)->
-	eval "var Ob = function(e){return ElementPointers." + Name + " =" + " e;}"
+	Ob = (E)->
+		ElementPointers[Name] = E
 	return Ob
+
 JQ.get "test.html", (doc) ->
 
 	Mdoc =  eval (tempConv.Template doc).toString!
@@ -233,7 +235,7 @@ JQ.get "test.html", (doc) ->
 		IndexCSS =
 			"top":"0"
 			"left":"-20%"
-			"font-size":"15pt"
+			"font-size":"13pt"
 			"width":"20%"
 			"height":"100%"
 			"-webkit-transform": "translateZ(0)"

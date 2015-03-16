@@ -1,0 +1,13 @@
+/* latin */
+@font-face {
+  font-family: 'MyButtonFont';
+  font-style: normal;
+  font-weight:50;
+  src: url(OpenSan.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'ErrorFont';
+  font-style: normal;
+  font-weight: 100;
+  src: url(ErrorFont.woff2) format('woff2');
