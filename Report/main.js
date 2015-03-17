@@ -643,6 +643,9 @@
         config: config("doc")
       }, [Mdoc]);
       body = m("body", {
+        style: {
+          fontSize: "8pt"
+        },
         config: config("body")
       }, [doc]);
       html = m("html", {

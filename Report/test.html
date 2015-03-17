@@ -1,11 +1,20 @@
 
 <h1 align = "center">Interactive Computer Vision using Web Technology </h1>
+<div  align = "center">
+	Developing custom computer vision algorithms with an interactive interface using Canvas and Javascript
+</div>
 <div align="center">Joy Krishna Mondal</div>
 <div align = "center">
 	jm12752@my.bristol.ac.uk
 </div>
 <div  align = "center">
-	Developing custom computer vision algorithms with an interactive interface using Canvas and Javascript
+	<a href="joykrishnamondal.github.io/Clean/index.html">Live Demo</a>
+	<div>joykrishnamondal.github.io/Clean/index.html</div>
+</div>
+<div  align = "center">
+<a href="joykrishnamondal.github.io/Report/index.html">Report</a>
+<div>joykrishnamondal.github.io/Report/index.html</div>
+
 </div>
 
 <h2>Introduction</h2>
@@ -40,7 +49,7 @@ At the start of the year I was tasked to solve problems involving robotics and c
 <center>
 	<figure>
   <img style = "width:100%;" src="/images/source.jpg">
-  <figcaption caption = "source" > Graph showing source Map for the different modules present in the application. Each module is specialized to do a certain task for the application.
+  <figcaption caption = "source" > Graph showing source Map for the different modules present in the application. Each module is specialized to do a certain task for the application. ( Arrows represent approximate control flow )
   </figcaption>
 </figure>
 </center>
@@ -77,6 +86,7 @@ At the start of the year I was tasked to solve problems involving robotics and c
 	</li>
 </ol>
 <h2>Externa Libraries</h2>
+
 	<p>
 		For creating this application I have used three external libraries.
 	</p>
@@ -84,30 +94,159 @@ At the start of the year I was tasked to solve problems involving robotics and c
 		<li>
 			<code>Lodash.js</code>
 			<p>
-				<code>Lodash.js</code> is a succesor to a very popular utlity module called <code>underscore.js</code>. The main difference lies in the fact that <code>Lodash.js</code> was created with performance in mind. It also extends the functionaliy of <code>underscore.js</code>.
+				<code>Lodash.js</code> is a successor to a very popular utility module called <code>underscore.js</code>. The main difference lies in the fact that <code>Lodash.js</code> was created with performance in mind. It also extends the functionality of <code>underscore.js</code>.
 			</p>
 			<p>
-				Both the libraries act as the defacto standard libraries for programmers who do functional programming in javascript. They provide utiliy method that are similar to what you would find in the standard libraries of programming languages like haskell or scheme.
+				Both the libraries act as the defacto standard libraries for programmers who do functional programming in javascript. They provide utility method that are similar to what you would find in the standard libraries of programming languages like Haskell or scheme.
 			</p>
 					</li>
 			<li>GASP
 			<p>
-				GSAP is a collection of javascript animation libraries. I have mainly used the funtionality provided by <code>TweenMax.js</code>. GSAP emphasis is performance when it comes to animation. I have found animating using GSAP to be much more responsive then animating using any other means. It also gives me fine control on my animation.
+				GSAP is a collection of javascript animation libraries. I have mainly used the functionality provided by <code>TweenMax.js</code>. GSAP emphasis is performance when it comes to animation. I have found animating using GSAP to be much more responsive then animating using any other means. It also gives me fine control on my animation.
 			</p>
 			</li>
 			<li>
 				<code>mithril.js</code>
 				<p>
-					This is a MVC library that was inspired by the library created by <code>facebook</code> for doing bi-direcitonal data binding on DOM elements. After a lot of emprical benchmarks the engineers at <code>facebook</code> realized that doing DOM manipulation was expensive while javascript was much faster. Based on this idea they created <code>react.js</code> and it proved to be quite performant and simple compared to its competition. However I refrained from using <code>react.js</code> mainly because the library requires use to use a custom <code>HTML</code> like language called <code>JSX</code>.
+					This is a MVC library that was inspired by the library created by <code>facebook</code> for doing bi-directional data binding on DOM elements. After a lot of empirical benchmarks the engineers at <code>facebook</code> realized that doing DOM manipulation was expensive while javascript was much faster. Based on this idea they created <code>react.js</code> and it proved to be quite performant and simple compared to its competition. However I refrained from using <code>react.js</code> mainly because the library requires use to use a custom <code>HTML</code> like language called <code>JSX</code>.
 				</p>
 				<p>
 					<code>mithril.js</code> takes the idea of virtual DOM from <code>react.js</code> however it doen't use <code>JSX</code> or any <code>XML</code> like language but pure <code>JSON</code> and <code>Array</code> structure to represent its view.
-					This idea to me was very elegant since  objects and arrays are the most fundamental data-strcutures in comptuter science.
+					This idea to me was very elegant since  objects and arrays are the most fundamental data-structures in comptuter science.
 				</p>
 			</li>
 
 	</ol>
+	<h3>Compiling External Libraries </h3>
+	<center>
+	<figure>
+  <img style = "width:100%;" src="/images/headerls.jpg">
+  <figcaption caption = "external" > Schematic showing how the external libraries are compiled.
+  </figcaption>
+</figure>
+</center>
+	<p>
+		 The above diagram shows the process of compilation for our external libraries. The process was inspired by C where we have a header file containing links to all our script files. In our case browserify takes care of arranging them so that we can <code>require</code>our external libraries while we are in the browser environment.
+	</p>
 
+<h2>Using The Application</h2>
+	<p>
+		The most tested way to start the application is to download the <code>http-server</code> module from <code>npm</code>
+	</p>
+
+	<ol>
+		<li>
+			If you have <code>npm</code> and <code>node</code> installed you need to just type ( note: this is a global installation due to the <code>-g</code> flag):
+		</li>
+			<center>
+		<p>
+		<code>npm install -g http-server</code>
+		</p>
+		</center>
+				<li>
+				After installing navitage to the directory containing <code>index.html</code> and type on the terminal
+				<p>
+					<center><code>http-server</code></center>
+				</p>
+		</li>
+		<li>
+			Notice the port number that is displayed on your terminal and then open browser and type on the address bar - where {port number} is a placeholder for the port number that is observed on the terminal.
+			<p>
+				<center>
+				<b>localhost:{port number}</b>
+				</center>
+			</p>
+		</li>
+	</ol>
+
+
+
+
+	<center>
+	<figure>
+  <img style = "width:100%;" src="/images/first.jpg">
+  <figcaption caption = "GUI1" > By clicking on the "Find Camera Button" we can start streaming a video on canvas showing a hypothetical input from our sensor
+  </figcaption>
+</figure>
+</center>
+<p>
+	The application can be started by clicking on "Find Camera" Button on the button right. The rest of the buttons are for exploring the data that is coming from the sensor in various ways. ( Either in Spacial Dimensions or as a Time Series). To start our tracking algorithm we need to click on "Start Tracking"
+</p>
+<center>
+	<figure>
+  <img style = "width:100%;" src="/images/tracking.jpg">
+  <figcaption caption = "GUI2" > By Clicking on "start tracking" we start our computer vision algorithms to track each of the pins in the video feed from our sensor.
+  </figcaption>
+</figure>
+</center>
+
+<center>
+	<figure>
+  <img style = "width:100%;" src="/images/time.jpg">
+  <figcaption caption = "GUI1" > By Clicking on X-t we can see the the time series representation of the X position.
+  </figcaption>
+</figure>
+</center>
+
+
+
+<center>
+	<figure>
+  <img style = "width:100%;" src="/images/xy.jpg">
+  <figcaption caption = "GUI2" > By Clicking on X-Y we can see the the spatial representation of the data.
+  </figcaption>
+</figure>
+</center>
+
+<h2>Canvas Data Structure</h2>
+
+	<center>
+	<figure>
+  <img style = "width:100%;" src="/images/Vector1.jpg">
+  <figcaption caption = "vector1" > Schematic Diagram of data-structure if we store the data as it it recieved from our algorithm.
+  <i>K</i> is the number of Frames. <i>N</i> is the number of Detected Pins
+  </figcaption>
+</figure>
+</center>
+<p>
+	For the canvas rendering we had an interesting data structure problem that had to be solved.
+</p>
+<p>
+	The data that we get back from our algorithm is a <code>2 x N </code> array ( as shown in the diagram above ). This data structure is returned every frame ( 35 millisecond ). We need to find an efficient way to store this data so that we can render our canvas. If we store the data as it is we run into performance problem. It can be intuitively seen that for our canvas to render each graph line it needs to traverse an array of <i>K</i> elements each of which are not stored in a contiguous array. For movement between each array element we need to do an extra lookup on a <i>separate</i> array. Notice that we never have to travel vertically down our data structure so storing it in this form is reductant.
+</p>
+
+	<center>
+	<figure>
+  <img style = "width:100%;" src="/images/Vector2.jpg">
+  <figcaption caption = "vector1" > Schematic Diagram of data-structure after rearranging ( NOTE:
+  <i>n</i> is the number of Frames. <i>K</i> is the number of Detected Pins - opposite of previous graph)
+  </figcaption>
+</figure>
+</center>
+<p>
+The solution to this problem is the data structure shown above. Where we re-arrange our array to store all XY position for each pin in a contiguous array. This reduces the lookup needed for our inner while loop improving the speed of our rendering significantly.
+</p>
+<h2>
+	Use of Inkspace and Gimp
+</h2>
+
+<p>
+	All the figures on this page were created using Adobe Photoshop and Adobe Illusrator. I have played around with Ink space and GIMP and found them to be really good pieces of open source tools. However I have gained a lot of proficiency in using Adobe Photo-shop and Adobe Illustrator so did not feel it was nessenry to do my diagrams in a new software. I created most of the digram using the photo shop brush tool and a tablet for free-hand drawing. The background grid was created using illustrator and rendered as a <code>.jpg</code>. The final vector diagrams were created in illustrator and then saved as a <code>.jpg</code>. I used the line tool and the rectangle tool for it.
+</p>
+<h2>Opening report in HTML</h2>
+<p>
+	This report was written in a custom designed HTML. It it an partial attempt to create a latex -> html parser.
+</p>
+<p>
+	This report can be opened in the same method as the application using <code>http-server</code> in the directory where the <code>index.html</code> is stored.
+</p>
+<h2> For Marker </h2>
+<p>
+All the files I expressed above as source files have code that was written entirely by me. There is a lot of stuff that can said about the different things that were done. The main time consuming aspect was making javascript performant ( under 35 millisecond ).  Writing elaborate for loops and finding shortcuts to reduce the algorithm lookup took a lot of time to figure out. Sometimes simple things like not using the <code>Math</code> library improved the performance be a large amount.
+</p>
+<p>
+	I have used array buffers also to improve performance.
+</p>
 <!-- <p>
 	The web has come a long since the days of Netscape. The internet is no more restricted to just desktop but is available in devices of various sizes and shapes. The gateway to the internet for most people is their browser. Therefore its not surprising that the amount of development in web-technologies has skyrocketed in the past 5 years. People who might have been experts in web-technologies even 6 years ago will find that modern web is nothing like what it used to be and that is a good thing.
 </p>
