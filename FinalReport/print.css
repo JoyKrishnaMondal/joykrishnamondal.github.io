@@ -1,0 +1,28 @@
+@page {
+    counter-increment: page;
+    counter-reset: page 1;
+    @top-right {
+        content: "Page " counter(page) " ofAA " counter(pages);
+    }
+}
+
+@media print {
+	p,ol,div,figcaption{
+		font-size:7pt;
+	}
+	h1{
+		font-size:14pt;
+	}
+	h2{
+		font-size:13pt;
+	}
+	h3{
+		font-size:12pt;
+	}
+	h4{
+		font-size:11pt;
+	}
+	h5{
+		font-size:10pt;
+	}
+}

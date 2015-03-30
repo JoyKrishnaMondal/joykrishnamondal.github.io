@@ -1,0 +1,45 @@
+/* latin */
+@font-face {
+  font-family: 'OpenSan';
+  font-style: normal;
+  font-weight:50;
+  src: url(OpenSan.woff2) format('woff2');
+}
+
+
+/*@page {
+    counter-increment: page;
+    counter-reset: page 1;
+    @top-right {
+        content: "Page " counter(page) " ofAA " counter(pages);
+    }
+}
+*/
+
+
+h1{
+		font-size:20pt;
+		page-break-after:always;
+	}
+
+@media print {
+	p,ol,div,figcaption{
+		font-size:8pt;
+	}
+	h1{
+		font-size:30pt;
+		page-break-after:always;
+	}
+	h2{
+		font-size:16pt;
+	}
+	h3{
+		font-size:14pt;
+	}
+	h4{
+		font-size:12pt;
+	}
+	h5{
+		font-size:10pt;
+	}
+}
