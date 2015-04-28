@@ -1,39 +1,1244 @@
-<h2>Graphical Model</h2>
+<!-- <h1>Abstract</h1>
+<p>
+	Tactile-perception is the most primitive form of intelligence in biological agents. Highly intelligent agents combine tactile-perception with locomotion to create utility that in nature, provided significant evolutionary advantages. Allowing survival and eventually allowed more types of sensors to be incorporated - like vision. Conventional A.I and machine learning took strong emphasis on vision, which is being used now to solve problems such as fine motor dexterity in robotics. In biology dexterity and locomotion is more unified with tactile-perception rather than vision. By copying the path biology took its possible to find a shortcut in solving many problems in robotics. While doing so, also learning a lot about how intelligence works in open loop systems. The direct impact of the research unusually will affect manufacturing which depend heavily on tactile perception, that is still done manually. Keeping the application in mind, existing tools used in manufacturing are to be employed to showcase the potential of such autonomous systems.
+</p>
+ -->
+<h2>Background</h2>
+<p>
+	Tactile perception would be a key component if fully autonomous robots are expected to be a reality in the near future. Both tactile perception and physical autonomy  seem to have a deep primitive link across real biologically intelligent systems. There is a general agreement that physical autonomy might have provoked the selective pressure for living things to develop intelligence <ref>Mind</ref><ref>MobileAI</ref><ref>MobileAI1</ref>. To thus create robots that showcase strong physical autonomy requires developing control systems that gains self awareness of its environment using tactile feedback.
+</p>
+<h3>Relevance of Tactile Perception</h3>
+<p>
+Significant progress can be made in the field of robotics by creating better algorithms, sensors, etc in the domain of touch. The research focus of the larger community has been towards computer vision. As important as computer vision is, there is a fundamental physical limit. As it depends on doing inference based on a singular physical source of data - the electromagnetic spectrum. It is important to point out that data collected from tactile sensors has helped many organism 'win' the evolutionary game, and almost all forms of biological intelligence incorporates inference from data obtained from touch sensors. This is evidence of the versatility of tactile perception. Solving any specific problem helps open the door and ask newer questions, regarding what is possible. The most useful problem that tactile-perception helps solve involves physical autonomy in intelligent systems. Fine motor control in robotics is a growing area of study and can be considered a fundamental technology. Its imaginative to think of autonomous robots that can learn to play any instrument on their own or walk on any terrain. Creating such robots is very possible in the near future and studying integrated tactile and fine motor control feedback systems is the first step in achieving that. But before its possible to do these studies its very important to create the required infrastructure. The component infrastructure already in many ways have existed for the better part of the last 40 years, industrial arms are widely used in manufacturing and provide the type of fine motor control that is critical, but it wasn't until recent advancement in hardware and artificial intelligence that research could be conducted with ease.
+Combing the component infrastructure is important in creating a well integrated general system, to be more specific there needs to an industrial arm that would enable a tactile sensor to collect data in a highly controlled manner.
+</p>
+
+
+<h3>Application</h3>
+
+<p>
+Even though creating such a system would be quite general, there is a avenue of use-case that such systems can already provide value in. Manufacturing in all kinds of products require a very labor intensive stage of quality assurance. The reason for labor intensity is due to the lack of useful automation that is possible in tactile perception. The biggest and most economically relevant industry is that of automobile manufacturing. Thus tackling the specific problems faced by automobile manufacturers helps direct the research in the most useful way.
+</p>
+
+<p>
+Quality assurance in automotive manufacturing generally speaking means assessing the quality of some finished assembly, which could be a small part of a car. Currently this is mostly done by manual inspections by engineers or technicians. There are two specific tasks that they are required to do:
+</p>
+
+
+<ol>
+	<li>
+		To make sure edge contours of the assembly do not have any defects, known as gap and flush checking.
+	</li>
+	<li>
+		Notify about any inconsistencies on the surface finishing.
+	</li>
+</ol>
+
+<p>
+To accomplish this the people inspecting would use approximate prior knowledge about the geometry of the assembly. Usually the engineer would use a CAD model to express the geometry of the assembly. There has been attempts made to automate both these problems using computer vision but unfortunately it has not been successful. The reasoning for vision not being successful was due to the fact that light interacts in complex ways with both the material and geometry of a surface, there can be diffraction, surface ray-scattering, subsurface ray-scattering, diffusion, etc. Detecting the amount of light reflected from a beam does not directly inform us about the surface that is reflecting it, even if some inference is made, it will most likely not be robust and have a lot of uncertainties associated with it, this issue is particularly problematic in materials such as rubber which has a matte finish and diffuses incoming light.
+</p>
+
+<p>
+	Both the problems faced by automobile manufacturers can be generalized as edge detection. As of writing the most efficient method for any edge detection for rigid bodies is based on computer vision. The aim of the overall investigation conducted can thus be summarized as edge detection in rigid bodies using a tactile sensor.
+</p>
+
+	<h3>Video Presentation</h3>
+	<p>
+		A video presentation has been made available <ref>video</ref> that tries to summarize some of the key background information and things that had to be done for this project. The target audience for the video presentation are people who may not want to know much technical details about the project but may have an interest in it.
+	</p>
+
+	<h2>Hardware</h2>
+
+	<h3>Industrial Arm</h3>
+	<p>
+		The science of fine motor control is very mature in industry. Especially in manufacturing where even sub-millimeter errors are not tolerated. Thus it made sense to depend on the already available infrastructure. ABB is a large process automation company who make commodity industrial arms used across various industries. From a practical standpoint, using a commodity industrial arm would mean the system devised could be easily employed in existing manufacturing process with minimum friction.
+	</p>
+	<p>
+		Its also key that commodity industrial arms are used. The most likely candidate from the auto industry for which such a system might be useful compete on cost and have a large part of the their manufacturing process already automated using industrial arms of similar type and thus using commodity equipment helps in making it relevant for them.
+	</p>
+	<p>To be specific the industrial arm that was provided was an ABB IRL-120 as shown in <figref>ArmOnly </figref>. The robot has 6 degree of freedom and positional repeatability of 0.01 mm <ref>DataSheet</ref> </p>
 
 <center>
 <figure>
-	<img src="http://i.imgur.com/4YIhjJT.jpg" style="width:100%;" >
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/ArmOnly.jpg" style="width:100%;" >
+	<figcaption tag = "ArmOnly">
+	ABB IRL-120 in Bristol Robotics Laboratory. Most of the research was done in Bristol Robotics Laboratory.
+	</figcaption>
+</figure>
+</center>
+
+<p>
+	The ABB industrial arm comes with two other hardware parts outside of the arm itself. The controller is what the industrial arm is connected to and can be viewed as a server that controls the actual arm. There are two methods of access to the controller :
+	</p>
+	<ol>
+		<li>
+			Via an external display connected to it called the <b>Flex Pendant</b>.
+		</li>
+		<li>
+			Using TCP/IP channels over LAN assuming the controller is also connected to the same network.
+		</li>
+	</ol>
+
+<h3>Tactile Sensor</h3>
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/RubberPin.jpg" style = "width:100%;" >
+	<figcaption tag = "RubberPin">
+		On the right we have an close-up image of the tactile sensor while on the left we have a schematic drawing showing the internal design of the tactile sensor. The gel is transparent and enclosed tightly to prevent the formation of air-bubbles that might introduce noise in our data.
+	</figcaption>
+</figure>
+</center>
+
+The tactile sensor shown <figref>ArmOnly</figref> connected to the industrial arm  has 4 components <figref>RubberPin</figref> - LED Lights, Camera, organic gel and Tactip head. The key component of interest is the tactip head that has extrutions which we call pins on its surface <figref>InvertedTactipHead</figref>.
+	The illumination of the pins due to LED light happens due to the application of white coating on the extrutions. Its an interesting question if we could apply coating of different color to each pin to improve perception. These questions about imporved hardware design is closely linked to the functioning of the entire system and until a robust method for data collection,analysis and testing is not developed we will not be able to answer these questions.
+	<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/PinAE1.jpg" style = "width:100%;" >
+	<figcaption tag = "InvertedTactipHead">
+	We can invert the tactip-head to show exactly how the pins are arranged. ( The coating was done by hand ).
+	By slowing moving your finger over the surface it became apparent that the pins spacing is small enough to register even the smallest of movements.
+	</figcaption>
+</figure>
+</center>
+<p>
+	The tactip head is hemispherical in shape - this is to allow the tactip sensor to fit itself into small edges if needed. The organic gel is placed to allow the tactip head to change its shape, it should be noted that applying  pressure above a threshold will result in tear or leakage.
+</p>
+<p>
+	The design of the tactip-sensor has various implications and importance:
+	<ol>
+		<li>Noise in data - air-bubbles can form resulting in artifacts in our data.</li>
+		<li>Narrowing down feature selection - The position of the pins is a function of surface geometry that is in contact with the tactip head. this intuition helps choose the class of algorithms.
+			</li>
+		<li>Create models that works best for the hardware - because some aspects of the design are easily modifiable <figref>EasyDismount</figref>, models should not break when design aspect of the hardware changes.</li>
+	</ol>
+</p>
+
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/W.jpg" style = "width:100%;" >
+	<figcaption tag = "EasyDismount">
+	A key advantage of the tactile sensor is the ability to change the design and layout of pins. This has huge implication compared to conventional design of tactile sensors which involves a lot of hardware design and hardwiring each "feature pin/point" using a micro-controller. Finding the best way to layout the pin is one of the many interesting question that can only be answered once a a system has been setup to effectively conduct such experiments. An optimized pin layout from an application perspective is only useful to improve perception, but more broadly it will provide powerful insights into the nueral mechanisms by which humans and other animals do perception using friction ridges.
+	</figcaption>
+</figure>
+</center>
+
+<h3>Operating Personal Computer</h3>
+<p>
+	Its important to note the type of hardware the algorithms was tested in. Real time is very important and achieving that is very dependent on the hardware being used.
+	All the empirical time values presented were obtained while running the code on a single Intel i5-3317U @ 1.7 GHz processor. Since its hyper-threaded the maximum allowed clock speed that a single process has access to is 0.85 GHz.
+</p>
+
+
+<h2>External Software</h2>
+<h3>Robot Studio</h3>
+<p>
+	ABB has provided a software tool called Robot Studio <figref>RobotStudio</figref>. It allows a lot of functionality, the relevant functionality for the purposes of this paper :
+</p>
+<ol>
+	<li>
+		It allows the simulation of running specific code on the industrial arm. This is critical as all the testing and debugging needs to be first conducted here to prevent causing any real damage or harm in the physical world.
+	</li>
+	<li>Creating software tools using the SDK provided by ABB.</li>
+</ol>
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/RobotStudio.jpg" style = "width:100%;" >
+	<figcaption tag = "RobotStudio">
+ Screenshot of Robot Studio running custom software written for the purposes of this paper.
+	</figcaption>
+</figure>
+</center>
+
+<h3>A.B.B Software SDK</h3>
+
+	<p>It needs to said about what the designer of the industrial arm had in mind as its use-case. An entire industry exists for programming ABB industrial arms. The method for use is to explicitly program each robot to do a specific task in an assembly line. This programming is mainly supposed to be done either using the flex pendant or Robot Studio, that allows upload of files via TCP/IP.
+</p>
+
+<p>
+	ABB for custom usecase outside of the usual provides a SDK for anyone who is interested in developing software on top of the tools provided by them. The SDK is written using C#. For the purposes of this project entirely new software tools will need to be contrusted even just to automatically upload files on the robot.
+</p>
+
+<p>Some of the things that is required prior to writing any software :</p>
+<ol>
+	<li>
+		Expertise in the working of the software running the industrial arm.
+	</li>
+	<li>
+		Expertise in knowing how to use the SDK.
+	</li>
+</ol>
+
+<h2>Real Time Constraints</h2>
+
+<p>
+ One of the key goals of the algorithms, systems and techniques that has been developed is keeping optimal time efficiency. Its important to remember that even the human brain takes about 13 millisecond to process images from our eyes <ref>13Mil</ref> - this is before it can do any time-series based analysis. Which means it might prove very challenging to create systems that do hard-real time active perception. Nevertheless being able to do active perception close to that limit would be an achievement even if its at a cost of slight inaccuracy.
+</p>
+<p>
+	From a mathematical modeling perspective it may not be clear or seem relevant to do perception in real-time. However there are great many reasons why having real-time systems is critical. In fact <i>not</i> having something do perception at real-time may be the deciding factor at how useful our implementation is.
+</p>
+<h3>Safety</h3>
+<h4>Human</h4>
+<p>
+	My opinion is that human safety is the most important reason why real-time is very relevant for our models.
+	</p>
+
+	The robot must be able to at all times:
+	<ol>
+		<li>
+			Be ready to discontinue its operations.
+		</li>
+		<li>
+			Allow a human operator to take control of the robot.
+		</li>
+		<li>
+			 It should be able predict the creation of hazard <i> before </i> running some function.
+		</li>
+	</ol>
+
+<p>
+	If the implementation is slow to run then the "reaction time" of the system is reduced.  The robot and the systems connected to it needs to be reactive to any conditions that might result in a human operator from being either in direct harm or create conditions that will be unsafe for humans to be near the robot.
+</p>
+<p>
+	To understand this point further its important to re-emphasis the context where the system might be employed. On a typical production line there might be humans doing work besides the robots. Even in a typical lab the robot will be in constant proximity to human operators. Its possible to make sure that every human that is allowed to be near the robot takes the necessarily precautions - however there will always be uncertainty about how far the risks are being mitigated. The goal should be to always strive to create solutions that both know what to do when something <i>does</i> go wrong and minimize circumstances where something <i>can</i> go wrong - and a real-time system helps reach that goal.
+</p>
+<h4>Machines and Parts</h4>
+<p>
+While not as important as human safety, the conditions where the safety of the the robot, the tools connected to it or the parts that its interacting with comes into question happens more frequently. Damage to machine also indirectly increase the risk to humans if the damage and its cause is not addressed.
+</p>
+<p>
+	Operations with the tactile-sensor is a good example of damage to machines. The reason why this is a good example is because of how frequently it was occurring during experimentation. The tactip head is both the most sensitive and easy to damage hardware used while also being the hardware has is always placed under variable force.
+</p>
+
+<p>
+	The tactile-sensor head is soft, and the camera and LED lights attached to its can be easily damaged with increased pressure. The ABB robot has an inbuilt mechanism to deal with high pressure that might damage the robot itself, causing it to stop all operations. However the in-built cut-off pressure is a lot higher than what it would take to damage the tactile-sensor and the camera attached to its end.
+</p>
+<p>
+	Even before the discussion on real-time active perception, there needs to be models for assessing the conditions when the tactile-sensor might be damaged. Having a perception algorithm that does this in soft real-time would be a critical addition to the system.
+</p>
+<p>
+	The other situation where damage to machines and parts is important involves the application context. Modern car parts are usually built out of easily malleable components for safety reasons. The active-perception algorithm should have the functionality to specify the maximum allowed pressure by the tactile sensor. However it could be more subtle than that, theoretically it should be possible to create models that only apply enough pressure to do perception and have a maximum pressure threshold specified by the operator. Due to the trial and error nature of this operation its important to have a reactive system that can quickly respond to feedback loops.
+</p>
+<h3>Training Data</h3>
+<p>
+	For perception data that needs to be collected takes a lot of time since the data-set is large, just to give an rough estimation, it took 3 hours to collect training and test data for a single class. The expectation is about 1000 classes for the toy prototypes made available. Improving time-efficiency is important if the necessary data needs to be collected in time.
+</p>
+<h3>Economical Factor</h3>
+
+<p>
+An important argument for improving time-efficiency is that of cost. Computational power is cheap, and premature optimization is never a good idea. However those ideas should be assessed based on what our goals are.
+</p>
+<p>
+	Even improving the overall time-efficiency by 2X is significant since it means there needs to be twice as less robots at the assembly line. And if the algorithms are parallel in nature, it means there needs to be twice as fewer CPUs to run the algorithm. Its possible to see that some of the optimizations that will be devised improve time efficieny exponentially, making them even useful.
+</p>
+<p>
+	These advantages became even more significant when the system is scaled, and in the context of the application that is industrial manufacturing large scaling of systems wouldn't be unusual.
+</p>
+
+<h4>Hardware Consideration</h4>
+<p>
+	One interesting aspect that is sometimes ignored is that some algorithms can be better for some hardware and perform poorly for others. The most significant of these considerations involves GPU and CPUs.
+</p>
+<p>
+Conventional wisdom in modern computer vision and machine learning is to use GPUs are much as possible - GPUs are also cheaper than CPUs on a <i>per</i> <b>instruction cycle</b> basis. However GPUs are inherently not superior to CPUs for all cases. Both are designed with different execution models. GPUs are fast when you have SIMD ( Single Instruction Multiple Data) type algorithms to run. While CPUs are more all rounded and can handle complex control flow instructions. GPUs also have another cost - that is copying of data - ( image matrix in our case ) - from RAM to GPU memory. GPUs also require special programming knowledge which is uncommon, the type of calculations they do is also not simple to back-trace from - if something is not working correctly debugging is not as straightforward. This is why strong justification is needed for using GPUs before abandoning simpler sequential algorithms.
+</p>
+<p>
+	GPUs are also not well supported and the main well supported implementation known as CUDA by Nvidia is both closed source and require special licensing. These things increase cost and create uncertainly when what is actually needed is reducing cost and allow wide adoption and usefulness of the system.
+</p>
+<p>
+	The other important thing with GPUs appear in the context of scaling, having a separate GPU for doing image analysis for each sensor will not be trivial in terms of cost. If its possible to write an implementation that uses as few CPU cycles as possible its even conceivable to place it on a modern micro-controller ( they do not have GPUs ) to do the image analysis and mount it on the tactile sensor itself, which would be tremendously useful.
+</p>
+
+<p>
+	Controlling the movement of a robot is fairly complex but have been standardized. If the TCP <figref>ArmOnly</figref> needs to be displaced in any direction a fairly long chain of calculations involving derivatives, followed by the inverse kinematic problem needs to be solved. The inverse kinematic problem can be simply stated as a matrix equation that tries to locate the position of each of the joints. There are various techniques for solving the inverse kinematic problem, ABB provides a default function that abstracts away having to do all the needed calculation ( the technique ABB uses is unclear ), but they do also provide with control of each of the joints in case a better technique for solving the problem needs to be used. The important thing to note about the inverse kinematic problem is that many solutions to the inverse kinematic problem results in singularities depending on what technique is bing used to solve it. What this means practically for this paper is that some restrictions will be made to prevent from having to deal with these singularities. Since a decision was made to use ABB provided functions.
+</p>
+<h2>Software Infrastructure</h2>
+<h3>Data Collection</h3>
+<p>
+	Capturing data from a web-camera in a lossless manner is critical to even being doing any meaningful analysis. It seemed unsual that there was <b>no</b> simple tool out there that met this requirement. Basically the requirements are :
+	</p>
+	<ol>
+	<li>	Capture images / video from a 640 x 480 resolution camera at 30 frames per second.</li>
+
+		<li>Save image / video on disk ( without compression ).</li>
+	</ol>
+
+<p>
+This prompted the creation of a tool for image capture. Image capture became a problem due to slow disk writing. Even with Solid State Drive, the time it took to do a file write was orders of magnitude higher than the data that was being captured.
+</p>
+<p>	A new and popular technique in programming called async I/O was used to solve this problem, inspired by how web servers deal with orders of magnitude bottle necks in a system. An illustration of the GUI interface is shown <figref>IO</figref>. This simple tool had considerable impact. Since it gave researchers besides the author of this paper a simple tool that can be used to easily capture all data from the sensor, the data was also time-stamped. The data existed in raw form for anyone to try and solve the problems in active perception. Saving the data as image is also helpful as most video codecs use some form compression algorithm. The only limitation is having too little disk space and for that reason the application also allows monitoring of the disk space of the device its running on.
+</p>
+<p>	Another simple advantage is the choice of camera, Open CV makes it difficult to choose something besides the default camera. Having multiple cameras connected to the device of use is very common, and its always a process of trail and error to find the correct camera. This way its much simpler to choose the right camera.</p>
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/FirstGUI.jpg" style = "width:50%;" >
+	<figcaption tag = "IO">
+		GUI of application created to collect images from the camera in real-time.
+	</figcaption>
+</figure>
+</center>
+
+<p>
+</p>
+<h3>Arm Control</h3>
+
+<p>
+	The API provided by the ABB SDK exists inside .DLL files ( Dynamic Link Libraries ). There are many ways to access these files however ABB also provided a manual that can be used to learn how to build software specific for controlling ABB IRL series robots. The literature for the manual is written for two languages - Visual Basic and C#.
+</p>
+<p>
+	The decision to choose C# was based purely on the fact that C# had more literature and was a much more expressive language than Visual Basic.
+</p>
+<p>
+	Both of these languages required deep expertise in Microsoft specific technology if the needed tools for controlling the robot was to be created.
+
+	After some research an interesting open-source project seemed appropriate to use, this was developed by Microsoft and then abandoned but is still maintained now by a team within Microsoft. The project is known as Iron Python.
+</p>
+<h4>Iron-Python</h4>
+
+<p>
+	Iron Python is developed using something known as the Microsoft Dynamic Language Runtime. The main problem of running Python in .NET was that python was a dynamic language with weak typing however this tool could be used to allow the development of languages with dynamic typing in the .NET ecosystem. Iron Python allows writing of python code that during runtime generates appropriate C# code that can then be executed on the CLR virtual machine. The runtime for Iron Python is different than python and can run any valid Python code that doesn't use any other extensions - ( Open CV is an example of a library that cannot be run directly using Iron Python since it uses C++ extensions). It needs to be emphasized that the iron python runtime is completely separate than the normal python runtime and any use of normal python code needs to be done with caution. What interests us about  Iron Python is that it has access to all of the libraries available in the .NET ecosystems and can access the functions available in any .DLL files written using C# - which includes the .DLLs that was provided to us by ABB.
+</p>
+<p>
+	Iron Python is also much simpler to use than C# for programmers who might not be familiar with C# but know programming in Python - increasing the impact of the code-base. The code was simple enough to be useful to certain other researchers.
+</p>
+<p>
+	MATLAB has some functionality when it comes to accessing .DLL files, however it only works if .DLL file was written using C++ or some static programming language and not managed code like C#. Due to this we had to resort to using alternates like Iron Python.
+</p>
+<p>
+	Due to the uncertainty surrounding the nature of support for Iron Python its best to keep it so that its only use case is to access ABB specific functions. One thing to emphasis at this point is the importance of systems - most of the code specific for the perception is done using MATLAB while the code that implements image analysis for computer visions is done using javascript, the code that is being using to control the robot is done using Iron Python at the server-side while the robot itself receives instructions using RAPID <figref>ArmOnly</figref>. These facts helps to emphasize an important point - and that is that systems integration is a key task along with everything else that is involved. Separate software runtime that needs to be glued together. It may seem like unnecessarily complexity for solving a problem in tactile perception but dealing with such a practical problem in a way to be useful in industry requires using the standards set by it, which also means dealing with the complexities that comes along with it. Dealing with them is as important as the core algorithms. It may not be possible to demonstrate the effectiveness of algorithms being conceived if systems integration is not done correctly.
+	</p>
+	<p>
+	Using systems integration also provides compartmentalization. Allowing the exchange of one aspect of the system for another.
+	Due to the fact that Iron Python is still essentially C#. Iron Python and C# will be refereed to interchangeably in this paper.
+</p>
+
+<h4>Rapid</h4>
+<p>
+RAPID is a domain specific language created by ABB for dealing with robot specific tasks. The code only runs on either a virtual controller in robot studio or the controller. Iron Python can only be used to upload files that are valid RAPID code or send direct signals via TCP/IP to communicate with RAPID during runtime.
+</p>
+
+<h4>Closed Loop Control Algorithm</h4>
+<p>
+A summary of the different components of the software architecture that is having to be dealt with can be seen in <figref>OSI</figref>. The only two part of the flow chart that we are interested in are Iron Python and RAPID.
+</p>
+<p>
+The overall algorithm at the perception level is open loop. But when it comes to execution, Iron Python and RAPID need to have a technique to notify each other about their state of execution. This was a major problem given that there are so many layers between them.
+</p>
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/Broken1.jpg" style="width:60%;" >
+	<figcaption tag = "OSI">
+		A flow-chart expressing the control flow involved in sending any command from a terminal in a windows PC to observing movement on an ABB industrial arm. MATLAB is also part of it above Iron Python but the method was abandoned due to latency.
+	</figcaption>
+</figure>
+</center>
+
+
+<h4>Observer Pattern</h4>
+<p>
+	A common pattern used for solving the problem of syncing between Iron Python and RAPID involves setting up what is known as an <i>Observer</i> Pattern. The idea is to set up a method by which  notifications of the change of some external parameter is alerted and running the necessary sub-routine based on its value.
+</p>
+<p>
+The Observer Pattern can be implemented in various ways based on different factors. The most efficient implementation is direct function invocation by the execution of whatever is rewriting the value of our parameter. This is however only possible if the <b>context of execution</b> - thread, process- is the same. In the given case this does not hold through. The execution doesn't even occur on the  <i>same</i> machine. This is why an observer pattern requires a fair amount of work.
+</p>
+<p>
+	The Observers pattern was implemented <i>three</i> times, each an incremental improvement from the previous based on more in depth understanding of the ABB software architecture.
+</p>
+<h4>Independent Rapid Execution</h4>
+
+	The first algorithm involves independent RAPID execution for each movement using the industrial arm :
+	<ol>
+		<li>
+			Use regex to edit a text file containing RAPID source code and hard code
+			the positional,rotational,velocity matrix onto RAPID source.
+		</li>
+		<li>
+			Upload edited source code file onto robot controller.
+		</li>
+		<li>
+			Request robot controller to execute RAPID.
+		</li>
+		<li>
+			Wait for controller to provide us with RAPID exit code.
+		</li>
+		<li>Repeat </li>
+	</ol>
+	This algorithm requires approximately 4 seconds before any rapid execution. Its important to emphasis we are talking about a single movement and not a single tap, each tap requires 3 separate movement. This meant 12 second waiting period for a single tap.
+	<p>
+	Leaving aside the very poor time performance of the algorithm the more pressing problem was disk-usage. The robot controller has limited hard-disk space and damage to the disk is expensive to fix since special help is required from outside the robotics laboratory. Its important to emphasis that the robot is shared resource and even though an average disk takes a lot of time before wearing out it was not ideal to have an algorithm that might potentially damage an expensive piece of shared resource.
+	</p>
+
+<h4>Using file system for storing state information</h4>
+<p>
+	It was possible to push, write and read files on the robot controller using C# and just using that knowledge an easy was to reduce disk usage would be to only store state information on a separate file rather than use regular expression to hardcore state information onto RAPID source. The only upload  that is needed is this separate file onto the robot controller. The second implementation can be modeled using the state machine diagram <figref>RapidStateMachine</figref> for the TCP/IP signal based implementation, in this implementation a file is treated as a signal and a buffer that stores the nesseary information (positional, rotational and velocity parameters).
+</p>
+<p>
+	One other difference between the final implementation and the current algorithm is that this requires execution until completion, what that means for each separate set of tap it requires rapid execution to restart.
+</p>
+<h4>Event Handlers and Unreliable TCP/IP</h4>
+
+	The data of interest is passed over the network from the controller to the server process over TCP/IP, the chain of execution command for this process is fairly long and not completely transparent - as noted prior - but its important to realize that fundamentally there are network ports involved. The way that TCP/IP port works is similar to how Inter Process Communication and pipes works when dealing with thread and processes that need to pass data, it works as follows :
+</p>
+<ol>
+	<li>
+		There exists a buffer which is maintained and written to by the kernel.
+	</li>
+	<li>
+		The processes notify and pass values to the kernel that writes onto the buffer.
+	</li>
+	<li>Which then, wakes the process on the receiving end and notifies it about the state of the buffer.</li>
+	<li>Control flow is passed onto the process on the receiving end.</li>
+</ol>
+<p>
+The mechanism is fairly low - level and there exists an underlying API that can be used to perform this kernel operation. The API is exposed under the <code>select.h</code> header file in the C programming language. However we do not have to worry about manually writing code using <code>select.h</code> as its the wrong abstraction layer for the problem at hand. Python exposes a higher level abstraction that we can use. In python this abstraction are known as <b>event handlers</b>.
+</p>
+
+<p>
+	Using Event-handlers is the correct way to implement an observable pattern. In fact that was what was initially implemented however two problems were raised:
+</p>
+<ol>
+	<li>multiple firing of event-handler callback - this problem is easy to fix, keep a record of the previous value of the parameter and only when the value changes continue executing.</li>
+	<li>
+	 No trigging of event-handler - This problem cannot be solved under the current implementation. There is no way to know at what indeterminate time in the future do we receive a signal. This signal is essential since it has the state information about the RAPID execution.
+	 <p>Models can be created for the time <i>t<sub>n</sub></i> where <i>n</i> are the different states in RAPID, this type of predictive model is not ideal since there are so many different error conditions in  RAPID, some of which are to prevent damage to the robot or prevent injury to its operators. Under no conditions could our predictions be wrong or unreliable if such a model was to be created.
+	 </p>
+	</li>
+</ol>
+<p>
+	Both these problems are unusual. Referring back to <figref>OSI</figref> what essentially is occurring is the data-flow path that sends data from RAPID to Iron Python doesn't do what is expected. Its also highly unusual since we know that TCP/IP:
+	<ol>
+		<li>
+			garuntees no failure of bi-directional data exchange after establishing of hand-shake, if a failure does occur it will give an appropriate error code - network issues, corrupted data, etc.
+		</li>
+		<li>
+			The data-flow from Iron Python to RAPID does not show any failure based on tests. Notice because of this <figref>OSI</figref> there does not exist a reverse OSI layer for the controller since no knowledge of how the robot controller handles TCP/IP signal is mentioned in the documentation.
+		</li>
+	</ol>
+</p>
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/DirtyCheckingA1.jpg" style="width:100%;" >
+	<figcaption tag = "Heaven">
+		Only the kernel process and controller runtime need to check for changes in network ports and wake up the appropriate thread. A simple analogy might be helpful - imagine 2 postmen in 2 cities, if the postmen does their job correctly then every resident in the cities does not have to constantly visit the post office. However if one of the postmen is unreliable then an entire city would had have to visit their post offices everyday to make sure that they got all their mail. Imagine logistically how inefficient the process would be. This is exactly what is happening here. Due to unreliable TCP connection  the loop cannot be closed.
+	</figcaption>
+</figure>
+</center>
+
+<p>
+	Both the problem can be summarized from <figref>OSI</figref> in its essential form in <figref>Heaven</figref>
+</p>
+
+<h4>Dirty Checking</h4>
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/DirtyCheckingE.jpg" style = "width:100%;" >
+	<figcaption tag = "DirtyCheck">
+		To overcome the flaw from <figref>Heaven</figref> 4 separate threads now need to periodically wake up, this guarantees a closed loop but comes at a cost of increased latency and loss of CPU cycles. This method is called dirty checking and massively increases the latency of the system. 100 ms in our case.  What it means is that reaction time for the robot will be in the order of greater than 100ms. From the postmen and 2 cities analogy its equivalent to having two entire cities visit their post offices every data. It works for the particular case since there is only a single resident in each city. But trying to scale a system with this inherit limitation would not be optimal.
+	</figcaption>
+</figure>
+</center>
+
+
+<p>
+Dirty checking is a pattern that is widely used in many complex software systems, especially ones involving distributed systems to navigate around the problem that is being presented. The way dirty checking works is we read the value of the parameter we are interested in periodically under a time interval <i>t</i>, <figref>DirtyCheck</figref> illustrates how dirty checking works.
+</p>
+<p>
+	Essentially since one data-flow path <figref>OSI</figref> is unreliable we use the other path to provide us with the needed functionality.
+	There are many things we can do using our single path:
+	<ol>
+		<li>Use Iron Python can change data present in RAPID - as long as they are the same types.</li>
+		<li>Iron Python can read the data present in RAPID.</li>
+	</ol>
+</p>
+
+<h4>Rapid State Machine</h4>
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/StateMachine.jpg" style = "width:100%;" >
+	<figcaption tag = "RapidStateMachine">
+		State Machine Diagram showing RAPID execution model using signals and dirty checking.
+	</figcaption>
+</figure>
+</center>
+
+<p>
+	The final implementation is rather simple compared to what we had used previously. The RAPID program that runs on the robot controller can be modeled as a state machine as shown in <figref>RapidStateMachine</figref>.
+	This model is much faster than what we used previously but it has the inherient flaw of using dirty checking (it can be made faster by using a kernel based observer pattern but the documentation for pursuing such a technique was not available).
+</p>
+<p>
+	The RAPID state machine has one parameter that is used to keep an account of the current state. There are three possible states as can be seen from <figref>RapidStateMachine</figref>.
+</p>
+
+<h4>Server Process</h4>
+<p>
+	The rapid state machine receives instructions via TCP/IP from a C# process running on a remote machine. For the C# process - a simple sequential tap sequence was implemented as show in <figref>App</figref>. The server process also allows a human operator to take over via the terminal.
+</p>
+<p>
+	An important safety precaution was also implemented and that is the existence of a bounding box. The industrial arm will not be able to move <b>outside</b> a certain volumetric box. This is for safety and also to prevent failure of the inverse kinematic problem by avoiding regions of singularity.
+</p>
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/App.jpg" style="width:100%;" >
+	<figcaption tag = "App">
+Each two movements forms a single tap on the surface. The C# process sends enumerated displacement position asynchronous.
+	</figcaption>
+</figure>
+</center>
+
+<h2>Pin Detection and Identification</h2>
+<h3>Introduction</h3>
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/RawData.jpg" style="width:100%;" >
+	<figcaption tag = "RawData">
+	An image of the raw data we get from the Camera. The large white region on the circumference are the LED lights while the many small circular regions that are illuminated ( and also white ) are the pins.
+	</figcaption>
+</figure>
+</center>
+
+<p>
+	An example image that needs to be analyzed is shown in <figref>RawData</figref>. Theoretically its possible to pass the raw image data directly onto a bayseian classifier and treat each pixel as a feature, however practically that would mean a lot of images as training data for the classifier had to be constructed, which would not be trivial to collect and annotate. Rather its easier to pre-filter the data which would significantly reduce the amount of required training data. By feature examination its possible to see that the data from the image can be reduced to just the pixels representing the pins.
+</p>
+<p>
+	If the pins are important features and there are about 500 pins per image, identifying each pin would significantly reduce the dimensionality of the spatial data-set. This spatial reduction problem will be referred to as pin detection.
+</p>
+<p>
+	Since the sensor has a limited number of pins. Its possible to track each of the pins in time. This would give nice parametric curves for each of the data points. If pins were not being tracked, the data would have a lot of noise. But by tracking each of the pin, the entire data-set can be reduced to about 500 curves. The problem of pin tracking is thus reduction in dimensionality in time.
+</p>
+
+<p>
+Initially it was decided to try and use algorithms that are already made available in Open CV. For pin detection the function <code>cv2.findContours</code> was used. The algorithm essentially provides a list of continuous edges in the image. The list is filtered by area to provide with a list containing the Cartesian co-ordinates of the centers of each of pin. The problem is <code>cv2.findContours</code> takes about 4 seconds per image. This was order of magnitude higher that the acceptable time interval ( 0.035 seconds ). Its not feasible to simple parallelism or use better hardware. Due to the time it takes for the algorithm to run its not possible to run it on each frame. This prompted the use of another algorithm for pin tracking - the most promising candidate was the Lucas-Kanade Method for solving the optical flow equations that can be used to track each of the Pin. This method for tracking each of the pin helped improve the time-efficiency but it was still almost double of what is acceptable and very inaccurate. Its again possible to try and use new hardware, but its important to emphasis some of the inherit properties and assumptions of this method showing why its not just possible to use better hardware :
+</p>
+<p>
+	Some things to keep in mind about the Lucas-Kanade Method:
+	</p>
+	<ol>
+		<li>
+			It tracks pixels rather than objects / shapes. The pixel it tracks for this case are the center of Pins that is passed from the pin detection routine.
+		</li>
+		<li>
+			It makes the important assumption that each pixel is displaced only in the neighborhood.
+		</li>
+	</ol>
+
+
+
+Both these facts point to the use-case of optical flow, which is for general object tracking - its especially suited for tracking slow-moving object in the data-set (e.g - slow moving truck) but might not be optimal for the type of data in the given sensor, where the pins might be moving quite quickly and are nearby each other. These facts makes it difficult to keep the first two assumptions. Optical flow also does sequential time-series analysis - this is a recurring theme in many time-series based algorithms, where maintaining a sequential chain of calculation is essential. However this is very limiting for any algorithm that needs to run on a modern multi-cored system. An algorithm that is parallel is inherently more superior due to the fact that it can be easily scaled. Its possible to see that by thinking in terms of <i>anonymous relations</i> the possibilities are opened for easy parallelization making it feasible to scale for arbitrary image size and frame rate. It also provides a robust algorithm that doesn't fail against dropped frames.
+</p>
+
+<h4>Pin Detection</h4>
+
+<p>For Pin detection in each image, its possible to seee some problems just from the sample image. The prominent LED lights in <figref>RawData</figref> needs to be ignored as shown in <figref>RegionsToIgnore</figref>, but they closely match the luminosity of the pins themselves.
+</p>
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/RegionsToIgnore.jpg" style="width:100%;" >
+	<figcaption tag = "RegionsToIgnore">
+	We can visually examine the raw data to find the important features and the features to ignore. The Features we clearly need to ignore are the light sources on the sides - they are not effected by deformations on the surface. We may in the future create light sources that dynamically change positions to improve our perception.
+	</figcaption>
+</figure>
+</center>
+
+<p>
+	This is technically not a problem with the data but a justification - one of the first things that most conventional Computer Vision techniques try to do is apply gaussian filter. For the Lucas Kande implementation a gaussian filter was used. By observing <figref>FarBlur</figref> and <figref>LatestBlur</figref> its possible to see that gaussian filter  introduces more noise making it difficult for pin detection.
+</p>
+
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/FarBlur.jpg" style="width:100%;" >
+	<figcaption tag = "FarBlur">
+ By applying gaussian blur of even a small amount of 2 pixel its became even visually to not detect the pins.
+	</figcaption>
+</figure>
+</center>
+
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/LatestBlur.jpg" style="width:100%;" >
+	<figcaption tag = "LatestBlur">
+	By closer inspection its possible to see why this is the case. The data has very little noise. Most of the features have well defined boundaries and usually for Gaussian blur, by application of it its much harder to do any inference.
+	</figcaption>
+</figure>
+</center>
+
+
+<ol>
+	<li>
+		The first step involves gray-scaling and then applying contrast.
+	</li>
+	<li>
+		To explain how an effective pin detection algorithm was constructed, its possible to take a single cross section of the image to do feature examination. Due to the symmetrical nature of the pin, it doesn't matter if its a single row or column. It just has to be straight horizontal or vertical line. This is shown in <figref>SingleLoop</figref> <figref>BandsRep</figref>.
+	</li>
+</ol>
+
+
+
+
+<p>
+This technique used to band the pixels seen in <figref>BandsRep</figref> was inspired by an old one-dimensional clustering technique. The algorithm is called the mean shift algorithm <ref>MeanShift1</ref> <ref>MeanShift2</ref>. The algorithm doesn't need any specification of how many clusters might exist in the data set. The only parameter it needs is the min distance between clusters, for the sensor data-set - its 2 pixels.
+</p>
+<p>By tweaking mean shift its possible to find the centers of all the clusters shown in <figref>BandsRep</figref> and their size. By then thresholding by length its possible to achieve very significant reduction in number of features.</p>
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/SingleLoop.jpg" style = "width:100%;" >
+	<figcaption tag = "SingleLoop">
+		Cross-section of a single row or column from the image data - we can make careful deductions based on just analysing this data in isolation and make significant dimensional reduction.
+	</figcaption>
+</figure>
+</center>
+
+<p>
+	Just by performing threshold based mean shift, empirically the number of dimensions reduce from 307,200 to on average 60,000.
+</p>
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/BandsRep.jpg" style = "width:100%;" >
+	<figcaption tag = "BandsRep">
+		Annotated Diagram of cross-section of a single row or column from the image data showing us how clustering groups of high luminosity data points can give us candiate centers and the size of each one dimensional cluster can be used to determine if the cluster belongs to the LED Light source or if its actually a valid pin.
+	</figcaption>
+</figure>
+</center>
+
+
+<h5>Hierarchical Column/Row Reduction</h5>
+
+<p>
+After conducting a threshold based mean-shift, the remaining data points if plotted on a scatter plot would look like <figref>Scatter</figref>. The reason is simple - mean-shift only clusters for each row. There is still the problem of reducing the excess features column wise. Its not possible to re apply the mean-shift. Since the data is 2-dimensional now.
+</p>
+<p>
+	The algorithm that would work best in this case would be any simple 2 - dimensional clustering like k-means. However because there are 60,000 points its not feasible to do a k-means without scarifying time-complexity. The algorithm that was concieved involves just doing <b>local</b> clustering. Its possible to see how the data lends itself to local search. Most of the relevant points for a single pin would not be more further away than 5 pixel. Since 5 pixel is more than the maximum size of the average pin. Thus by doing a local search involving 5 pixels ( row or column) up and down, its possible cluster all the pins.
+</p>
+<p>
+	The final algorithm can be stated as follows :
+</p>
+<ol>
+<li>Grayscale and contrast.</li>
+	<li>
+		Conduct threashold based mean shift ( row reduction ).
+	</li>
+	<li>
+		Create compact representation of sparse data, however the data is only reduced in one axis, while the other axis still maintains its length.
+	</li>
+	<li>
+		Concatenate adjacent column recursively while performing nearest neighbor clustering ( column reduction ). Limit this step to the radius of search which in this case is just 5.
+	</li>
+</ol>
+<p>
+	The final step is illustrated using <figref>HCR</figref>. The algorithm performs well but has one flaw because of the data that is being used. The radius of search ( 5 pixel ) is <b>greater</b> that the distance between each of the pins ( 2 pixel ). This means some of the pins will clusters with pins from nearby pins. This is again illustrated in <figref>Scatter</figref>. Notice the figure, the features that are nearby the edges also have <i>small</i> length from the mean-shift step.
+	Thus by using the <b>same</b> principal of thresholding in row reduction step, its possible to get rid of candidate centers which are near the edge by removing the ones which have very small length. This reduction is illustrated in <figref>IPins</figref>
+</p>
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/HCR.jpg" style = "width:100%;" >
+	<figcaption tag = "HCR">
+	</figcaption>
+</figure>
+</center>
+
+
+<center>
+<figure>
+	<!--<img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/OneDim.jpg" style="width:100%;" >
+	<figcaption tag = "Scatter">
+	After reducing by bands
+	</figcaption>
+</figure>
+</center>
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/IgnoredPins.jpg" style="width:100%;" >
+	<figcaption tag = "IPins">
+By filtering candidate centers by length its possible to do automatic reduction in 2 dimension when 1 dimensional reduction is being performed.
+	</figcaption>
+</figure>
+</center>
+
+<p>By adding the lower limit of thresholding during row reduction very high accuracy for pin detection can be achieved. These algorithm can be run in parallel on each image  making it much better than lucas kande. </p>
+
+<p>The next part step involves graphical models which are useful for pin tracking based on the reduction applied here.</p>
+
+<h4> Inverse-Difference Image Transform </h4>
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/ClassicDiffClose.jpg" style="width:50%;" >
+	<figcaption tag = "Overlay">
+	How close up near the impulse region looks when subsequent frame image are overlay-ed on top of each other.
+	</figcaption>
+</figure>
+</center>
+
+<p>
+	A technique widely used in the medical sciences to understand data is that of image overlaying. This technique involves taking two images that hold data and applying an appropriate operator to create a new image which gives us as a better indication of the type of model that we might need. We applied a simple difference operation as seen in <figref>Overlay</figref> between two consecutive frames. The darker regions shows Pins from the next frame while the ligher regions are pins from the previous frame. Notice the point of contact between the external surface and our sensor can be seen in the center region where a singular pin actually has <i>not</i> moved between the frames. There are lots of interesting patterns that can be observed but most of them cannot be easily parameterized without significant noise. The important features that needs to be emphasized however can be seen in <figref>Nuclear</figref> where we apply a gray-scale filter and invert the N + 1 frame to better illustrate the Pins. The impulse that resulted in pin positions to change in the sensor was large for this particular image. Keeping that in mind notice:
+
+</p>
+
+<ol>
+	<li>
+		Most pins are displaced by a <i>small</i> amount.
+	</li>
+	<li>
+		Distance between pins in a single image is small and in large numbers of cases the diameter of each pin may be <i>larger</i> than distance between them.
+	</li>
+</ol>
+
+
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/Nuclear.jpg" style="width:100%;" >
+	<figcaption tag = "Nuclear">
+	Classical difference transformations like in <figref>Overlay</figref> are good when there are no overlapping regions. To emphasis the Pins the best transformation is gray-scaling the image, inversion for one of the image and then application if either multiplicative transformation or additive transformation like in the image.
+	</figcaption>
+</figure>
+</center>
+
+<h3>Graphical Model</h3>
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/4YIhjJT.jpg" style="width:100%;" > -->
+	<img src = "./images/OnlyPins.jpg" style="width:100%;" >
+
 	<figcaption tag = "Initial">
-		Each image can be independently analysed to find pins. These pins are <b>anoynmouns</b> in nature - what that means is that <i>relation</i> between pins of subsequent or previous images is unknown.
+		Each image can be independently analyzed to find pins for our graphical model. These pins are <b>anonymous</b> in nature - what that means is that <i>relation</i> between pins of subsequent or previous images is unknown.
 	</figcaption>
 </figure>
 </center>
 
+<p>
+	The image shown on the right of <figref>Nuclear</figref> hopefully gives an indication as to what inspired the useage of graphical model. Specifically a <b> Weighted Directed Cyclic Bi-Partite Graph</b> to represent the relationships between pins from subsequent frames. A partial indication as to what the model looks like is illustrated in <figref>Initial</figref> with just the pins and <figref>NN1</figref> illustrates what an <i>optimal</i> matched bi-partite graph might look like once a singular relationship between each paired pin is established. Its important to remember that the relationship that is estabilished is a separate model than the Pin detection. The relationship could be statistical , geometrical, logical, etc. The relationships will be expressed as <b>edges</b> in the bi-partite graph.
+</p>
 
+<p>
+	Given <figref>Nuclear</figref>, it made intutive sense to use <i>k</i>-Nearest Neighbour to establish the anonymous relationship between the pins. The pin that is <i>most</i> nearest in euclidean space in frame <i>N</i>  + 1, would have the maximum-like-hood of match.
+	To keep the model simple we will only look at <i>k</i>  = 1 case and provide context as to what it would mean to introduce <i>k > 1</i>, showing the generality of the model.
+</p>
+
+<p>
+The graph in <figref>NN1</figref> is an example of <i>optimal</i> match while if there existed a non-optimal graph like in <figref>DAG</figref> the edges will be <b>directed</b>. The difference between optimal matched graph and <i>non</i>-optimal matched graph is simple - an non-optimal matched graph became an optimal matched graph when <i>each</i> vertexes is part of a disconnected subgraph made of two vertex. Another much more intuition but less accurate definition is that the establishment of bijectivity between the disjointed sets of vertexes. When a disconnected subgraph is established the two edges that connect the vertices in the subgraph are opposite in direction but have the same weight - this can be proofed by contradiction since the edges represent the nearest neighbor and the distance between two pins should be the same regardless of the fact which pin the algorithm uses to start the measurement. What this implies is that that graph reduces from a <i>directed</i> graph to a <i>undirected </i> graph  ( this final conclusion is only true for <i>k</i> =  1).
+</p>
+<p>
+	The above definition only applies when <i>k </i> = 1 for nearest neighbor. For <i>k ></i> 1 the optiml graph can be defined more simply as having only <i>one</i> edge that is undirected. The undirected edge defines the best estimate for paired match.
+</p>
 <center>
 <figure>
-	<img  src="http://i.imgur.com/lRgRse5.jpg" style="width:100%;" >
+	<!-- <img  src = "http://i.imgur.com/lRgRse5.jpg" style="width:100%;" > -->
+	<img  src  = "./images/NN1.jpg" style="width:100%;" >
 	<figcaption tag = "NN1">
-		This is the ideal matching. The question I had to investigage was if such a matching was even possible.
+		Bipartite graph with an established relationships between pins - notice that there are no cyclical relationships in our case - why that is the case will be explained and proofed.</figcaption>
+</figure>
+</center>
+<h3>Same Origin Binary Search</h3>
+
+<p>
+	1-NN seem to be key based on the above logic. Thus its possible now to look at a fast technique for doing 1-NN that is critical for the graphical model.
+</p>
+<p>
+	A brute force <i>k</i> nearest neighbor search requires <i>n</i><sup>2</sup> time for <i>n</i> number of pins. A more optimized search algorithm would be :
+</p>
+<ol>
+	<li>
+		Pre-sorting the pins in a single spatial dimension <i>x<sub>1</sub></i>.
+	</li>
+	<li>
+	Conduct search <i>only</i> for values that are withing a range of <i>x</i><sub>1</sub> where the range is defined using a radius <i>R</i></i>.
+	</li>
+</ol>
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/Full.jpg" style = "width:100%;" >
+	<figcaption tag = "PinDistribution">
+	Distribution of the Density of Pins - densely packed near the center while sparely packed as we get closer to the edges.
 	</figcaption>
 </figure>
 </center>
 
+<p>
+Due to the uneven mapping of pins across the spatial dimension <figref>PinDistribution</figref> binary search is the only way to quickly traverse the list regardless of how the overall search algorithm works. However binary search is only good at locating a singular value, what is needed is locating a <i>range</i> of candidate values.
+</p>
+
+Assuming we specify a radius <i>R</i> in <i>x<sub>1</sub></i> over which we will find our nearest neighbor, there exists two values that define the range of values that need to be checked:
+<ul>
+	<li> Upper bound = <i>x<sub>1</sub></i> + <i>R</i></li>
+	<li> Lower bound = <i>x<sub>1</sub></i> &minus; <i>R</i></li>
+</ul>
+<p>
+Any pin that is within this range is candidate for nearest neighbour. Within that range the optimal place to start the search is in the <i>center</i> and moving <i>outwards</i> in both the positive and negative direction until the upper and lower bound is reached. However computationally its not the most optimal method:
+</p>
+<ol>
+	<li> Calculation for indexes is costly for random-access while for sequential-access its a single instruction. </li>
+	<li>
+		Modern compilers use special optimized sub-routines for iterations that do sequential search. Branch predictor circuits might also not be able to optimize performance.
+	</li>
+</ol>
+<p>
+What is needed is an sequential search over the range of value. It needs to be noted that even with an random-access based algorithm the search space that needs to be checked doesn't reduce in size - providing no inherent advantage. Hence the best algorithm would try to locate the lower-bound pin and start a sequential search from there until the upper-bound pin is reached.
+</p>
+
+
 <center>
 <figure>
-	<img  src="http://i.imgur.com/fCTVD31.jpg" style="width:100%;" >
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/BinPacking.jpg" style = "width:100%;" >
+	<figcaption tag = "PinShifting">
+		Diagram showing the individual shifting of pins between each frame.
+	</figcaption>
+</figure>
+</center>
+<p>
+Binary search can now be used to find the lower bound value but by taking advantage of an inherit assumption present in the model, further optimization and simplification can be achieved. The shifting in pin position for most pins is assumed <i>small</i>. The shifting is illustrated in <figref>PinShifting</figref> showing the pin positions as in memory. What this implies is that <i>maximum likelihood</i> of finding the optimal matched pin  is around the <i>same</i> region in our array as for our pin in frame <i>n</i>, however as stated earlier we cannot start our search here but its still a good place to start lookout for the lower bound pin. Keeping this in mind the algorithm can be now formulated as follows :
+
+	</p>
+ Presort the data from frame <i>N</i> + 1. Set our starting index <i>I</i> as the same index value as that of our pin from <i>n</i> and <i>K</i> holds the same definition as <figref>SameOriginBinarySearch</figref>:
+<ol>
+	<li>Do partial lookup at <i>I</i>.</li>
+	<li>
+		If partial lookup returns:
+		<ol>
+				<li>Below lower bound - add <i>K</i> to <i>I</i>.</li>
+				<li>Above lower bound - subtract <i>K</i> to <i>I</i>. </li>
+		</ol>
+	</li>
+	<li>
+		Repeat above steps until the best estimation of lower bound pin is reached and then start a contagious search for nearest neighbor until we reach the upper bound threshold pin.
+	</li>
+</ol>
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/Array3.jpg" style = "width:100%;" >
+	<figcaption tag = "SameOriginBinarySearch">
+		Schematics of steps involved in same-origin binary search. <i>K</i> is an parameter we have to set-up based on how much we think the array elements are shifted. Partial Lookup is our binary search condition where we check if the pin is below or over the lower bound of our threshold range.
+	</figcaption>
+</figure>
+</center>
+<p>
+	Same-Origin Binary Search significantly improves the time efficiency, It has a time-complexity of <i>n</i> compared to a brute  force search that is <i>n</i><sup>2</sup> where <i>n</i> is the number of detected pins. The algorithm is key in making the graphical model feasible as a real-time solution for pin identification. For the current model the Same-Origin Binary Search will only keep 1-nearest neighbor pin, but it can be used to keep track of more nearby pins if needed without increasing the time complexity.
+</p>
+<h4>Non-optimality</h4>
+
+<p>
+	Having established a powerful axiom and representation, its now possible to simply examine the data in terms of the model. The inference that is required from the data is now formulated as a problem that is quite common in graph theory. A function that can effectively do pin tracking will be an emergent property of solving non-optimanlity. To put in more simply - the model is just a tool that is being used as a guide to solve a real world problem and by reviewing the model we can understand the real problem much better.
+</p>
+
+<p>
+The default state of the graph created from the data is non-optimal (unless image frame <i>N</i> and frame <i>N</i> + 1 are the same ). If the pins moves <i>very slowly</i> the bi-partite graph will <i>still</i> be optimal. However once pins start to get closer to a different pin between consecutive frames the graph became non-optimal. This phenomenon is illustrated in <figref>3Pins</figref>
+<p>
+
+<center>
+<figure>
+	<!-- <img  src = "http://i.imgur.com/fCTVD31.jpg" style="width:100%;" > -->
+	<img  src  = "./images/NonOptimal.jpg" style="width:100%;" >
 	<figcaption tag = "3Pins">
-
+		Its easy to capture condition for non-optimality with just 3 pins. Notice that <i>R</i><sub>2</sub> < <i>R</i><sub>1</sub>. What is illustrated here is the fact that if pins from frame <i>n</i> + 1 are displaced by an amount that is greater than half the distance  to the nearest pins  from frame <i>n</i> ( which is small anyway implying that this happens quite frequently), we create edge structure that is the condition for non-optimality.
 	</figcaption>
 </figure>
 </center>
+<p>
+	Another frequent occurance that results in non-optimal graph structure, is that of having different cardinality between the disjoint vertex sets - frame <i>n</i> and frame <i>n</i> + 1. This cardinality mismatch occurs  due to the following reasons:
+	<ol>
+		<li>
+			If the pins are moving fast enough the camera will capture multiple sets of photons from the same pins - this raises artifacts in the image know as motion blur. Resolving motion blur is a separate problem and to some extent is best solved using better hardware, since even by visual inspection its not obvious where the pin is. Using a camera with higer frame rate is the simplest way to remove the uncertainty raised in our model, and the current implementation can be easily optimized to take advantage of it. Motion blur using our test data created situations where 100s of pins went missing between frames.
+		</li>
+		<li>Sometimes pins may not be detected by the pin detection algorithm - this occurs when the pin may be very weakly illuminated or if the pin is close to the regions of ignored LED Light source.
+		</li>
+	</ol>
+	To resolve the issue of unequal cardinality, fixed cardinality is assumed. This assumption is fair due to the fact that the number of pins that exists on the sensor is <i>always</i> the same. The best method to find the fixed cardinality is to create the initial set when the tactip is not subject to external tension. When the fixed cardinality is being set - the euclidean distance of each pin is also stored. This is done to resolve the problem of <b>stability</b>	.
+</p>
+<h4>Stability</h4>
+<p>
+	 In a real production setting the sensor will be switched on for long period of time collecting data. Up until now the focus has been between frame <i>N</i> and <i>N</i> + 1. However even small errors in pin tracking per frame will result in large errors over time. Loosing track of 5 pins in 550 pins <i>seems</i> like a small error but that error is happening <i>per frame</i>, the error quickly builds up for the current model especially when the applied force is quite large throughout.
+	</p>
+	<p>
+		The distinction between error and stability is that error is acceptable, the algorithm should be robust enough to handle loosing track over a few pins, however stability is the prevention of letting these errors form a self feedback loop where it starts to interfere with the pin tracking of other pins in the sensor or allowing these errors to persist. The ability of self correction when some pins are lost what stability means for our model. It needs to noted that there are two kinds of stability - <b>local</b> and <b>global</b>. Global stability is defined as average error over time-scale under which the same fixed cardinality is used while local stability is expressed over time-interval between each tap or more formally intervals when the sensor is under no external tension.
+	</p>
+	<p>
+		The relationship between stability and non-optimality is an interesting one. Solving non-optimality locally doesn't <i>guarantee</i> stability. This reflect the incomplete formulation of the problem using <i>k </i> = 1 as solving non-optimality <i>should</i> guarantee stability.
+	</p>
+	<h4>Bayseian Prior</h4>
+	<p>
+	 To guarantee global stability a concept from bayseian statistics is used, assuming the nearest neighbor to be the evidence, then the starting euclidean position at rest can be assumed to be a strong prior. The pins regardless of individual impulses causing displacement will at some point return back to their original position. If the graphical model is unable to provide a good estimation for the position of the pin in frame <i>n</i> + 1, the prior can be used as the best estimate, guaranteeing global stability. It can be also be though of as a fail-safe mechanism. However this guarantee of global stability comes at a cost of local stability. Test show that this prior does work empirically, even if it lacks sophistication. One of the key ways to extend the graphical model would be to create more sophisticated ways to improve the local stability using better inference techniques without effecting the global stability.
+</p>
+<p>
+	The Bayesian prior that is being used can also be viewed as using <i>k</i>-NN <i>over</i> time. The graphical representative works in both the time and space dimension. There are edges connecting to each pin to some pin in the near future and some pin at every time interval of the past. Thus the prior is using a single edge that connects <i>N = t </i> - 1 to <i>N</i> = 0 where <i>t</i> is the current time. An illustration of this much more general graphical model is shown in <figref>FullGraphicalModel</figref>. Hence by introducing bayesian ideas we can think of both the spatial and time domains as being just connected by edges and think of these edges as data that can be used to provide the best estimation for the current position of the pin. By this logic, for the current implementation only two edges are used - one in space and another in time.
+</p>
 
+
+<h4>Maximum Matching Algorithm</h4>
+<p>
+	Having described the problem of non-optimality of matching its possible now to examine the techniques used to resolve it. Finding solutions to different types of matching problems has a rich history in graph theory. However due to formulation of the graphical model its difficult to find an exact algorithm in the literature that can solve for non-optimality as defined for the problem at hand. There is also the case of "No free lunch theorem", which means that we use the data as a guide to make fair assumptions to simplify the implementation without having to invoke more sophisticated classes of algorithms. Nevertheless the techniques used were inspired by algorithms from literature even if the final model is vastly different from any of them.
+</p>
 
 <center>
 <figure>
-	<img  src="http://i.imgur.com/5mH2Wbz.jpg" style="width:100%;" >
+	<!-- <img  src = "http://i.imgur.com/5mH2Wbz.jpg" style="width:100%;" > -->
+	<img  src  = "./images/DAG.jpg" style="width:100%;" >
 	<figcaption tag = "DAG">
+	How <figref>3Pins</figref> would look if represented using a bigraph. <i>D</i><sub>1</sub> and <i>D</i><sub>2</sub> are <i>R</i><sub>1</sub> and <i>R</i><sub>2</sub> respectively. Assume that this is the <i>only</i> data that was presented. The maximum matching would then be determined by the finding the minimum of set [<i>D</i><sub>1</sub>,<i>D</i><sub>2</sub>].
+	</figcaption>.
+</figure>
+</center>
 
+<p>
+	Non-optimality as shown in <figref>3Pins</figref> would look look like <figref>DAG</figref> under the current model. Analysing isolated graph stucture and determining the most logical step is a powerful reductionist technique, for both exploring algorithmic options and explaining the working of the algorithm piece at a time. In the case of non-optimality as in <figref>3Pins</figref> the edge with the lowest weight is preserved while the other edge is ignored and removed. Since fixed cardinality is assumed and the value for it is fixed from the beginning, in the case of <figref>3Pins</figref> the cardinality would be 2. We have a case of a missing pin. In this situation the bayseian prior is invoked for the vertex that has no edge.
+</p>
+<p>
+	The final implementation would actually just do the above step if that was the only information present in the bigraph! Before introducing more vertexes in the model its helpful to think about what is actually happening in the sensor. To illustrate  this a restriction was made - <i>assume</i> the sensor had a single spatial dimension instead of, two or to put it in another way - movement in one of the spatial dimension is negligible . Pin position can be plotted against two discrete time interval as shown in <figref>SingleSpaceBall</figref>. Assume that the plot represents all the information that is present in the model. The actual <i>correct</i> matching is shown using the enumeration at the top and bottom in <figref>SingleSpaceBall</figref>.
+</p>
+
+<center>
+<figure>
+	<!-- <img  src = "http://i.imgur.com/hfk4GpC.jpg" style="width:100%;" > -->
+	<img  src  = "./images/beforeAnnot2.jpg" style="width:100%;" >
+	<figcaption tag = "SingleSpaceBall">
+	The vertical axis represents time, while the horizontal axis represents a single dimension in space. The numbers on the top and bottom represent the actual matching. Notice that pin 3 from <i>n</i> + 1 has a nearest neighbour of pin 2 in frame <i>n</i>.
+	</figcaption>
+</figure>
+</center>
+
+<p>
+The reason why the matching is correct is fundamentally statistical. A simple way to prove this is applying smaller force but maintaining the overall impulse and displacement. The pins would move much slower allowing the capture of much more frames between <i>n</i> and <i>n</i> + 1, non-optimality will <b>not</b> occur since the pins will be moving far too slowly. This way each pin gets essentially tracked just by using nearest neighbour, giving the correct matching. This tracking information can now be used to examine situations where the applied force is higher. An interesting implicit assumption that is being made is that the pin displacement stays <b>invariant</b> with respect to <b>magnitude</b> of applied force. Why that is the case is not simple to prove without using a completely different approch to modelling where actual physics is used rather than making statistical observations. Also using actual physics from contact mechanics requires more parameters, that are not available if the images are the only input.
+</p>
+
+<p>
+A thing of note is the fact the simple model of nearest neighbour is very good if the average displacement is all the pins is near zero, but its <i>also good</i> if the pins were more <b>sparsely</b> distributed. However the spacing between each pin is small enough that under reasonable applied force the model of nearest neighbour is not good enough and creates conditions for non-optimality. Empirically, tests show that on average 16% of pins are incorrectly identified under reasonable applied force by the robot using just nearest neighbour match. The error rate is also not helped by the fact that its additive as noted previously ( meaning for the next <i>n </i> + 1 frame we expect an error rate of 33%,49%, . .).
+</p>
+
+
+<p>
+	The lack of useful information in <figref>SingleSpaceBall</figref> was done on purpose, it was an exercise to help make intutive sense on how the problem of matching can be solved. <figref>ConnectedSpaceBall</figref>  is an illustration of <figref>SingleSpaceBall</figref> with directed nearest neighbour edges. Some critical observations can be made :
+</p>
+<ol>
+	<li>There exists a closed walk in each sub-optimal sub-graph. Proof will be provided shortly.</li>
+	<li>
+		If cardinality of each non-optimal sub-graph is <b>odd</b> then there exist a free vertex in the graph that cannot be matched with any of the edges. This means the 1-NN graphical model has insufficient information to create optimal matches for all vertices, either Bayesian prior or some extension of the model is required. Its helpful to note this condition as they are the shortcoming of the current model.
+	</li>
+</ol>
+
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/UdIuOGa.jpg" style="width:100%;" > -->
+	<img src = "./images/AfterAnnot.jpg" style="width:100%;" >
+	<figcaption tag = "ConnectedSpaceBall">
+	Ilustration of running Same Origin Binary Search to find <i>k</i> = 1 nearest neighbour for each pin in <figref>SingleSpaceBall</figref>. Two graphs from <figref>DAG</figref> can be seen, highlighting the conditions for more complex non-optimality.
+	</figcaption>
+</figure>
+</center>
+
+<p>
+	The illustration in <figref>ConnectedSpaceBall</figref> gives us very important information regarding the <i>k</i> = 1 nearest neighbour assumption. The fact that for a given pin there exist a pin which is nearest neighbour to it, <i>doesn't</i> necessarily mean that that certain pin is nearest neighbour the initial pin. Coming back to the raw data its possible to see geometrically how these occur. An illustration of it as it would be seen using the classic difference image transform is shown in  <figref>FarAway</figref>. Using the matching information from <figref>SingleSpaceBall</figref>, edge with radius R<sub>1</sub> can be removed from <figref>FarAway</figref> resulting in an optimal sub-graph.
+</p>
+
+
+
+<center>
+<figure>
+	<!-- <img src = "http://imgur.com/AGGPSWP.jpg" style="width:100%;" > -->
+	<img src = "./images/BetterRep.jpg" style="width:100%;" >
+	<figcaption tag = "FarAway">
+	Viewing non-optimal subgraph from <figref>ConnectedSpaceBall</figref> in isolation. Notice its a X-Y-Time plot.  The time dimension is viewed using change in color.
+	</figcaption>
+</figure>
+</center>
+
+<p>
+	An important observation when analyzing sub-graph like in <figref>FarAway</figref> taken from graph <figref>SingleSpaceBall</figref> involves the weight of the edges. The weight of each edge is simply the euclidean distance between the pins. This value <i>will always decrease </i>, when a walk is performed on the sub-graph <i>regardless</i> of the starting vertex in the sub-graph. Why that is the case will be proofed for more complex sub-graphs but its possible to see it happen if each of the radius is drawn in a plot <figref>Mixed</figref>. This constant decrease has some interesting implications that can be taken advantage of when constructing a computationally efficient algorithm, things to note :
+	</p>
+<ol>
+<li>
+		This lowest edge weight will always occur at the end of the walk. In other words the edge weights are naturally desending in order for a walk.
+	</li>
+	<li>The operation of identifying of the vertexes in the subgraph and then sorting by edge weight gives the same output as performing a manual walk, this condition specifically helps to encode the algorithm using more compact linear algebra, rather than conventional tree or linked list graphical structures. </li>
+</ol>
+
+
+<p>
+	The radius drawn in <figref>Mixed</figref> can be viewed as "area of 1-NN search", it can be used to perform a though experiment. Imagine a pin was identified <b>outside</b> the sensor region. It is clearly noise but if the pin tried finding 1-NN it would arrive at a pin inside the sensor somewhere, that pin inside the sensor will however 1-NN with a pin that is inside the sensor due the abundance of pins. This is one of the many reasons for not depending on 1-NN exclusively as a mechanism for best estimation of pin position,<b> even </b>if the pin movement is slow. Doing a graph walk is essential to get rid of random noise that occurs near the edges and outside the sensor.
+</p>
+<center>
+<figure>
+	<!-- <img  src = "http://i.imgur.com/hfk4GpC.jpg" style="width:100%;" > -->
+	<img  src  = "./images/Mixed.jpg" style="width:100%;" >
+	<figcaption tag = "Mixed">
+ Drawing subgraph with radius helps bring the geometrical computation performed in nearest neighbour into the graphical model.
+	</figcaption>
+</figure>
+</center>
+
+<p>
+	If an algorithm that does a walk for each non-optimal subgraph was to be implemented, an important and pressing question needs to be answered - is it possible for non-optimal sub-graphs to exist that have closed walks of <b>more</b> than <b>two</b> vertices. Specifically what is shown in <figref>CyclicGraph</figref>. While implementation it was difficult to test each of the algorithms without coming to firm conclusions about the model. Most often than not, graph traversal resulted in infinite loops. The reason for this was because it proved difficult to control time-complexity for search without resorting to some probabilistic search technique for locating nearest pin, which traded some accuracy for speed. Before same origin binary search was implemented - which combines <b>good</b> probabilistic assumption along with deterministic binary search - it was difficult to test failures for the graph traversal algorithm. The initial probabilistic search assumption was doing brute force but terminating when a pin that was located within a range that guarantees 0.99 accuracy, the algorithm proved not only to not provide much in terms of time efficiency but also resulted in a 0.01 error that caused the creation of many infinite loops in graph traversal, compared against the probabilistic assumption made in same origin binary search, which only approximates the starting index of search but not the <b>actual</b> data. Implementing the initial bad search technique made it important to note that the <i>k</i> = 1 search had to be very accurate to prevent closed walks of more than two vertices. It became important to create a proof even if its abstract, to properly test failures in the implementation. The guarantees provided by the proof was key in the implementation of same origin binary search as a mechanism to test for really rare and small errors.
+</p>
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/Split.jpg" style="width:100%;" >
+	<figcaption tag = "CyclicGraph">
+	On the left a cycle as it might exist on a bi-graph, while on the right - unraveled sub-graph on a hypothetical X-Y-Time axis to emphasis its cylcic nature. Its also important to note that this illustration is just isolating a small part (that <i>might</i> exist) of a bi-partite graph.
+	</figcaption>
+</figure>
+</center>
+
+
+<p>
+	Its possible to construct an algebraic proof that might be more rigorous but a simpler more intuitive proof will be provided using geometry and contradiction. The proof has five simple steps expressed using
+	<figref>Stage1</figref>
+	<figref>Stage2</figref>
+	<figref>Stage3</figref>
+	<figref>Stage4</figref>
+	<figref>Stage5</figref>
+</p>
+<p>
+		First it needs to be emphasised that:
+</p>
+<ol>
+	<li>
+		A minimum of 4 vertices are required to create a closed walks of more than two vertices. It will be possible to show that the proof scales for 4 + 2<i>n</i> vertices.
+	</li>
+	<li>
+	Search algorithm will find the <b> global </b> nearest neighbour - assume same origin binary search is not yet implemented, since the proof doesn't require a fast search a brute force search can be assumed as the abstract search technique being used.
+	</li>
+</ol>
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/Stage1.jpg" style="width:100%;" >
+	<figcaption tag = "Stage1">
+	<b>Step 1</b> : Lets assume a single pin from image <i>N</i>. The inclusion region shows the search algorithm performing its task. There can only be <b>one</b> pin in the inclusion zone, once that pin is found the algorithm terminates.
+	</figcaption>
+</figure>
+</center>
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/Stage2.jpg" style="width:100%;" >
+	<figcaption tag = "Stage2">
+	<b>Step 2</b> : The pin represnted by the tag (1) now tries to look for its 1-<i>NN</i>. The arrows show the search direction. The inclusion zone is the area where we expect to find 1-<i>NN</i> pin. The pin cannot be found in the exclusion zone since if there exists a pin in that region a contradiction would exist with <b>Step 1</b>.
+	</figcaption>
+</figure>
+</center>
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/Stage4.jpg" style="width:100%;" >
+	<figcaption tag = "Stage3">
+	<b>Step 3</b> :  Repeating the search with the pin tagged (2) from image <i>N</i>. Notice that the radius of search decreases with each step, if the radius was <b>increasing</b> there would also be contradiction from the previous steps. This proves the decreasing nature of edge weight for the graphical model.
+	</figcaption>
+</figure>
+</center>
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/Stage3.jpg" style="width:100%;" >
+	<figcaption tag = "Stage4">
+	<b>Step 4</b> : Pin with tag (2) finds a pin from image (<i>N</i> + 1) tagged as (3). This is the last vertex, if a closed walk with 4 vertexes does exist, somehow this pin needs to match with the inital pin.
+	</figcaption>
+</figure>
+</center>
+
+
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/Stage3_1.jpg" style="width:100%;" >
+	<figcaption tag = "Stage5">
+		<b>Step 4</b> : If a 1- <i>NN</i> was performed with the final pin (3), the pin has a maximum radius of search before it matches with pin (2). The inital pin doesn't exist within this maximum radius of search. Even if it did exist it would exist in the exclusion region which also contradicts the search performed in <b>step 1</b>. The only possible match is either pin tagged (2) or a pin that exist within the boundary of the possible maximum radius. Its also important to note that regardless of how many more vertices are introduced its not possible to create a cycle. The vertices will always have to exist outside the exclusion region.
+	</figcaption>
+</figure>
+</center>
+
+<h4>Implemention of Matching Algorithm</h4>
+<p>
+	Having examined all the various reasoning and assumptions its possible to now express a simple maximum matching algorithm that can be used :
+</p>
+<ol>
+	<li>
+	 Perform pin identification and same origin binary search for each pin in image <i>n</i> and <i>n </i> + 1
+	</li>
+	<li>
+		Start from any pin in the bi-partite graph ( on which a walk is not performed ).
+	</li>
+	<li>
+		Start a walk on the pin while keeping a record of all vertex in the walk. If a closed walk is found match the two vertex in the closed walk and then back trace the walk matching each pairs of vertices.
+	</li>
+	<li>
+		If the number of vertex is odd then a single vertex at the end will remain, in which case invoke Bayesian prior.
+	</li>
+	<li>
+		Repeat from step 2 until there are no more pins left to ID in the bi-partite graph.
+	</li>
+</ol>
+
+<p>
+	It maybe helpful to refer back to <figref>SingleSpaceBall</figref> and <figref>ConnectedSpaceBall</figref> to see how the algorithm does the optimal enumerated match. Something that is left out is explaining why the algorithm would work for the general case.
+</p>
+<p>
+	The reality is the algorithm will <b>not</b> always provide correct matching for all non-optimal sub-graph, derived from the data. The underlying relationship will always be statistical - which means there will always be some error. The top diagram in <figref>Transition</figref> shows justification for choosing such a strong <b>bias</b> in the model. A single overlay transform image doesn't do justice, since the observation was made after studying a lot such overlay-ed images to come to the conclusion.
+</p>
+<p>
+	There is another view that can be taken, if the data is not convincing. What the algorithm tries to do is reduce the <b>sum </b> of <b>all</b> edge weights in each non-optimal sub-graph. This makes the model very elegant but caution needs to be taken to make sure that this view is accurate with the data.
+</p>
+
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/Transition1.jpg" style="width:100%;" >
+	<figcaption tag = "Transition">
+ A simple illustration summerizing the entire process of extracting the most useful features and establishing relevant relationship.
+	</figcaption>
+</figure>
+</center>
+
+<h4>Managing Time Complexities</h4>
+
+
+
+<p>
+	The algorithm presented for maximizing match using graph traversal is fairly simple but computationally it has a few redundancies:
+</p>
+<ol>
+	<li>
+		Many vertices are visited multiple times due to backtracking and performing walks starting from <b>all</b> vertices in the graph.
+	</li>
+	<li>
+		The underlying data-structure used were two separate arrays, regardless of what type of data-structure is chosen, there will be a lot of random access for array element. A lot of "jumping" between index values and also if separate arrays are used - switching between array for each iteration step.
+	</li>
+	<li>
+		The time-complexity for the algorithm is <i>n</i><sup>2</sup>. This is the main reason why the algorithm takes a lot of time even if the data-set is small.
+	</li>
+</ol>
+<p>
+	A simple deduction involving non-optimal sub-graph helps significantly simplify the computation. Assume a simple graph of 3 vertices illustrated as <figref>HiddenMagic</figref>. It it possible to deduce the hidden value for one of the edge given the others.
+</p>
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/Hidden11.jpg" style="width:100%;" >
+	<figcaption tag = "HiddenMagic">
+Edge 2 has the same weight as edge 3. Edge 3 is also the smaller edge that has an <b>incoming</b> direction for pin 2. We know from previous discussion that the pin with the smallest edge weight is part of a closed walk. The final useful fact is that <b>any</b> vertex can have <b>more</b> than 2 <b>incoming</b> directed edge.
+	</figcaption>
+</figure>
+</center>
+
+<p>This useful property now allows to construct a very quick algorithm that does a different set of operation but gives the same results :</p>
+<ol>
+	<li>Perform same origin search for every vertex from  frame <i>n</i> + 1 <b>only</b> to find its nearest neighbour from frame <i>n</i>.</li>
+	<li>
+	Each of the 1-NN pin found from same origin search <b>would</b> have an associated ID. Thus sort the set of vertices from frame <i>n</i> + 1 based on the ID of matched pin in frame <i>n</i>.
+	</li>
+	<li>
+		Sequentially walk the ID enumeration to find clusters of vertices with the <i>same</i> id. For each cluster match only the vertex with the lowest edge weight.
+	</li>
+	<li>
+	Invoke Bayesian prior for any remaining pins.
+	</li>
+</ol>
+
+<p>
+	The algorithm presented above has a time complexity of <i>n</i> making it a lot superior than just brute force graph traversal. This shortcut however only works for 1-NN.
+
+</p>
+<h4>Limitation of 1-NN Maximum Matching </h4>
+
+<p>
+	The overall algorithm devised has a very important limitation. As the speed of the industrial arm is increased, something interesting starts to happen with the pins, as shown in <figref>Flaw</figref>. If a pin moves more than half the distance between it and the nearby pin, it will match with the nearby pin <b>assuming</b> that the nearby pin in the next frame has R greater than R<sub>1</sub>, where R is the radius of 1- NN search for the nearby pin from frame <i>n</i> + 1. This matching is inaccurate. The limitation is sort of expected from the model itself but it only starts to be visible and cause a lot of inaccuracy in the local stability when the speed of the robot is increased, more than what is normally the safety operating range in an experimental setting.
+
+
+<center>
+<figure>
+	<!-- <img  src = "http://i.imgur.com/43C1lLT.jpg" style="width:100%;" > -->
+	<img  src  = "./images/Flaw.jpg" style="width:100%;" >
+	<figcaption tag = "Flaw">
+ Taken from <figref>FarAway</figref>, how would the matching look like when R<sub>1</sub> < R<sub>2</sub>. It will create a very inaccurate match [ assuming the overall graph is similar to <figref>SingleSpaceBall</figref> ].
+	</figcaption>
+</figure>
+</center>
+
+<p>
+	The other limitation is missing pins. The threshold values taken for row clustering and hierarchical column reduction were purposely taken to be high. These values made it difficult for noise to pass through as a feature, but made it very easy to miss some weakly identifying features. This means the only problem for the pin identification step is having to deal with missing pins. To some extent this problem arises out of increased speed too due to having to deal with motion blur, but it presents itself when some pins get angled in a certain way as to not be well illuminated.
+</p>
+
+<p>
+	 Overcoming these limitation is both important from a research in tactile-perception standpoint and also application in manufacturing standpoint. The added impact in research is accuracy while for manufacture it is economical and time.
+</p>
+<h4>Model Extension for 1-NN Maximum Matching</h4>
+
+<p>
+	Extensions to the model give a lot of new tools that can be used to overcome the different limitations presented by a simpler model.
+	The initial implementation did involve a more complicated graphical structure, but it became really difficult to reason about exactly how to use the information. This is why a more simpler model became easier to work with.
+</p>
+<p>
+	The simpler model also allowed very important simplification and conclusions to be made which may not have been possible with a more complicated graph. It it now possible to look at a small extension of the algorithm using 2-NN. Using 2-NN instead of 1-NN means :
+</p>
+<ol>
+	<li>
+		Each vertex would now have two <b>outgoing</b> directed edges.
+	</li>
+	<li>
+		Its possible to show the proof used for 1-NN for 2-NN. Closed walks of <b>more</b> than <b>three</b> vertices is not possible for 2-NN due to the inclusion region shown in <figref>Stage5</figref>. An interesting conjecture can be raised from the two proofs that is based on the inclusion principal - for <i>k</i>-NN the <i>maximum</i> length of any closed walk is <b>always</b> <i>k</i> + 1.
+	</li>
+	<li>
+		An inference model needs to be developed on how to best use the extra information presented by having two nearest edges.
+		It will be shown how <b>both</b> the limitations for 1-KK which appears to be separate issues (one is missed pins and the other is increased speed) can be simultaneously dealt with using the same idea.
+	</li>
+	<li>An important difference between 1-NN and 2-NN is that for 2-NN any walk on a sub-optimal sub-graph <b>will</b> not always have a decreasing edge weight. This means the faster technique used to simplify graph traversal for 1-NN cannot be used.</li>
+</ol>
+
+<h4>Tackling Hidden Pins using 2-NN</h4>
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/Hidden12.jpg" style="width:100%;" >
+	<figcaption tag = "Hidden12">
+	Assume there are 3 pins. It would seem the best optimal matching would be matching pin 3 with pin 2 and leaving out pin 1 for the bayseian prior.
+	</figcaption>
+</figure>
+</center>
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/HiddenNamed.jpg" style="width:100%;" >
+	<figcaption tag = "HiddenNamed">
+However if assume there exists a hidden pin that was not detected, maybe it was missed in the pin detection phase. Now it seems the old matching was flawed.
 	</figcaption>
 </figure>
 </center>
@@ -41,9 +1246,10 @@
 
 <center>
 <figure>
-	<img  src="http://i.imgur.com/43C1lLT.jpg" style="width:100%;" >
-	<figcaption tag = "Mixed">
-
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/Hidden9.jpg" style="width:100%;" >
+	<figcaption tag = "Hidden9">
+	The interesting thing is the pin may either exist in on the right line in this image or on the left like in <figref>Hidden10</figref>.
 	</figcaption>
 </figure>
 </center>
@@ -51,9 +1257,23 @@
 
 <center>
 <figure>
-	<img  src="http://i.imgur.com/hfk4GpC.jpg" style="width:100%;" >
-	<figcaption tag = "Mixed">
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/Hidden10.jpg" style="width:100%;" >
+	<figcaption tag = "Hidden10">
+However the probability of a pin existing on the left is higher since the radius tagged 7 is greater radius tagged 3.
+	</figcaption>
+</figure>
+</center>
 
+
+
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/N-1Images1.jpg" style="width:100%;" >
+	<figcaption tag = "N1Images1">
+	In situations where two hidden states exits it makes sense to choose the one with the smaller radius which is the hidden state tagged 1 in this example.
 	</figcaption>
 </figure>
 </center>
@@ -61,9 +1281,145 @@
 
 <center>
 <figure>
-	<img src="http://i.imgur.com/UdIuOGa.jpg" style="width:100%;" >
-	<figcaption tag = "Mixed">
-
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/Confused2.jpg" style="width:100%;" >
+	<figcaption tag = "Confused2">
+	In case for the next image our "hunch" was correct, there will be no conflict and the matching will continue to be right. pin tagged 10 will be matched with pin tagged 16.
 	</figcaption>
 </figure>
 </center>
+
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/Confused1.jpg" style="width:100%;" >
+	<figcaption tag = "Confused1">
+The problem arises when the "hunch" was <b>wrong</b>. The problem with 1-NN in that the pins start drifting away once the start missing. It will be difficult for pin 10 to match with pin 15 or pin 16.
+	</figcaption>
+</figure>
+</center>
+
+
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/N+2Images1.jpg" style="width:100%;" >
+	<figcaption tag = "FullGraphicalModel">
+However if we used 2-NN , we retain information that will allow retaining of the correct matching. Notice that by simply matching 10 with its 2-NN and doing the same with pin 11. There was no need to start invoking the Bayesian prior.
+	</figcaption>
+</figure>
+</center>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>Software Implementation and Demo</h3>
+
+<p>
+	The implementation of the graphical model is a really important component of being able to use the algorithm. A lot of parameters need to be set for the algorithm to robustly identify the pin. The algorithm is not completely autonomous and requires a fair bit of supervision to get the correct results. However these parameters need to be set up once for each different design of tactile sensor. Due to these reasons A simple to use GUI is essential if we expect it to useful in the real world where both technical and non-technical operators might be expected to use it.
+</p>
+<p>
+	For research purposes Its useful to know how changes in the algorithm effects pin detection. What type of models need to be developed requires some tool for us to inspect the data we are observing.
+	Even though while construction of the needed algorithms we used tensors and matrix representation since that is how its stored in memory, the final judge of how good the algorithm performed was done visually by overlaying the positional information about each pin onto the original image. This process was repeated for pin identification - and the current limitations of the algorithm is also derived by patient observation of overlay-ed ID information onto the raw data. It best to think of it as a testing tool for our algorithm.
+</p>
+
+<p>
+	A link is provided where you can play with the GUI <ref>GUI</ref>.
+</p>
+
+<p>
+	A link to website for this paper <ref>paper</ref>.
+</p>
+
+
+
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/tracking.jpg" style="width:100%;" >
+	<figcaption tag = "l">
+Screen Shots of GUI
+	</figcaption>
+</figure>
+</center>
+
+
+
+<center>
+<figure>
+	<!-- <img src = "http://i.imgur.com/Y8HiTy4.jpg" style="width:100%;" > -->
+	<img src = "./images/time.jpg" style="width:100%;" >
+	<figcaption tag = "l">
+Screen Shots of GUI
+	</figcaption>
+</figure>
+</center>
+
+
+
+
+
+
+<h2>References</h2>
+	<href href="https://www.youtube.com/watch?v=QSy-CcwIQZ8" tag= "video">Link to self contained video presentation written, narrated and animated by the author of this paper.</href>
+
+<!-- <href tag = "SSB1">
+	Mackie GO, Burighel P. 2005. The nervous system in adult tunicates: current research directions. Canadian Journal of Zoology 83(1): 151-183. DOI: 10.1139/z04-177
+</href>
+<href tag = "SSB2">
+Meinertzhagen IA, Okamura Y. 2001. The larval ascidian nervous system: the chordate brain from its small beginnings Trends in Neurosciences 24(7). 401-410. DOI: 10.1016/S0166-2236(00)01851-8
+</href> -->
+<href tag = "Mind">
+Mind: introduction to cognitive science/Paul Thagard.—2nd ed, ISBN 0-262-20154-2
+</href>
+<href href="https://www.frc.ri.cmu.edu/~hpm/project.archive/robot.papers/1974/cp2.txt" tag = "MobileAI">
+		Vision, Intelligence and locomotion in nature, Hans Moravec.
+	</href>
+	<href tag = "MobileAI1">
+		Locomotion, Vision and Intelligence, Robotics Research - The First International Symposium, Michael Brady and Richard Paul, eds., MIT Press, 1984, pp. 215-224.
+	</href>
+	<href href = "http://new.abb.com/products/robotics/industrial-robots/irb-120/irb-120-data" tag = "DataSheet">ABB IRL-120 Data-sheet</href>
+	<href href = "http://mollylab-1.mit.edu/lab/publications/FastDetect2014withFigures.pdf" tag = "13Mil">
+		Potter, M.C., Wyble, B., Hagmann, C.E., & McCourt, E.S. (2014). Detecting meaning in RSVP at 13 ms per picture. Attention, Perception, and Psychophysics.
+	</href>
+	<href tag = "MeanShift1">Cheng, Yizong (August 1995). "Mean Shift, Mode Seeking, and Clustering". IEEE Transactions on Pattern Analysis and Machine Intelligence (IEEE) 17 (8): 790–799.</href>
+	<href tag = "MeanShift2">Comaniciu, Dorin; Peter Meer (May 2002). "Mean Shift: A Robust Approach Toward Feature Space Analysis". IEEE Transactions on Pattern Analysis and Machine Intelligence (IEEE) 24 (5): 603–619</href>
+
+	<href href = "http://joykrishnamondal.github.io/Clean/index.html" tag = "GUI">Software implementation</href>
+	<href href = "http://joykrishnamondal.github.io/FinalReport/index.html" tag = "paper">Website for Paper</href>
+	<!-- <href href = "" tag = ""></href> -->
+	<!-- <href href = "" tag = ""></href> -->
+	<!-- <href href = "" tag = ""></href> -->
+	<!-- <href href = "" tag = ""></href> -->
+</ol>
+
+
+
