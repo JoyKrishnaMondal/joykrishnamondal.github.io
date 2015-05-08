@@ -1,0 +1,255 @@
+
+<center style = "font-family:OpenSan;">
+
+<p style = "font-size:15pt;">
+Server Side Programming For Web Technologies
+</p>
+<p>
+Author - Joy Krishna Mondal
+</p>
+</center>
+
+<h2>Introduction</h2>
+<p>
+	Server side programming requires having a variety of skills. Its possible to be <i>very</i> good at one thing, but in practice their is a constant juggling of various techniques. Also if you are strictly programming in the domain if Javascript for server side, its possible to cross-pollinate techniques from the server-side onto the client side.
+</p>
+<p>
+ 	Thus most of the server-side related tasks that I have conducted are not stickly related to each other. My concentration has been to create <b>small</b> but <b>flexible</b> tools, that can be interchanged with other ones for various projects or purposes. This type of programming philosoplhy came from UNIX and was widely adopted by the npm community. This leads naturally to having more <b>emphasis</b> towards creating value for programmers first, compared to creating products and services for end-users. How successful this type of thinking is has yet to be fully demonstrated, but recently a company known as npm.inc which manages the node.js package manager was valued at 8 Million dollars <ref>money</ref>. It may seen odd how an tool that is used solely by programmers can gain such economical value, but clearly there seems to be significant impact. The collective type of such programming is given a broad stroke name of developers operations. Hence various server-side tools were generated under this use-case.
+</p>
+<p>
+	The other significant that was done involved real-time transfer of data from the client-side program created for computer vision application <ref>Pro</ref>to the server using web-sockets, that gets saved in a database.
+</p>
+<p>
+	A few extra things were done on the <b>client</b> side, but the techniques that were used were inspired by ideas on the server side, specifically the notion of a virtual DOM - most of the code was written for the client project but traditionallity such code were written in server side. We also finally look at a new programming feature coming to Javascript known as generator function. The reason it was done on the client side and not the server was because Node.js still doesn't fully support ECMAScript 6. IO.js which is a fork of Node.js supports generator functions but IO.js is relatively new. However from a purely programming prespective the usefulness of generator functions is something that needs to explored as interpolating from the time of this writing, it will have became standard in the server-side Javascript community <ref>io.js</ref>.
+</p>
+
+<h2>Developers Operations</h2>
+
+<h3>Livescript Watch</h3>
+
+<p>
+	As of writing this report there exists various tools to automate build scripts - Grunt.js , Glup.js, etc. Grunt.js's model for build scripts is using configaturing JSON files <ref>grunt</ref> <ref>gulp</ref>. Glup.js on the other hand emphasises the use of build <i>functions</i>. These are small functions that can be called from the command line to build the needed files.
+</p>
+<p>
+	Both the techniques are really good expecially if you are working with a large team of developers but requires a fair bit of study to start using. To put it more simply, these tools are <b>platforms</b> or <b>Framework</b>. That are designed to make it easy to create build tools. Hence if you are only interested in <b>using</b> a fast and simple build script - you might need to invest significant time in understanding both those frameworks. Node.js has a very powerful API that can be readily used to build simple build scripts when needed. Based on that reasoning I went and created a simple script that allows to automate the task of compliling LiveScript to Javascript.
+</p>
+<p>
+	The tool is fairly simple and is exposed via a top function as:
+</p>
+<center>
+	<code>
+		require("simple-livescript-watch")()
+	</code>
+</center>
+
+<p>
+	It doesn't accept any parameters, and performs the following operations :
+</p>
+<ol>
+	<li>
+		It traverses from top and searches your directory tree from where its called and locates all files that end with an extension of .ls.
+	</li>
+	<li>
+		It starts a watch, and whenever a change is made to an .ls file, it complies the corresponding Javascript file alone with it.
+	</li>
+	<li>
+		The thing of interest is the presentation of the the CLI. It is made to be very user-friendly. A Screenshot of it during operation if shown in <figref>Livescript</figref>. Another thing of interest is it finds the appropiate line where the error occurs <b>in</b> your LiveScript source code. Also because you might have different Livescript files in various directories it will compile all of them when any of them changes.
+	</li>
+</ol>
+<p>
+	I have uploaded the build-script on-to the npm registry <ref>my</ref> ( requires conforming to the common.js standards ). and have seen significant useage of it over time among the developers in the npm community .
+</p>
+<center>
+<figure>
+	<img src = "https://camo.githubusercontent.com/189a8ddb67b18af319db0c396be66a4f28bb715f/687474703a2f2f692e696d6775722e636f6d2f74585a584646442e706e67" style="width:100%;" >
+
+	<figcaption tag = "Livescript">
+	Simple-Livescript-Watch CLI
+	</figcaption>
+</figure>
+</center>
+
+
+<h3>Browserify Watch</h3>
+<p>
+	browserify is a tool that allows very structured compilation of all our source files. More detail of <b>why</b> it was being used can be found in the earlier report <ref>early</ref>, but I want to concentrate on a tool that was constructured for dealing with compilation time when using browserify.js.
+</p>
+<p>
+	If you use the <code>require</code> syntax to structure your program. As you increase the number of dependancies, the complilation time will start to increase significantly. This is because many libraries like <code>JQuery.js , Angular.js , Three.js</code> are very large. And if for every save you are needed to combine them with your source code it will reach orders of 10s of seconds. Browserify has no inbuilt mechanism to deal with reduction of size or can it detect before hand if your final JavsScript file has changed very little.
+</p>
+<p>
+	This promted me to look for solutions and most of then again were monoliths. I created a method to make it possible to <b>prevent</b> recompilation.
+</p>
+<p>
+	The idea is inspired by <code>C</code> programming, where you maintain a header and source file. The basic premise is that each time you are working on a piece of JavaScript code, the actual file size of this code is assumed small. Even if this file is dependent on many various large files. The basic programming model in node.js and npm is also to create small reuseable modules. Thus this file size will never get too big. And once it does, you are expected to make it part of your dependency tree.
+</p>
+<p>
+	Hence you create a header file that contains all your requires. And then only have that file as your sole dependencies in the rest of your code-base.
+</p>
+<p>
+	Compiling this header file will take a while if you have a lot of dependancies however since you are only changing it once in a while it shouldn't matter.
+</p>
+<p>
+ The header files compiles into a single file ( we can give it the appropiate name of static.js for our examples ). This file then can be placed in a <code>script</code> tag in your <code>index</code>.html file.
+</p>
+<p>
+	We take advantage of the browser's inbuilt chache mechansim to prevent re-compilation of the static.js file
+</p>
+
+
+<center>
+<figure>
+	<img src = "http://i.imgur.com/gAaBnO2.jpg" style="width:100%;" >
+
+	<figcaption tag = "Browserify">
+	Simple-Browserify-Watch CLI
+	</figcaption>
+</figure>
+</center>
+
+<p>
+	<figref>Browserify</figref> shows how to initiate the CLI. The tool sets up a watch for your a given header file, in the case of the example in <figref>Browserify</figref> we specify headers.js as the file containing the header file. An example of what the header file might look like is shown in <figref>header</figref>
+</p>
+<p>
+	A small detail that might be missed is the counter on the left, it seems like a small addition but when you are doing may compilation the terminal gets polluted and its hard to know when your compilation is complete. As noted prior it may take 10-20 second depending on the size of the dependencices. Hence a simple counter provides visual feedback as to known when the complilation is over.
+</p>
+<p>
+	A key choice that needs to made was deletion of .js files, once a project becames significantly large the number of .js files in your directory might be large and its pollutes the directory. Its still not clear how useful or harmful deletion of .js files is. For now it seems to be helpful but opinions may differ.
+</p>
+
+
+<center>
+<figure>
+	<img src = "http://i.imgur.com/lSHupo7.jpg" style="width:70%;" >
+
+	<figcaption tag = "header">
+	Sample Header file - note that its in LiveScript. Its possible to use the Livescript watch in sequence with the  browserify watch, creating a powerful but flexible and parallel build automation.
+	</figcaption>
+</figure>
+</center>
+
+<h2>Web Socket and Data-Base</h2>
+<p>
+	From an application prespective - we are interested in a real-time autonomouns robot. What that means is that data that we recieve from the client process needs to feed into programs running on the server.
+</p>
+<p>
+	For the purposes of this report, we are only interested in the part where websockets captures the relevant data and transmits it to the server and stores it in a database.
+</p>
+<p>
+	Before we being to look at those things its important to mention the <code>express</code> framework <ref>express</ref>. <code>express</code> has became the industry standard from creating webservers, in fact companies like <code>netflix</code> extensively demonstrated its robustness and capabilities <ref>netflix</ref>. It allows to prevent having to write a lot of boilerplate code for this project.
+</p>
+<p>
+	One issue with the server process is that it might not run on Linux or Mac computers. The dependencies for the server process need to downloaded and then run through the build process mentioned above.
+</p>
+<p>
+	Due to this uncertainity I will be providing a lot of screenshots of the code as to both provide cues as to where to look for the relevant code. For the real application of the project it will <b>not</b> have to be run on a linux or a mac computer since the software running the industrial arm only runs on windows as a <code>C#</code> process.
+</p>
+
+
+<center>
+<figure>
+	<img src = "http://i.imgur.com/c8Cgool.jpg" style="width:100%;" >
+	<figcaption tag = "BetterMenu">
+	The setup for <code>express</code> is very simple, we are interested only in a static web-server.
+	</figcaption>
+</figure>
+</center>
+
+<center>
+<figure>
+	<img src = "http://i.imgur.com/zXWAcCw.jpg" style="width:50%;" >
+	<figcaption tag = "BetterMenu">
+	The Server Process on the console, notice the color. These simple cues are helpful as they help in finding missing requests.
+	The message "Singe Host Connected . . " specifies an active web-socket connection being made.
+	</figcaption>
+</figure>
+</center>
+<p>
+
+<p>
+	The next cruitial thing to do is set-up the websocket connection. For dealing with websockets, we have a fairly powerful framework to use - <code>Socket.IO</code>. Many people in the Node.js community have the opinon that <code>Socket.IO</code> may have been reasponsible for the major early adoption of Node.js. Regardless its one of the most oldest and in-production use npm module.
+	One thing to note is that <code>Socket.IO</code> uses Native <code>C++</code> plugins. What that means is that if you are using <code>Windows</code> you need to setup the <code>node-gyp</code> build automation for native code <ref>gyp</ref>.
+</p>
+<p>
+
+</p>
+<center>
+<figure>
+	<img src = "http://i.imgur.com/kYWbZAV.jpg" style="width:50%;" >
+	<figcaption tag = "BetterMenu">
+	The logic for the web-socket is fairly simple. "PinData" is the ID for the data being sent from the client.
+	</figcaption>
+</figure>
+</center>
+<p>
+
+<p>
+	The final functionality is saving the data coming in into a database. SQLite3 is a very good option for saving the data that is coming it but the data model used by SQLite3 is relational tables. Since the data coming in JSON formated its better to use an JSON based database. The npm module known as LowDB is perfect for this usecase <ref>lowdb</ref>. The data gets stored locally on the server on a file named <code>PinData.json</code>
+</p>
+
+<p>
+	The amount of server code is fairly small, but the functionality that we require from the server for our application is also fairly limited. Its also important to point out that under a different stack besides Node.js the tasks of sending data using web-sockets and saving it using a database is fairly involved. Finding simplers and appropiate tools for the task took a fair amount of searching. There is also no need to query the database for our application as the process controlling the robot directly reads it from the file and analyses its contents.
+</p>
+
+<h2>Generator Functions</h2>
+<p>
+	For the previous submission I provided a client-side project that allows displaying of html content in a latex like fashion. Besides the use of the latex font, there are some key things that latex does, it for example finds all the headings and numbers them appropaiately.
+</p>
+<p>
+	The code-base also allows uploading of files to be viewed using a browser.
+</p>
+<p>
+	The entire projects provides all the needed funtionality that I was set out to achieve. However the code was written in a non-conventional, non-sturctured and inefficient manner.
+</p>
+<p>
+	The main reason for it was due to my limited understanding of parsers. The literature for parsing is very rich in computer science. An interesting project in javascript that tries to bring modern parsing on the browser is called <code>peg</code>.js <ref>pegi</ref>. Its based on a new parsing technique that combines both the lexer and grammer, allowing you to only specific the grammer in a recursive manner using regex. That compiles to a in single .js file which allows transformation of your source-code.
+</p>
+<p>
+	The initial approach was to try and use this to create a full latex parser but it proved too complex given the time constraint.
+</p>
+<p>
+	All of this by the was being done server-side. However significant insight into how parse trees are generated was made while using <code>peg</code>.js and this promoted me to refactor the entire code-base to a much more simpler and undersatable client-side implementation.
+</p>
+
+<p>
+ Another important reason for refactor was to gain a deep insight into something called as generator functions <ref>gene</ref>. I had a abstract notion of what generator functions do but never found a strong usecase for it. However one of the advantages of generator functions is the ability to do deep recursions <b>fast</b> and also without breaking the call stack.
+</p>
+
+<p>
+	Hence using generator functions I rewrote the client-side implementation for the program for writing latex-like reports. This might seem not a big imporvement but generator functions are a strong foundation to build such a project. It allows efficient traversing of parse-trees and also garantees no failure if the parse-tree is deeper than the call stack.
+</p>
+<center>
+<figure>
+	<img src = "http://i.imgur.com/ZnFbJvg.jpg" style="width:100%;" >
+
+	<figcaption tag = "BetterMenu">
+	For the previous implementation we had a badly designed UI for the menu ( on the left). The refactor allowed the creation of a better UI. The Menu also handles multiple lines of heading in a clean way without overflowing the text.
+	</figcaption>
+</figure>
+</center>
+
+<p>
+	The source file that contains all the content is expressed using a separate html file since the main implentation can be used for various reports. A seperate <code>GET</code
+	> request is made to the server process to retrieve the file before parsing.
+</p>
+
+<h2>Notes</h2>
+<p>
+	The report resides on a website <ref>report</ref>. The report was written using the refractored code.
+</p>
+<h2>References</h2>
+<href href = "http://techcrunch.com/2015/04/14/popular-javascript-package-manager-npm-raises-8m-launches-private-modules/" tag = "money"> NPM raises 8 Million Dollars, TechCrunch</href>
+<href href = "http://joykrishnamondal.github.io/FinalReport/index.html" tag = "Pro"></href>
+	<href href = "https://iojs.org/en/es6.html" tag = "io.js"></href>
+	<href href = "http://gruntjs.com/" tag = "grunt"></href>
+	<href href = "http://gulpjs.com/" tag = "gulp"></href>
+<href href = "https://www.npmjs.com/package/simple-livescript-watch" tag = "my"></href>
+<href href = "http://joykrishnamondal.github.io/Report/index.html" tag = "early"></href>
+<href href = "http://expressjs.com/" tag = "express"></href>
+<href href = "http://techblog.netflix.com/2014/11/nodejs-in-flames.html" tag = "netflix"></href>
+<href href = "https://github.com/TooTallNate/node-gyp" tag = "gyp"></href>
+<href href = "https://www.npmjs.com/package/lowdb" tag = "lowdb"></href>
+<href href = "http://pegjs.org/" tag = "pegi"></href>
+<href href = "https://strongloop.com/strongblog/how-to-generators-node-js-yield-use-cases/" tag = "gene"></href>
+<href href = "" tag = "report"></href>
+
