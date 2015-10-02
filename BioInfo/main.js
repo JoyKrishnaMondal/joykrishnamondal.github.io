@@ -18,7 +18,7 @@
     K = 1;
     for (i$ = 0, len$ = Table.length; i$ < len$; ++i$) {
       I = Table[i$];
-      Final += K + "," + I[0] + "," + I[1] + "\n";
+      Final += K + "," + I[0] + "," + I[1] + "\r\n";
       K += 1;
     }
     return Final;
