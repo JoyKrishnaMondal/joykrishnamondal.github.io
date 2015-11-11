@@ -1,0 +1,31 @@
+#Status
+	# Number Of Pins lost
+	# Number Of Total Pins being Tracked
+	# Time
+#Buttons
+	# Buttons for Only
+		# X
+		#	Y
+		# Camera Feed
+	# Find Camera
+		# SelectionList
+	# Start Tracking
+	# Reset Tracking
+	# Docs
+#DataEnter
+	# IP
+	# Port To Sent Data To
+	# Nearest Neighbour Distance
+	# MaxSizeOfPin
+	# DistanceBetweenPin
+	# MinSizeOfPin
+
+
+Ask CSS 	Questions
+Consistent Across Devices
+
+07717720016
+
+www.bristol.ac.uk/studenthouses/resinfo
+
+4:50 dr johns 31st march
