@@ -117,7 +117,7 @@ Main.Init = ->
 		return
 
 	errorFn = (e) -> console.log "Coudn't Stream from WebCam"
-	linkFn = ((stream) ->
+	linkFn = ( ->
 
 			@VideoElement.src =  "./test2.webm"
 			# VideoElement.src =  Main.createObjectURL stream
@@ -128,7 +128,7 @@ Main.Init = ->
 	@AttachCameraToVideoElement = (Index) ->
 		options = (video:(optional:[(sourceId:@ListOfCamera[Index])]),audio:false)
 		# request webcam access
-		@GetUserMedia.call navigator,options,linkFn,errorFn
+		linkFn!
 		return
 
 	@InitCTX = (Ref,refCTX) ->

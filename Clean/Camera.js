@@ -83,7 +83,7 @@
     errorFn = function(e){
       return console.log("Coudn't Stream from WebCam");
     };
-    linkFn = function(stream){
+    linkFn = function(){
       this.VideoElement.src = "./test2.webm";
       this.VideoElement.play();
     }.bind(this);
@@ -97,7 +97,7 @@
         },
         audio: false
       };
-      this.GetUserMedia.call(navigator, options, linkFn, errorFn);
+      linkFn();
     };
     this.InitCTX = function(Ref, refCTX){
       var Vctx;
